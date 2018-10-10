@@ -13,6 +13,29 @@ body {
   font-family: 'Open Sans';
 }
 
+#content {
+  /* background: #EDEFEF; */
+  width: 940px;
+  height: 500px;
+  position: absolute;
+  top: 75px;
+  left: 48px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.rl {
+  position: relative;
+  height: 15px;
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  font-size: 10px;
+  line-height: 15px;
+  padding-left: 8px;
+  white-space: nowrap;
+}
+
 .axis {
   clip-path: url(#clip);
 }
@@ -40,7 +63,8 @@ body {
 }
 
 </style>
-<svg width="1000" height="700"></svg>
+<svg width="1000" height="570" style="display: block;"></svg>
+<div id="content"></div>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 
@@ -83,8 +107,8 @@ var xTicks3 = [
 ];
 
 var svg = d3.select('svg'),
-    marginFoc = {top: 40, right: 20, bottom: 30, left: 40},
-    marginCtx = {top: 0, right: 20, bottom: 700, left: 40}, // bottom should be svg height
+    marginFoc = {top: 40, right: 20, bottom: 0, left: 40},
+    marginCtx = {top: 0, right: 20, bottom: parseInt(d3.select('svg').attr('height')), left: 40}, // bottom should be svg height
     width = +svg.attr('width') - marginFoc.left - marginFoc.right,
     heightFoc = +svg.attr('height') - marginFoc.top - marginFoc.bottom,
     heightCtx = +svg.attr('height') - marginCtx.top - marginCtx.bottom;
@@ -118,7 +142,7 @@ var xFocTicks = [
 
 var xAxisFoc2 = d3.axisBottom(xScaleFoc)
   .tickValues(xTicks)
-  .tickSize(heightFoc - 5)
+  .tickSize(500)
   .tickFormat(function(d) { return null; });
 
 var xAxisFoc = d3.axisBottom(xScaleFoc)
@@ -221,66 +245,74 @@ gAxisFoc2.call(xAxisFoc2)
   .attr('stroke-linecap', 'round')
 
 var data = [
-  {x: 1       , y: 25},
-  {x: 3       , y: 24},
-  {x: 9       , y: 23},
-  {x: 10      , y: 22},
-  {x: 10      , y: 21},
-  {x: 14      , y: 20},
-  {x: 20      , y: 19},
-  {x: 22      , y: 18},
-  {x: 28      , y: 17},
-  {x: 30      , y: 16},
-  {x: 37      , y: 15},
-  {x: m2w(5)  , y: 14},
-  {x: m2w(6)  , y: 13},
-  {x: m2w(9)  , y: 12},
-  {x: m2w(12) , y: 11},
-  {x: m2w(18) , y: 10},
-  {x: m2w(22) , y: 9},
-  {x: m2w(28) , y: 8},
-  {x: m2w(30) , y: 7},
-  {x: m2w(35) , y: 6},
-  {x: y2w(4)  , y: 5},
-  {x: y2w(5)  , y: 4},
-  {x: y2w(6)  , y: 3},
-  {x: y2w(9)  , y: 2},
-  {x: y2w(11) , y: 1}
+  {x: 1       , y: 25 , w: 5, txt: 'Event 1'},
+  {x: 3       , y: 24 , w: 5, txt: 'Event 2'},
+  {x: 9       , y: 23 , w: 3, txt: 'Event 3'},
+  {x: 10      , y: 22 , w: 7, txt: 'Event 4'},
+  {x: 10      , y: 21 , w: 7, txt: 'Event 5'},
+  {x: 14      , y: 20 , w: 6, txt: 'Event 6'},
+  {x: 20      , y: 19 , w: 3, txt: 'Event 7'},
+  {x: 22      , y: 18 , w: 3, txt: 'Event 8'},
+  {x: 28      , y: 17 , w: 2, txt: 'Event 9'},
+  {x: 30      , y: 16 , w: 4, txt: 'Event 10'},
+  {x: 37      , y: 15 , w: 4, txt: 'Event 11'},
+  {x: m2w(5)  , y: 14 , w: m2w(0.2), txt: 'Event 12'},
+  {x: m2w(6)  , y: 13 , w: m2w(0.1), txt: 'Event 13'},
+  {x: m2w(9)  , y: 12 , w: m2w(0.1), txt: 'Event 14'},
+  {x: m2w(12) , y: 11 , w: m2w(0.5), txt: 'Event 15'},
+  {x: m2w(18) , y: 10 , w: m2w(0.25), txt: 'Event 16'},
+  {x: m2w(22) , y: 9 , w: m2w(0.25), txt: 'Event 17'},
+  {x: m2w(28) , y: 8 , w: m2w(1), txt: 'Event 18'},
+  {x: m2w(30) , y: 7 , w: m2w(1), txt: 'Event 19'},
+  {x: m2w(35) , y: 6 , w: m2w(0.5), txt: 'Event 20'},
+  {x: y2w(4)  , y: 5 , w: y2w(2), txt: 'Event 21'},
+  {x: y2w(5)  , y: 4 , w: y2w(2), txt: 'Event 22'},
+  {x: y2w(6)  , y: 3 , w: y2w(2), txt: 'Event 23'},
+  {x: y2w(9)  , y: 2 , w: y2w(1), txt: 'Event 24'},
+  {x: y2w(11) , y: 1 , w: y2w(1), txt: 'Event 25'}
 ];
 
-var dots = focus
-  .append('g')
-  .attr('class', 'dots')
+// var dots = focus
+//   .append('g')
+//   .attr('class', 'dots')
+//   .datum(data)
+//   .selectAll('.dots-group')
+//   .data(function(d) { return d })
+//   .enter().append('g')
+//   .attr('class', 'dots-group')
+//   .attr('transform', function(d) { return 'translate(' + xScaleFoc(d.x) + ',' + yScaleFoc(d.y) + ')' })
+
+// dots.append('text')
+//   .attr('dx', 8)
+//   .attr('dy', 12)
+//   .text(function(d) { return Math.round(d.x) + ' weeks'; })
+//   .style('fill', 'none')
+//   .style('font', '10px');
+
+// dots.append('circle')
+//   .attr('class', 'circles')
+//   .attr('r', 8)
+//   .style('fill', 'red')
+//   .on('mouseenter', function() { 
+//     d3.select(this.parentNode)
+//       .select('text')
+//       .style('fill', '#000');
+//   })
+//   .on('mouseleave', function() { 
+//     d3.select(this.parentNode)
+//       .select('text')
+//       .style('fill', 'none');
+//   });
+
+var dots2 = d3.select('#content')
   .datum(data)
-  .selectAll('.dots-group')
+  .selectAll('.dots-group2')
   .data(function(d) { return d })
-  .enter().append('g')
-  .attr('class', 'dots-group')
-  .attr('transform', function(d) { return 'translate(' + xScaleFoc(d.x) + ',' + yScaleFoc(d.y) + ')' })
-
-dots.append('text')
-  .attr('dx', 8)
-  .attr('dy', 12)
-  .text(function(d) { return Math.round(d.x) + ' weeks'; })
-  .style('fill', 'none')
-  .style('font', '10px');
-
-dots.append('circle')
-  .attr('class', 'circles')
-  .attr('r', 8)
-  .style('fill', 'red')
-  .on('mouseenter', function() { 
-    d3.select(this.parentNode)
-      .select('text')
-      .style('fill', '#000');
-  })
-  .on('mouseleave', function() { 
-    d3.select(this.parentNode)
-      .select('text')
-      .style('fill', 'none');
-  });
-
-
+  .enter().append('div')
+  .attr('class', 'rl')
+  .text(function(d) { return d.txt; })
+  .style('left', function(d) { return xScaleFoc(d.x) + 'px'; })
+  .style('width', function(d) { return (xScaleFoc(d.x + d.w) - xScaleFoc(d.x)) + 'px'; })
 
 context.append('g')
   .attr('class', 'axis axis--x')
@@ -428,6 +460,11 @@ function brushed() {
     .attr('y', 2)
     .attr('x', 2)
     .style('text-anchor', 'start');
+
+  d3.selectAll('.rl')
+    .style('left', function(d) { return xScaleFoc(d.x) + 'px'; })
+    .style('width', function(d) { return (xScaleFoc(d.x + d.w) - xScaleFoc(d.x)) + 'px'; })
+    .style('display', function(d) { return (xScaleFoc(d.x + d.w) < 0 || xScaleFoc(d.x) > 940) ? 'none' : null; })
 
   focus.select('.axis--x2').call(xAxisFoc2);
 
