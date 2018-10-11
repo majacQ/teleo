@@ -34,6 +34,17 @@ body {
   line-height: 15px;
   padding-left: 8px;
   white-space: nowrap;
+  transition: height 0.25s ease-in-out, opacity 0.75s ease-in;
+}
+
+.rl2 {
+  height: 3px;
+  background: white;
+  position: relative;
+  /* left: 338px;
+  width: 204px; */
+  top: 9px;
+  margin-top: -3px;
 }
 
 .axis {
@@ -308,11 +319,17 @@ var dots2 = d3.select('#content')
   .datum(data)
   .selectAll('.dots-group2')
   .data(function(d) { return d })
-  .enter().append('div')
-  .attr('class', 'rl')
-  .text(function(d) { return d.txt; })
-  .style('left', function(d) { return xScaleFoc(d.x) + 'px'; })
-  .style('width', function(d) { return (xScaleFoc(d.x + d.w) - xScaleFoc(d.x)) + 'px'; })
+  .enter()
+  .append('div')
+    .attr('class', 'rl')
+    .text(function(d) { return d.txt; })
+    .style('left', function(d) { return xScaleFoc(d.x) + 'px'; })
+    .style('width', function(d) { return (xScaleFoc(d.x + d.w) - xScaleFoc(d.x)) + 'px'; })
+  // .append('div')
+  //   .attr('class', 'rl2')
+  //   .style('left', function(d) { return xScaleFoc(d.x - 2) + 'px'; })
+  //   .style('width', function(d) { return (xScaleFoc(d.x + d.w) - xScaleFoc(d.x)) + 'px'; })
+  // https://stackoverflow.com/questions/21485981/appending-multiple-non-nested-elements-for-each-data-member-with-d3-js
 
 context.append('g')
   .attr('class', 'axis axis--x')
@@ -464,7 +481,12 @@ function brushed() {
   d3.selectAll('.rl')
     .style('left', function(d) { return xScaleFoc(d.x) + 'px'; })
     .style('width', function(d) { return (xScaleFoc(d.x + d.w) - xScaleFoc(d.x)) + 'px'; })
-    .style('display', function(d) { return (xScaleFoc(d.x + d.w) < 0 || xScaleFoc(d.x) > 940) ? 'none' : null; })
+    .style('height', function(d) { return (xScaleFoc(d.x + d.w) < 0 || xScaleFoc(d.x) > 940) ? 0 : "15px"; })
+    .style('opacity', function(d) { return (xScaleFoc(d.x + d.w) < 0 || xScaleFoc(d.x) > 940) ? 0 : 1; })
+
+  d3.selectAll('.rl2')
+    .style('left', function(d) { return xScaleFoc(d.x - 2) + 'px'; })
+    .style('width', function(d) { return (xScaleFoc(d.x + d.w) - xScaleFoc(d.x)) + 'px'; })
 
   focus.select('.axis--x2').call(xAxisFoc2);
 
