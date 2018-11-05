@@ -36,8 +36,17 @@ body {
   line-height: 15px;
   padding-left: 8px;
   white-space: nowrap;
-  transition: height 0.25s ease-in-out 0s, opacity 0.1s ease-in 0s;
+  /* this transition is when they become active */
+  /* height first, then text */
+  transition: height 0.15s ease-in-out 0.25s, opacity 0.1s ease-in 0.25s;
 }
+
+/* this transition is when they become inactive */
+/* text goes away immediately, height after */
+.rl.inactive {
+  transition: height 0.15s ease-in-out 0.25s, opacity 0.1s ease-out 0s;
+}
+
 
 .rl2 {
   height: 3px;
@@ -427,6 +436,7 @@ function brushed() {
     .style('height', function(d) { return (xScaleFoc(d.gmdd_end_age / 7) < 0 || xScaleFoc(d.gmdd_start_age / 7) > 940) ? 0 : "15px"; })
     .style('margin-bottom', function(d) { return (xScaleFoc(d.gmdd_end_age / 7) < 0 || xScaleFoc(d.gmdd_start_age / 7) > 940) ? 0 : "5px"; })
     .style('opacity', function(d) { return (xScaleFoc(d.gmdd_end_age / 7) < 0 || xScaleFoc(d.gmdd_start_age / 7) > 940) ? 0 : 1; })
+    .classed('inactive', function(d) { return xScaleFoc(d.gmdd_end_age / 7) < 0; })
 
   d3.selectAll('.rl2')
     .style('left', function(d) { return xScaleFoc(d.gmdd_start_age / 7 - 2) + 'px'; })
