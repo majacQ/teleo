@@ -1,0 +1,84 @@
+body {
+  background: #202A2B;
+  font-family: 'Arial';
+}
+
+#content {
+  /* background: #EDEFEF; */
+  width: 940px;
+  height: 500px;
+  position: absolute;
+  top: 75px;
+  left: 48px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.row {
+  height: 20px;
+}
+
+.row-abs {
+  position: relative;
+}
+
+.rl {
+  /* display: inline-block; */
+  position: absolute;
+  top: 0px;
+  height: 15px;
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  font-size: 10px;
+  line-height: 15px;
+  /* padding-left: 8px; */
+  white-space: nowrap;
+  /* this transition is when they become active */
+  /* height first, then text */
+  /* transition: height 0.15s ease-in-out 0.25s, opacity 0.1s ease-in 0.25s; */
+  /* transition: all 0.15s ease-in; */
+}
+
+/* this transition is when they become inactive */
+/* text goes away immediately, height after */
+.rl.inactive {
+  transition: height 0.15s ease-in-out 0.25s, opacity 0.1s ease-out 0s;
+}
+
+
+.rl2 {
+  height: 3px;
+  background: white;
+  position: relative;
+  /* left: 338px;
+  width: 204px; */
+  top: 9px;
+  margin-top: -3px;
+}
+
+.axis {
+  clip-path: url(#clip);
+}
+
+.dots {
+  clip-path: url(#clip);
+}
+
+.focus-area {
+  fill: #EDEFEF;
+}
+
+.axis path {
+  stroke-width: 2px;
+}
+
+.axis .tick text {
+  font-size: 12px;
+  font-family: 'Open Sans';
+}
+
+.brush rect.selection {
+  fill: none;
+  stroke: none;
+}
