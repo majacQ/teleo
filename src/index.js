@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore, compose, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
+import { fetchData, windowResize } from './actions';
 
 import './index.css';
 import App from './App';
@@ -42,6 +43,22 @@ if (module.hot) {
       document.getElementById('root'));
   });
 }
+
+// TODO: move this to the filtering components to call fetchData when filters are updated
+// for now, while designing the vis components, this is a fixed source
+store.dispatch(fetchData('testdata.json'));
+
+store.dispatch(windowResize({
+  height: window.innerHeight,
+  width: window.innerWidth
+}));
+
+window.addEventListener('resize', () => {
+  store.dispatch(windowResize({
+    height: window.innerHeight,
+    width: window.innerWidth
+  }));
+});
 
 // registerServiceWorker();
 

@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { scaleLinear } from 'd3-scale';
 import { axisBottom } from 'd3-axis';
 import { arc } from 'd3-shape';
 import { brushX } from 'd3-brush';
 import { select, event as curEvent } from 'd3-selection';
+import { setAgeRange, setTimelineFocusScale } from '../actions';
+import { ui } from '../constants';
 
 // ~52.18 weeks in a year
 // add 40 weeks for to account for gestation
@@ -24,18 +27,19 @@ class AgeSlider extends Component {
   }
 
   componentDidUpdate() {
-    this.createAgeSlider();
+    // this.createAgeSlider();
   }
 
   createAgeSlider() {
     const { node } = this;
+    const { setRange, setScale } = this.props;
 
     // const unselectColor = '#565658';
     const unselectColor = '#666';
     // const selectColor = '#BCDCDE';
     const selectColor = '#70B6BC';
 
-    const brushHeight = 15;
+    const brushHeight = 18;
 
     // Conception to prenatal: 40 weeks
     // Infant to toddler: 0 to 36 months (40 to 196 weeks)
@@ -63,21 +67,20 @@ class AgeSlider extends Component {
 
     const svg = select(node);
     const marginFoc = {
-      top: 40, right: 20, bottom: 0, left: 40
+      top: 40, right: 0, bottom: 0, left: 0
     };
     const marginCtx = {
       top: 0,
-      right: 20,
-      bottom: parseInt(select('svg').attr('height'), 10),
-      left: 40
+      right: 0,
+      bottom: this.props.windowSize.height - ui.header.height - ui.slider.height,
+      left: 0
     }; // bottom should be svg height
     const width = +svg.attr('width') - marginFoc.left - marginFoc.right;
     const heightFoc = +svg.attr('height') - marginFoc.top - marginFoc.bottom;
     const heightCtx = +svg.attr('height') - marginCtx.top - marginCtx.bottom;
 
-    // const focAxisPad = 25;
-
-    const xDomain = [0, 40, 196, 716];
+    // const xDomain = [0, 40, 196, 716];
+    const xDomain = [-4, 40, 196, 850];
     const xRange = [0, width * xProps[0], width * (xProps[0] + xProps[1]), width];
 
     const xScaleFoc = scaleLinear()
@@ -98,11 +101,13 @@ class AgeSlider extends Component {
       y2w(3), y2w(4), y2w(5), y2w(6), y2w(7), y2w(8), y2w(9), y2w(10), y2w(11), y2w(12)
     ];
 
+    // focus view ticks
     const xAxisFoc2 = axisBottom(xScaleFoc)
       .tickValues(xTicks)
-      .tickSize(500)
+      .tickSize(this.props.windowSize.height - ui.header.height - ui.slider.height)
       .tickFormat(() => null);
 
+    // focus view tick labels
     const xAxisFoc = axisBottom(xScaleFoc)
       .tickValues(xFocTicks)
       .tickSize(0)
@@ -122,9 +127,11 @@ class AgeSlider extends Component {
         return null;
       });
 
+    // context (full) timeline view major ticks
     const xAxisCtx = axisBottom(xScaleCtx)
       .tickValues(xTicks)
-      .tickSize(6)
+      .tickSize(10)
+      .tickSizeOuter(0)
       .tickFormat((d) => {
         if (d <= 36) {
           return d;
@@ -137,14 +144,18 @@ class AgeSlider extends Component {
         // }
       });
 
+    // context (full) timeline view minor ticks
     const xAxisCtx2 = axisBottom(xScaleCtx)
       .tickValues(xTicks2)
-      .tickSize(4)
+      .tickSize(10)
+      .tickSizeOuter(0)
       .tickFormat(() => null);
 
+    // context (full) timeline view tick labels
     const xAxisCtx3 = axisBottom(xScaleCtx)
       .tickValues(xTicks3)
-      .tickSize(14)
+      .tickSize(18)
+      .tickSizeOuter(0)
       .tickFormat((d) => {
         if (d <= 36) {
           return 'CONCEPTION TO PRENATAL (weeks)';
@@ -214,27 +225,27 @@ class AgeSlider extends Component {
       .attr('transform', `translate(0,${heightCtx})`)
       .call(xAxisCtx)
       .selectAll('text')
-        .attr('y', 4)
-        .attr('x', 2)
-        .attr('fill', unselectColor)
-        .style('text-anchor', 'start');
+      .attr('y', 7) // how far the tick labels are below the axis line
+      .attr('x', 3) // how far the tick labels are to the right of the tick lines
+      .attr('fill', unselectColor)
+      .style('text-anchor', 'start');
 
     context.append('g')
       .attr('class', 'axis axis--x2')
       .attr('transform', `translate(0,${heightCtx})`)
       .call(xAxisCtx2)
       .selectAll('text')
-        .attr('fill', unselectColor);
+      .attr('fill', unselectColor);
 
     context.append('g')
       .attr('class', 'axis axis--x3')
       .attr('transform', `translate(0,${heightCtx})`)
       .call(xAxisCtx3)
       .selectAll('text')
+      .attr('y', 23) // how far the tick labels are below the axis line
       .attr('fill', unselectColor)
       .style('text-anchor', 'start');
 
-    // TODO: find way to do this without selectAll
     svg.selectAll('.context .domain')
       .attr('stroke', unselectColor);
 
@@ -349,6 +360,10 @@ class AgeSlider extends Component {
         brushLine.attr('width', 0);
       }
 
+      // trigger a change to ageRange
+      setRange(curDom);
+      setScale(xScaleFoc);
+
       // update the ticks in the focused timeline view
       focus.select('.axis--x')
         .call(xAxisFoc)
@@ -388,12 +403,35 @@ class AgeSlider extends Component {
         ));
     }
 
-    gBrush.call(brush.move, [xScaleCtx(39.99), xScaleCtx(m2w(18.2))]);
+    gBrush.call(brush.move, [xScaleCtx(this.props.ageRange[0]), xScaleCtx(this.props.ageRange[1])]);
   }
 
   render() {
-    return <svg ref={node => this.node = node} width={1000} height={500} />;
+    return (
+      <svg
+        ref={(node) => { this.node = node; }}
+        width={Math.min(1000, this.props.windowSize.width)}
+        height={this.props.windowSize.height - ui.header.height - ui.slider.height}
+      />
+    );
   }
 }
 
-export default AgeSlider;
+const mapStateToProps = state => ({
+  ageRange: state.ageRange,
+  windowSize: state.windowSize
+});
+
+const mapDispatchToProps = dispatch => ({
+  setRange: (range) => {
+    dispatch(setAgeRange(range));
+  },
+  setScale: (scl) => {
+    dispatch(setTimelineFocusScale(scl));
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AgeSlider);

@@ -1,24 +1,99 @@
 body {
   margin: 0;
   padding: 0;
-  background: #202A2B;
+  background: #f1f2f2;
 }
 
 .root {
   flex: 1;
   max-width: 1000px;
-  padding-left: 20px;
-  padding-right: 20px;
+  /* padding-left: 20px; */
+  /* padding-right: 20px; */
   margin: auto;
+  position: relative;
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #202a2b;
+  width: 1000px; /* TODO: make this variable in component */
 }
 
 .header-text {
+  font-family: 'Open Sans';
+  font-size: 20px;
+  font-weight: 600;
   color: white;
+  padding: 10px;
+}
+
+.slider-container {
+  position: absolute;
+  left: 0px;
+  background: #202a2b;
+}
+
+.events-container {
+  position: absolute;
+  left: 0px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 
+/* events elements */
+
+.row {
+  height: 25px;
+  font-family: 'Times New Roman';
+}
+
+.row-abs {
+  font-size: 12px;
+  position: relative;
+}
+
+.rl {
+  /* display: inline-block; */
+  position: absolute;
+  top: 0px;
+  height: 20px;
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  line-height: 20px;
+  /* padding-left: 8px; */
+  white-space: nowrap;
+  /* this transition is when they become active */
+  /* height first, then text */
+  /* transition: height 0.15s ease-in-out 0.25s, opacity 0.1s ease-in 0.25s; */
+  /* transition: all 0.15s ease-in; */
+}
+
+/* this transition is when they become inactive */
+/* text goes away immediately, height after */
+.rl.inactive {
+  transition: height 0.15s ease-in-out 0.25s, opacity 0.1s ease-out 0s;
+}
 
 
+.rl2 {
+  height: 3px;
+  background: white;
+  position: relative;
+  /* left: 338px;
+  width: 204px; */
+  top: 9px;
+  margin-top: -3px;
+}
+
+/* end events elements */
+
+
+
+/* timeline axes */
 
 .axis {
   clip-path: url(#clip);
@@ -33,7 +108,11 @@ body {
 }
 
 .axis path {
-  stroke-width: 2px;
+  stroke-width: 6px;
+}
+
+.handle-line {
+  stroke-width: 6px;
 }
 
 .axis .tick text {
@@ -45,3 +124,5 @@ body {
   fill: none;
   stroke: none;
 }
+
+/* end timeline axes */
