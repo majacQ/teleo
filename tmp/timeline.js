@@ -1,5 +1,11 @@
 // const d3 = d3;
 
+// Developmental Domains -> Neurodevelopment
+// Cognitive Development 
+
+// Organogenesis -> Growth & Development
+// Central Nervous System
+
 // get the size of text for each item in the data
 // https://stackoverflow.com/questions/6117553/external-font-on-html5-canvas
 // https://html.spec.whatwg.org/multipage/canvas.html#text-0
