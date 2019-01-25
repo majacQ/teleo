@@ -1,11 +1,13 @@
 // const d3 = d3;
 
 // get the size of text for each item in the data
+// https://stackoverflow.com/questions/6117553/external-font-on-html5-canvas
+// https://html.spec.whatwg.org/multipage/canvas.html#text-0
 // TODO: make sure dt is sorted by gmdd_start_age
 const dt = data['Developmental Domains'].data;
 const tmpEl = document.createElement('canvas');
 const ctx = tmpEl.getContext('2d');
-ctx.font = '10px Arial';
+ctx.font = '12px "Times New Roman"';
 for (let i = 0; i < dt.length; i += 1) {
   dt[i].width = ctx.measureText(dt[i].gmdd_short_description).width;
 }
@@ -353,35 +355,40 @@ function updateView() {
   const rowPad = 8;
   dt.forEach((d) => {
     const xStart = xScaleFoc(d.gmdd_start_age / 7);
-    // const xEnd = xScaleFoc(d.gmdd_end_age / 7);
-    // const outOfRange = xScaleFoc(d.gmdd_end_age / 7) < 0 || xStart > 940;
     const eventWidth = xScaleFoc(d.gmdd_end_age / 7) - xStart;
-    const curWidth = Math.max(d.width, eventWidth) + rowPad;
-    d.xStart = xStart;
-    d.eventWidth = eventWidth;
-    const outOfRange = xStart + curWidth < 0 || xStart > 940;
-
+    const outOfRange = xStart + eventWidth < 0 || xStart > 940;
     if (!outOfRange) {
-      // const xStart = xScaleFoc(d.gmdd_start_age / 7);
-      // const eventWidth = xScaleFoc(d.gmdd_end_age / 7) - xScaleFoc(d.gmdd_start_age / 7);
-      // d.xStart = xStart;
-      // d.eventWidth = eventWidth;
+      let curWidth = Math.max(d.width, eventWidth) + rowPad;
+      let xStart2 = xStart;
+      // we still want the full text to show if the event is on the left edge of the timeline
+      let paddingLeft = 5;
+      if (xStart < 0) {
+        paddingLeft = xRange[0] - xStart + 5;
+        curWidth = Math.max(d.width, xRange[0] - xStart);
+        xStart2 = 0;
+        console.log(curWidth);
+      }
       // see if any existing row is narrow enough to fit a new element
       let foundSpot = false;
+      const newDat = Object.assign({
+        xStart,
+        eventWidth,
+        paddingLeft
+      }, d);
       for (let ii = 0; ii < rowEnds.length; ii += 1) {
         const rw = rowEnds[ii];
         // if we are on an empty row or the element fits on this row, we add the element
         // and the end of the row becomes the starting point plus the width of the element
-        if (rw === 0 || (rw < xStart && rw + curWidth < 940)) {
-          rows[ii].push(d);
-          rowEnds[ii] = xStart + curWidth;
+        if (rw === 0 || (rw < xStart2 && rw + curWidth < 940)) {
+          rows[ii].push(newDat);
+          rowEnds[ii] = xStart2 + curWidth;
           foundSpot = true;
           break;
         }
       }
       if (!foundSpot) {
-        rows.push([d]);
-        rowEnds.push(xStart + curWidth);
+        rows.push([newDat]);
+        rowEnds.push(xStart2 + curWidth);
       }
     }
   });
@@ -402,10 +409,18 @@ function updateView() {
         .enter()
         .append('div')
           .attr('class', 'rl')
-          .text(d => d.gmdd_short_description)
           .style('left', d => `${d.xStart}px`)
           .style('width', d => `${Math.max(d.eventWidth, 5)}px`);
-  });
+        });
+
+    d3.selectAll('.rl')
+      .append('div')
+      .attr('class', 'rl-text')
+      .style('padding-left', d => `${d.paddingLeft}px`)
+      .text(d => d.gmdd_short_description);
+    d3.selectAll('.rl')
+    .append('div')
+    .attr('class', 'stuff');
 
   focus.select('.axis--x2').call(xAxisFoc2);
 

@@ -15,10 +15,12 @@ body {
 }
 
 .row {
-  height: 20px;
+  height: 25px;
+  font-family: 'Times New Roman';
 }
 
 .row-abs {
+  font-size: 12px;
   position: relative;
 }
 
@@ -26,12 +28,11 @@ body {
   /* display: inline-block; */
   position: absolute;
   top: 0px;
-  height: 15px;
+  height: 20px;
   background: white;
   border-radius: 8px;
   margin-bottom: 5px;
-  font-size: 10px;
-  line-height: 15px;
+  line-height: 20px;
   /* padding-left: 8px; */
   white-space: nowrap;
   /* this transition is when they become active */
