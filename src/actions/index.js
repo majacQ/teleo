@@ -35,7 +35,7 @@ export const fetchData = url => (dispatch) => {
     // compute the text width so we can compute layout when displaying events
     const tmpEl = document.createElement('canvas');
     const ctx = tmpEl.getContext('2d');
-    ctx.font = '14px "Times New Roman"';
+    ctx.font = '14px "Open sans"';
 
     const keys = Object.keys(dat);
     keys.forEach((ky) => {
