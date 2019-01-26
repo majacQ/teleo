@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AgeSlider from './AgeSlider';
 import EventsGroup from './EventsGroup';
@@ -21,14 +22,19 @@ const Body = ({ data, windowSize }) => (
           data={data['Developmental Domains']}
         />
       )}
-      {data['Organogenesis'] !== undefined && (
+      {data.Organogenesis !== undefined && (
         <EventsGroup
-          data={data['Organogenesis']}
+          data={data.Organogenesis}
         />
       )}
     </div>
   </div>
 );
+
+Body.propTypes = {
+  windowSize: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired
+};
 
 const mapStateToProps = state => ({
   data: state.timelineData.data,

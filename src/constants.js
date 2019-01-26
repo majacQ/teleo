@@ -7,7 +7,7 @@ export const WINDOW_RESIZE = 'WINDOW_RESIZE';
 export const ui = {
   maxWidth: 1000,
   header: {
-    height: 50
+    height: 47
   },
   slider: {
     height: 70, // includes the focus ticks as well

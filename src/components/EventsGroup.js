@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ui } from '../constants';
 
 const EventsGroup = ({
   data, xScaleFoc, windowSize
@@ -10,12 +9,12 @@ const EventsGroup = ({
   const rows = [[]];
   const rowEnds = [0];
   const rowPad = 8;
-  const focWidth = Math.min(ui.maxWidth, windowSize.width);
+  const focWidth = windowSize.appWidth;
   // compute data structure containing layout information
 
   data.data.forEach((d) => {
     const xStart = xScaleFoc(d.gmdd_start_age / 7);
-    const eventWidth = xScaleFoc(d.gmdd_end_age / 7) - xStart;
+    const eventWidth = Math.max(xScaleFoc(d.gmdd_end_age / 7) - xStart, 25);
     const outOfRange = xStart + eventWidth < 0 || xStart > focWidth;
     if (!outOfRange) {
       let curWidth = Math.max(d.width, eventWidth) + rowPad;
@@ -67,9 +66,13 @@ const EventsGroup = ({
                   rowdat.map((d, j) => (
                     <div
                       className="rl"
-                      style={{ left: d.xStart, width: Math.max(d.eventWidth, 5) }}
+                      style={{ left: d.xStart }}
                       key={`el-${i}-${j}`}
                     >
+                      <div
+                        className="rl-peak"
+                        style={{ width: d.eventWidth }}
+                      />
                       <div className="rl-text" style={{ paddingLeft: d.paddingLeft }}>
                         {d.gmdd_short_description}
                       </div>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { scaleLinear } from 'd3-scale';
 import { axisBottom } from 'd3-axis';
@@ -27,13 +28,20 @@ class AgeSlider extends Component {
     this.createAgeSlider();
   }
 
-  componentDidUpdate() {
-    // this.createAgeSlider();
+  componentDidUpdate(prevProps) {
+    // only redraw if windowSize.appWidth has changed
+    const { windowSize } = this.props;
+    if (prevProps.windowSize.appWidth !== windowSize.appWidth) {
+      select(this.node).html('');
+      this.createAgeSlider();
+    }
   }
 
   createAgeSlider() {
     const { node } = this;
-    const { setRange, setScale } = this.props;
+    const {
+      setRange, setScale, windowSize, ageRange
+    } = this.props;
 
     const brushHeight = 18;
 
@@ -76,7 +84,7 @@ class AgeSlider extends Component {
     const marginCtx = {
       top: 0,
       right: 0,
-      bottom: this.props.windowSize.height - ui.header.height - ui.slider.height,
+      bottom: windowSize.height - ui.header.height - ui.slider.height,
       left: 0
     }; // bottom should be svg height
     const width = +svg.attr('width') - marginFoc.left - marginFoc.right;
@@ -108,7 +116,7 @@ class AgeSlider extends Component {
     // focus view ticks
     const xAxisFoc2 = axisBottom(xScaleFoc)
       .tickValues(xTicks)
-      .tickSize(this.props.windowSize.height - ui.header.height - ui.slider.height)
+      .tickSize(windowSize.height - ui.header.height - ui.slider.height)
       .tickFormat(() => null);
 
     // focus view tick labels
@@ -372,7 +380,7 @@ class AgeSlider extends Component {
       // trigger a change to ageRange
       setRange2(curDom);
       setScale2(focDomain, focRange);
- 
+
       // update the ticks in the focused timeline view
       focus.select('.axis--x')
         .call(xAxisFoc)
@@ -412,19 +420,27 @@ class AgeSlider extends Component {
         ));
     }
 
-    gBrush.call(brush.move, [xScaleCtx(this.props.ageRange[0]), xScaleCtx(this.props.ageRange[1])]);
+    gBrush.call(brush.move, [xScaleCtx(ageRange[0]), xScaleCtx(ageRange[1])]);
   }
 
   render() {
+    const { windowSize } = this.props;
     return (
       <svg
         ref={(node) => { this.node = node; }}
-        width={Math.min(ui.maxWidth, this.props.windowSize.width)}
-        height={this.props.windowSize.height - ui.header.height - ui.slider.height}
+        width={windowSize.appWidth}
+        height={windowSize.height - ui.header.height - ui.slider.height}
       />
     );
   }
 }
+
+AgeSlider.propTypes = {
+  setRange: PropTypes.func.isRequired,
+  setScale: PropTypes.func.isRequired,
+  windowSize: PropTypes.object.isRequired,
+  ageRange: PropTypes.array.isRequired
+};
 
 const mapStateToProps = state => ({
   ageRange: state.ageRange,

@@ -79,17 +79,60 @@ body {
   position: absolute;
   top: 0px;
   height: 25px;
-  background: white;
-  border-radius: 8px;
+  border-radius: 12px;
   margin-bottom: 5px;
   line-height: 25px;
-  /* padding-left: 8px; */
   white-space: nowrap;
   /* this transition is when they become active */
   /* height first, then text */
   /* transition: height 0.15s ease-in-out 0.25s, opacity 0.1s ease-in 0.25s; */
   /* transition: all 0.15s ease-in; */
 }
+
+.rl-peak {
+  height: 25px;
+  margin-left: 8px;
+  border-radius: 12px;
+  position: relative;
+  background-color: white;
+  border-bottom: 1px solid lightgray;
+  border-radius: 12px;
+  border-bottom: 1px solid lightgray;
+}
+
+.rl-peak:before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 5px;
+  width: 23px;
+  height: 16px;
+  background:radial-gradient(ellipse at top left,transparent 12px, white 0) top left,
+    radial-gradient(ellipse at bottom left,transparent 12px, white 0) bottom left;
+  background-size:50% 50%;
+  background-repeat:no-repeat;
+}
+
+.rl-peak:after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  top: 5px;
+  width: 23px;
+  height: 16px;
+  background:radial-gradient(ellipse at top right,transparent 12px, white 0) top right,
+    radial-gradient(ellipse at bottom right,transparent 12px, white 0) bottom right;
+  background-size:50% 50%;
+  background-repeat:no-repeat;
+}
+
+.rl-text {
+  position: absolute;
+  top: 0px;
+  left: 8px;
+}
+
+
 
 /* this transition is when they become inactive */
 /* text goes away immediately, height after */

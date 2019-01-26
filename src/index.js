@@ -4,7 +4,9 @@ import { Provider } from 'react-redux';
 import { createStore, compose, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
+import { throttle } from 'throttle-debounce';
 import { fetchData, windowResize } from './actions';
+import { ui } from './constants';
 
 import './index.css';
 import App from './App';
@@ -55,17 +57,21 @@ if (module.hot) {
 // for now, while designing the vis components, this is a fixed source
 store.dispatch(fetchData('testdata.json'));
 
-store.dispatch(windowResize({
-  height: window.innerHeight,
-  width: window.innerWidth
-}));
-
-window.addEventListener('resize', () => {
+const resize = () => {
   store.dispatch(windowResize({
     height: window.innerHeight,
-    width: window.innerWidth
+    width: window.innerWidth,
+    appWidth: Math.min(ui.maxWidth, window.innerWidth)
   }));
-});
+};
+
+// triger resize at beginning
+resize();
+
+// listen for future resizes (throttled)
+window.addEventListener('resize', throttle(300, () => {
+  resize();
+}));
 
 // registerServiceWorker();
 

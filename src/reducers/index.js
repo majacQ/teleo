@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 
 import {
   SET_AGE_RANGE, SET_FOCUS_SCALE, REQUEST_DATA, RECEIVE_DATA,
-  WINDOW_RESIZE
+  WINDOW_RESIZE, ui
 } from '../constants';
 
 const ageRange = (state = [39.99, 120], action) => {
@@ -23,7 +23,11 @@ const timelineFocusScale = (state = () => {}, action) => {
   return state;
 };
 
-const windowSize = (state = { height: window.innerHeight, width: window.innerWidth }, action) => {
+const windowSize = (state = {
+  height: window.innerHeight,
+  width: window.innerWidth,
+  appWidth: Math.min(ui.maxWidth, window.innerWidth)
+}, action) => {
   switch (action.type) {
     case WINDOW_RESIZE:
       return Object.assign({}, state, action.dims);
