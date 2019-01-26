@@ -29,11 +29,9 @@ export const receiveData = dat => ({
   receivedAt: Date.now()
 });
 
-export const fetchData = url =>
-  (dispatch) => {
-    dispatch(requestData());
-
-    json(url, (dat) => {
-      dispatch(receiveData(dat));
-    });
-  };
+export const fetchData = url => (dispatch) => {
+  dispatch(requestData());
+  json(url, (dat) => {
+    dispatch(receiveData(dat));
+  });
+};

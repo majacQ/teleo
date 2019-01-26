@@ -181,10 +181,6 @@ class AgeSlider extends Component {
         return null;
       });
 
-    const brush = brushX()
-      .extent([[0, heightCtx], [width, heightCtx + brushHeight]])
-      .on('brush end', updateView);
-
     svg.append('defs').append('clipPath')
       .attr('id', 'clip')
       .append('rect')
@@ -260,6 +256,9 @@ class AgeSlider extends Component {
 
     svg.selectAll('.context .domain')
       .attr('stroke', ui.slider.unselectColor);
+
+    const brush = brushX()
+      .extent([[0, heightCtx], [width, heightCtx + brushHeight]]);
 
     const gBrush = context.append('g')
       .attr('class', 'brush')
@@ -419,6 +418,8 @@ class AgeSlider extends Component {
           (d >= curDom[0] && d <= curDom[1]) ? ui.slider.selectColor : ui.slider.unselectColor
         ));
     }
+
+    brush.on('brush end', updateView);
 
     gBrush.call(brush.move, [xScaleCtx(ageRange[0]), xScaleCtx(ageRange[1])]);
   }

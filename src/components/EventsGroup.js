@@ -63,11 +63,11 @@ const EventsGroup = ({
             <div className="row" key={`row-${i}`}>
               <div className="row-abs">
                 {
-                  rowdat.map((d, j) => (
+                  rowdat.map(d => (
                     <div
                       className="rl"
                       style={{ left: d.xStart }}
-                      key={`el-${i}-${j}`}
+                      key={d.gmdd_unique}
                     >
                       <div
                         className="rl-peak"
