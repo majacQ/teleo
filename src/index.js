@@ -14,18 +14,25 @@ import * as serviceWorker from './serviceWorker';
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(
-  reducers,
-  // { initial state... },
-  composeEnhancer(applyMiddleware(thunkMiddleware, createLogger()))
-);
+let store;
 
 if (process.env.NODE_ENV !== 'production') {
+  store = createStore(
+    reducers,
+    // { initial state... },
+    composeEnhancer(applyMiddleware(thunkMiddleware, createLogger()))
+  );
   if (module.hot) {
     module.hot.accept('./reducers', () => {
       store.replaceReducer(reducers);
     });
   }
+} else {
+  store = createStore(
+    reducers,
+    // { initial state... },
+    composeEnhancer(applyMiddleware(thunkMiddleware))
+  );
 }
 
 ReactDOM.render(
