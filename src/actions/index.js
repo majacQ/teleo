@@ -32,6 +32,20 @@ export const receiveData = dat => ({
 export const fetchData = url => (dispatch) => {
   dispatch(requestData());
   json(url, (dat) => {
+    // compute the text width so we can compute layout when displaying events
+    const tmpEl = document.createElement('canvas');
+    const ctx = tmpEl.getContext('2d');
+    ctx.font = '14px "Times New Roman"';
+
+    const keys = Object.keys(dat);
+    keys.forEach((ky) => {
+      const dt = dat[ky].data;
+      for (let i = 0; i < dt.length; i += 1) {
+        dt[i].textWidth = ctx.measureText(dt[i].gmdd_short_description).width;
+      }
+      dat[ky].data = dt; // eslint-disable-line no-param-reassign
+    });
+
     dispatch(receiveData(dat));
   });
 };

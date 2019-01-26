@@ -17,13 +17,13 @@ const EventsGroup = ({
     const eventWidth = Math.max(xScaleFoc(d.gmdd_end_age / 7) - xStart, 25);
     const outOfRange = xStart + eventWidth < 0 || xStart > focWidth;
     if (!outOfRange) {
-      let curWidth = Math.max(d.width, eventWidth) + rowPad;
+      let curWidth = Math.max(d.textWidth, eventWidth) + rowPad;
       let xStart2 = xStart;
       // we still want the full text to show if the event is on the left edge of the timeline
       let paddingLeft = 5;
       if (xStart < 0) {
         paddingLeft = -xStart + 5;
-        curWidth = Math.max(d.width, -xStart);
+        curWidth = Math.max(d.textWidth, -xStart);
         xStart2 = 0;
       }
       // see if any existing row is narrow enough to fit a new element
