@@ -2,6 +2,7 @@ body {
   margin: 0;
   padding: 0;
   background: #f1f2f2;
+  font-family: 'Open Sans'
 }
 
 .root {
@@ -18,7 +19,6 @@ body {
   top: 0;
   left: 0;
   background: #202a2b;
-  width: 1000px; /* TODO: make this variable in component */
 }
 
 .header-text {
@@ -42,16 +42,33 @@ body {
   overflow-y: auto;
 }
 
+.eventgroup-header {
+  border-top: 2px dashed #51b8c0;
+  padding-top: 4px;
+  padding-bottom: 15px;
+}
+
+.eventgroup-cat {
+  padding-left: 10px;
+  font-size: 12px;
+  color: gray;
+}
+
+.eventgroup-subcat {
+  font-weight: 600;
+}
+
 
 /* events elements */
 
 .row {
-  height: 25px;
+  height: 30px;
   font-family: 'Times New Roman';
+  opacity: 0.8;
 }
 
 .row-abs {
-  font-size: 12px;
+  font-size: 14px;
   position: relative;
 }
 
@@ -59,11 +76,11 @@ body {
   /* display: inline-block; */
   position: absolute;
   top: 0px;
-  height: 20px;
+  height: 25px;
   background: white;
   border-radius: 8px;
   margin-bottom: 5px;
-  line-height: 20px;
+  line-height: 25px;
   /* padding-left: 8px; */
   white-space: nowrap;
   /* this transition is when they become active */
@@ -89,6 +106,47 @@ body {
   margin-top: -3px;
 }
 
+/* tweak this to get the rounded shape of divs in design */
+/*
+ .card {
+  width:200px;
+  height:60px;
+  margin:40px;
+}
+
+.element {
+  position: relative;
+  background-color: #32CBFF;
+  border-radius: 25px;
+}
+
+.element:before {
+  content: "";
+  position: absolute;
+  left: -30px;
+  top: 10px;
+  width: 67px;
+  height: 40px;
+  background:radial-gradient(ellipse at top left,transparent 34px, #32CBFF 0) top left,
+    radial-gradient(ellipse at bottom left,transparent 34px, #32CBFF 0) bottom left;
+  background-size:50% 50%;
+  background-repeat:no-repeat;
+}
+
+.element:after {
+  content: "";
+  position: absolute;
+  right: -30px;
+  top: 10px;
+  width: 67px;
+  height: 40px;
+  background:radial-gradient(ellipse at top right,transparent 34px, #32CBFF 0) top right,
+    radial-gradient(ellipse at bottom right,transparent 34px, #32CBFF 0) bottom right;
+  background-size:50% 50%;
+  background-repeat:no-repeat;
+}
+*/
+
 /* end events elements */
 
 
@@ -104,7 +162,7 @@ body {
 }
 
 .focus-area {
-  fill: #EDEFEF;
+  fill: #f1f1f2;
 }
 
 .axis path {

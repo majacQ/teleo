@@ -5,6 +5,7 @@ import { axisBottom } from 'd3-axis';
 import { arc } from 'd3-shape';
 import { brushX } from 'd3-brush';
 import { select, event as curEvent } from 'd3-selection';
+import { throttle } from 'throttle-debounce';
 import { setAgeRange, setTimelineFocusScale } from '../actions';
 import { ui } from '../constants';
 
@@ -34,12 +35,15 @@ class AgeSlider extends Component {
     const { node } = this;
     const { setRange, setScale } = this.props;
 
-    // const unselectColor = '#565658';
-    const unselectColor = '#666';
-    // const selectColor = '#BCDCDE';
-    const selectColor = '#70B6BC';
-
     const brushHeight = 18;
+
+    const setRange2 = throttle(100, (curDom) => {
+      setRange(curDom);
+    });
+
+    const setScale2 = throttle(100, (focDomain, focRange) => {
+      setScale(focDomain, focRange);
+    });
 
     // Conception to prenatal: 40 weeks
     // Infant to toddler: 0 to 36 months (40 to 196 weeks)
@@ -80,7 +84,7 @@ class AgeSlider extends Component {
     const heightCtx = +svg.attr('height') - marginCtx.top - marginCtx.bottom;
 
     // const xDomain = [0, 40, 196, 716];
-    const xDomain = [-4, 40, 196, 850];
+    const xDomain = [-4, 40, 196, 850]; // this adds some padding to left and right of timeline
     const xRange = [0, width * xProps[0], width * (xProps[0] + xProps[1]), width];
 
     const xScaleFoc = scaleLinear()
@@ -217,7 +221,7 @@ class AgeSlider extends Component {
       .selectAll('line')
       .attr('stroke', '#FFFFFF')
       .attr('stroke-dasharray', '1, 4')
-      .attr('stroke-width', 1)
+      .attr('stroke-width', 2)
       .attr('stroke-linecap', 'round');
 
     context.append('g')
@@ -227,7 +231,7 @@ class AgeSlider extends Component {
       .selectAll('text')
       .attr('y', 7) // how far the tick labels are below the axis line
       .attr('x', 3) // how far the tick labels are to the right of the tick lines
-      .attr('fill', unselectColor)
+      .attr('fill', ui.slider.unselectColor)
       .style('text-anchor', 'start');
 
     context.append('g')
@@ -235,7 +239,7 @@ class AgeSlider extends Component {
       .attr('transform', `translate(0,${heightCtx})`)
       .call(xAxisCtx2)
       .selectAll('text')
-      .attr('fill', unselectColor);
+      .attr('fill', ui.slider.unselectColor);
 
     context.append('g')
       .attr('class', 'axis axis--x3')
@@ -243,11 +247,11 @@ class AgeSlider extends Component {
       .call(xAxisCtx3)
       .selectAll('text')
       .attr('y', 23) // how far the tick labels are below the axis line
-      .attr('fill', unselectColor)
+      .attr('fill', ui.slider.unselectColor)
       .style('text-anchor', 'start');
 
     svg.selectAll('.context .domain')
-      .attr('stroke', unselectColor);
+      .attr('stroke', ui.slider.unselectColor);
 
     const gBrush = context.append('g')
       .attr('class', 'brush')
@@ -257,7 +261,7 @@ class AgeSlider extends Component {
       .data([{ type: 'w' }, { type: 'e' }])
       .enter().append('path')
       .attr('class', 'handle--custom')
-      .attr('fill', selectColor)
+      .attr('fill', ui.slider.selectColor)
       .attr('cursor', 'ew-resize')
       .attr('d', arc()
         .innerRadius(0)
@@ -270,7 +274,7 @@ class AgeSlider extends Component {
       .attr('class', 'handle-line')
       .attr('width', 0)
       .attr('height', 1)
-      .attr('stroke', selectColor);
+      .attr('stroke', ui.slider.selectColor);
 
     function findIndex(x, arr) {
       for (let ii = 0; ii < arr.length; ii += 1) {
@@ -341,11 +345,13 @@ class AgeSlider extends Component {
       // const s = curEvent.selection || xScaleCtx.range();
       const s = curEvent.selection;
       let curDom;
+      let focDomain;
+      let focRange;
       if (s) { // if there is a selection
         curDom = s.map(xScaleCtx.invert);
         const newDR = updateXDomainRange(curDom);
-        xScaleFoc.domain(newDR.domain);
-        xScaleFoc.range(newDR.range);
+        focDomain = newDR.domain;
+        focRange = newDR.range;
         handle.attr('display', null)
           .attr('transform', (d, i) => `translate(${s[i]},${brushHeight / 2})`);
         brushLine
@@ -354,16 +360,19 @@ class AgeSlider extends Component {
       } else {
         // curDom = [Infinity, Infinity];
         curDom = [xDomain[0], xDomain[xDomain.length - 1]];
-        xScaleFoc.domain(xDomain);
-        xScaleFoc.range(xRange);
+        focDomain = xDomain;
+        focRange = xRange;
         handle.attr('display', 'none');
         brushLine.attr('width', 0);
       }
 
-      // trigger a change to ageRange
-      setRange(curDom);
-      setScale(xScaleFoc);
+      xScaleFoc.domain(focDomain);
+      xScaleFoc.range(focRange);
 
+      // trigger a change to ageRange
+      setRange2(curDom);
+      setScale2(focDomain, focRange);
+ 
       // update the ticks in the focused timeline view
       focus.select('.axis--x')
         .call(xAxisFoc)
@@ -377,29 +386,29 @@ class AgeSlider extends Component {
       // highlight selected axis ticks
       svg.selectAll('.context .axis--x text')
         .attr('fill', d => (
-          (d >= curDom[0] && d <= curDom[1]) ? selectColor : unselectColor
+          (d >= curDom[0] && d <= curDom[1]) ? ui.slider.selectColor : ui.slider.unselectColor
         ));
 
       // highlight selected axis range labels (conception, infant, toddler)
       svg.selectAll('.context .axis--x3 text')
         .attr('fill', (d) => {
           if (d === xTicks3[0]) {
-            return (curDom[0] <= xTicks3[1]) ? selectColor : unselectColor;
+            return (curDom[0] <= xTicks3[1]) ? ui.slider.selectColor : ui.slider.unselectColor;
           }
           if (d === xTicks3[1]) {
             const inRange = curDom[0] <= xTicks3[2] && curDom[1] >= xTicks3[1];
-            return inRange ? selectColor : unselectColor;
+            return inRange ? ui.slider.selectColor : ui.slider.unselectColor;
           }
           if (d === xTicks3[2]) {
-            return (curDom[1] >= xTicks3[2]) ? selectColor : unselectColor;
+            return (curDom[1] >= xTicks3[2]) ? ui.slider.selectColor : ui.slider.unselectColor;
           }
-          return unselectColor;
+          return ui.slider.unselectColor;
         });
 
       // highlight selected major axis tick lines
       svg.selectAll('.context .axis line')
         .attr('stroke', d => (
-          (d >= curDom[0] && d <= curDom[1]) ? selectColor : unselectColor
+          (d >= curDom[0] && d <= curDom[1]) ? ui.slider.selectColor : ui.slider.unselectColor
         ));
     }
 
@@ -410,7 +419,7 @@ class AgeSlider extends Component {
     return (
       <svg
         ref={(node) => { this.node = node; }}
-        width={Math.min(1000, this.props.windowSize.width)}
+        width={Math.min(ui.maxWidth, this.props.windowSize.width)}
         height={this.props.windowSize.height - ui.header.height - ui.slider.height}
       />
     );
@@ -426,7 +435,10 @@ const mapDispatchToProps = dispatch => ({
   setRange: (range) => {
     dispatch(setAgeRange(range));
   },
-  setScale: (scl) => {
+  setScale: (domain, range) => {
+    const scl = scaleLinear()
+      .range(range)
+      .domain(domain);
     dispatch(setTimelineFocusScale(scl));
   }
 });

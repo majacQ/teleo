@@ -5,14 +5,16 @@ export const RECEIVE_DATA = 'RECEIVE_DATA';
 export const WINDOW_RESIZE = 'WINDOW_RESIZE';
 
 export const ui = {
+  maxWidth: 1000,
   header: {
     height: 50
   },
   slider: {
-    height: 70 // includes the focus ticks as well
+    height: 70, // includes the focus ticks as well
+    unselectColor: '#6b6b6d',
+    selectColor: '#72b6bb'
   },
   timeline: {
-    maxWidth: 1000, // this should be adaptive but hard-coding for now
     entryHeight: 20
   }
 };
