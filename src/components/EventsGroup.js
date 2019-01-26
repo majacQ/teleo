@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Event from './Event';
 
 const EventsGroup = ({
   data, xScaleFoc, windowSize
@@ -60,23 +61,11 @@ const EventsGroup = ({
       <div>
         {
           rows.map((rowdat, i) => (
-            <div className="row" key={`row-${i}`}>
-              <div className="row-abs">
+            <div className="event-row" key={`row-${i}`}>
+              <div className="event-row-abs">
                 {
                   rowdat.map(d => (
-                    <div
-                      className="rl"
-                      style={{ left: d.xStart }}
-                      key={d.gmdd_unique}
-                    >
-                      <div
-                        className="rl-peak"
-                        style={{ width: d.eventWidth }}
-                      />
-                      <div className="rl-text" style={{ paddingLeft: d.paddingLeft }}>
-                        {d.gmdd_short_description}
-                      </div>
-                    </div>
+                    <Event data={d} />
                   ))
                 }
               </div>

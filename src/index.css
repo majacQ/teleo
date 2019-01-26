@@ -45,6 +45,7 @@ body {
 }
 
 .eventgroup-header {
+  margin-top: 25px;
   border-top: 2px dashed #51b8c0;
   padding-top: 4px;
   padding-bottom: 15px;
@@ -63,19 +64,19 @@ body {
 
 /* events elements */
 
-.row {
+.event-row {
   height: 30px;
   /* font-family: 'Times New Roman'; */
   font-weight: 300;
   opacity: 0.8;
 }
 
-.row-abs {
+.event-row-abs {
   font-size: 14px;
   position: relative;
 }
 
-.rl {
+.event {
   /* display: inline-block; */
   position: absolute;
   top: 0px;
@@ -90,7 +91,7 @@ body {
   /* transition: all 0.15s ease-in; */
 }
 
-.rl-peak {
+.event-peak {
   height: 25px;
   margin-left: 8px;
   border-radius: 12px;
@@ -101,7 +102,7 @@ body {
   border-bottom: 1px solid lightgray;
 }
 
-.rl-peak:before {
+.event-peak:before {
   content: "";
   position: absolute;
   left: -10px;
@@ -114,7 +115,7 @@ body {
   background-repeat:no-repeat;
 }
 
-.rl-peak:after {
+.event-peak:after {
   content: "";
   position: absolute;
   right: -10px;
@@ -127,30 +128,25 @@ body {
   background-repeat:no-repeat;
 }
 
-.rl-text {
+.event-text {
   position: absolute;
   top: 0px;
   left: 8px;
 }
 
-
-
 /* this transition is when they become inactive */
 /* text goes away immediately, height after */
-.rl.inactive {
+.event.inactive {
   transition: height 0.15s ease-in-out 0.25s, opacity 0.1s ease-out 0s;
 }
 
-
-.rl2 {
+/* .event2 {
   height: 3px;
   background: white;
   position: relative;
-  /* left: 338px;
-  width: 204px; */
   top: 9px;
   margin-top: -3px;
-}
+} */
 
 /* tweak this to get the rounded shape of divs in design */
 /*
