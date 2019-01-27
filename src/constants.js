@@ -1,5 +1,7 @@
 export const SET_AGE_RANGE = 'SET_AGE_RANGE';
 export const SET_FOCUS_SCALE = 'SET_FOCUS_SCALE';
+export const SET_EXPANDED = 'SET_EXPANDED';
+export const SET_PINNED = 'SET_PINNED';
 export const REQUEST_DATA = 'REQUEST_DATA';
 export const RECEIVE_DATA = 'RECEIVE_DATA';
 export const WINDOW_RESIZE = 'WINDOW_RESIZE';

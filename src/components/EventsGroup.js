@@ -65,7 +65,7 @@ const EventsGroup = ({
               <div className="event-row-abs">
                 {
                   rowdat.map(d => (
-                    <Event data={d} />
+                    <Event data={{ row: i, ...d }} key={d.gmdd_unique} />
                   ))
                 }
               </div>

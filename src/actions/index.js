@@ -1,7 +1,7 @@
 import { json } from 'd3-request';
 import {
   SET_AGE_RANGE, SET_FOCUS_SCALE, REQUEST_DATA, RECEIVE_DATA,
-  WINDOW_RESIZE
+  WINDOW_RESIZE, SET_EXPANDED, SET_PINNED
 } from '../constants';
 
 export const setAgeRange = val => ({
@@ -12,6 +12,36 @@ export const setAgeRange = val => ({
 export const setTimelineFocusScale = val => ({
   type: SET_FOCUS_SCALE,
   val
+});
+
+export const addExpanded = val => ({
+  type: SET_EXPANDED,
+  data: { val, what: 'add' }
+});
+
+export const removeExpanded = val => ({
+  type: SET_EXPANDED,
+  data: { val, what: 'remove' }
+});
+
+export const clearExpanded = val => ({
+  type: SET_EXPANDED,
+  data: { val, what: 'clear' }
+});
+
+export const addPinned = val => ({
+  type: SET_PINNED,
+  data: { val, what: 'add' }
+});
+
+export const removePinned = val => ({
+  type: SET_PINNED,
+  data: { val, what: 'remove' }
+});
+
+export const clearPinned = val => ({
+  type: SET_PINNED,
+  data: { val, what: 'clear' }
 });
 
 export const windowResize = dims => ({
