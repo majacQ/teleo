@@ -15,16 +15,19 @@ const Body = ({ data, windowSize }) => (
       {data['Growth and Maturation'] !== undefined && (
         <EventsGroup
           data={data['Growth and Maturation']}
+          gid="gm"
         />
       )}
       {data['Developmental Domains'] !== undefined && (
         <EventsGroup
           data={data['Developmental Domains']}
+          gid="dd"
         />
       )}
       {data.Organogenesis !== undefined && (
         <EventsGroup
           data={data.Organogenesis}
+          gid="or"
         />
       )}
     </div>

@@ -164,6 +164,13 @@ body {
   margin-top: -3px;
 } */
 
+.expand-info {
+  background: #202a3b;
+  color: white;
+  padding: 20px;
+  margin-bottom: 15px
+}
+
 /* tweak this to get the rounded shape of divs in design */
 /*
  .card {

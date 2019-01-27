@@ -36,7 +36,7 @@ const expanded = (state = [], action) => {
         }
         // if one in that row already exists, need to remove it
         const idx = rows.indexOf(action.data.val.row);
-        if (idx > -1) {
+        if (idx > -1 && newState[idx].row !== action.data.val.row) {
           newState.splice(idx, 1);
         }
       }

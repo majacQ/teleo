@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Event from './Event';
 
 const EventsGroup = ({
-  data, xScaleFoc, windowSize
+  data, gid, xScaleFoc, windowSize, expanded
 }) => {
   // get positions of elements that should be visible
   const rows = [[]];
@@ -12,6 +12,7 @@ const EventsGroup = ({
   const rowPad = 8;
   const focWidth = windowSize.appWidth;
   // compute data structure containing layout information
+  const expandedRows = expanded.map(d => d.row);
 
   data.data.forEach((d) => {
     const xStart = xScaleFoc(d.gmdd_start_age / 7);
@@ -60,17 +61,32 @@ const EventsGroup = ({
       </div>
       <div>
         {
-          rows.map((rowdat, i) => (
-            <div className="event-row" key={`row-${i}`}>
-              <div className="event-row-abs">
-                {
-                  rowdat.map(d => (
-                    <Event data={{ row: i, ...d }} key={d.gmdd_unique} />
-                  ))
-                }
+          rows.map((rowdat, i) => {
+            const rowId = `${gid}-${i}`;
+            const idx = expandedRows.indexOf(rowId);
+            return (
+              <div key={rowId}>
+                <div className="event-row">
+                  <div className="event-row-abs">
+                    {
+                      rowdat.map(d => (
+                        <Event
+                          data={{ row: rowId, ...d }}
+                          expanded={idx > -1 && d.gmdd_unique === expanded[idx].gmdd_unique}
+                          key={d.gmdd_unique}
+                        />
+                      ))
+                    }
+                  </div>
+                </div>
+                { idx > -1 && (
+                  <div className="expand-info">
+                    {expanded[idx].gmdd_short_description}
+                  </div>
+                )}
               </div>
-            </div>
-          ))
+            );
+          })
         }
       </div>
     </div>
@@ -79,13 +95,16 @@ const EventsGroup = ({
 
 EventsGroup.propTypes = {
   data: PropTypes.object.isRequired,
+  gid: PropTypes.string.isRequired,
   xScaleFoc: PropTypes.func.isRequired,
-  windowSize: PropTypes.object.isRequired
+  windowSize: PropTypes.object.isRequired,
+  expanded: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
   xScaleFoc: state.timelineFocusScale,
-  windowSize: state.windowSize
+  windowSize: state.windowSize,
+  expanded: state.expanded
 });
 
 export default connect(
