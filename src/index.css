@@ -37,6 +37,25 @@ body {
   background: #202a2b;
 }
 
+.pinned-container {
+  background: rgba(255, 255, 255, 0.7);
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.pinned-header {
+  padding-left: 5px;
+  padding-bottom: 5px;
+  font-weight: 600;
+}
+
+.pinned-instructions {
+  padding-left: 5px;
+  font-size: 13px;
+  font-weight: 300;
+  font-style: italic;
+}
+
 .events-container {
   position: absolute;
   left: 0px;
@@ -93,17 +112,41 @@ body {
 }
 
 .event-peak {
-  height: 25px;
-  margin-left: 8px;
-  border-radius: 12px;
+  height: 26px;
+  margin-left: 14px;
   position: relative;
   background-color: white;
   border-bottom: 1px solid lightgray;
-  border-radius: 12px;
+  /* border-radius: 12px; */
   border-bottom: 1px solid lightgray;
 }
 
-.event-peak:before {
+.event-peak-st {
+  position: absolute;
+  top: 0px;
+  left: -16px;
+}
+
+.event-peak-nd {
+  position: absolute;
+  top: 0px;
+}
+
+.event-peak-tl {
+  opacity: 0.5;
+  position: absolute;
+  left: -6px;
+  top: 3px;
+  width: 11px;
+  height: 9px;
+  border-bottom-right-radius: 33px 33px;
+}
+
+.event-peak-shadow {
+  filter: drop-shadow( 0px 1px 0px lightgray);
+}
+
+/* .event-peak:before {
   content: "";
   position: absolute;
   left: -10px;
@@ -127,7 +170,7 @@ body {
     radial-gradient(ellipse at bottom right,transparent 12px, white 0) bottom right;
   background-size:50% 50%;
   background-repeat:no-repeat;
-}
+} */
 
 .event-text {
   position: absolute;

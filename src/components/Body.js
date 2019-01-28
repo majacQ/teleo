@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AgeSlider from './AgeSlider';
 import EventsGroup from './EventsGroup';
+import PinnedGroup from './PinnedGroup';
 import { ui } from '../constants';
 
 const Body = ({ data, windowSize }) => (
@@ -11,7 +12,7 @@ const Body = ({ data, windowSize }) => (
       <AgeSlider />
     </div>
     <div className="events-container" style={{ top: ui.slider.height + ui.header.height, height: windowSize.height - ui.header.height - ui.slider.height }}>
-      {/* <PinnedEvents /> */}
+      <PinnedGroup />
       {data['Growth and Maturation'] !== undefined && (
         <EventsGroup
           data={data['Growth and Maturation']}

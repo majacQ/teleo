@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addExpanded, addPinned } from '../actions';
+import { addExpanded, addPinned, removePinned } from '../actions';
 
 // try using react hooks
 const Event = ({
-  data, expanded, windowSize, addToExpanded, addToPinned
+  data, expanded, pinned, windowSize, addToExpanded, addToPinned, removeFromPinned
 }) => {
   const [hover, setHover] = useState(false);
+
+  const eventColor = pinned ? '#d2e6e7' : '#ffffff';
 
   return (
     <div
@@ -24,11 +26,18 @@ const Event = ({
         <div className="event-hoverinfo" style={{ left: Math.min(Math.max(data.textWidth, data.eventWidth) - 10, windowSize.appWidth - data.xStart - 170) }}>
           <div
             className="hoverinfo-text"
-            onClick={(e) => { e.stopPropagation(); addToPinned(data); }}
-            onKeyPress={() => addToPinned(data)}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (pinned === true) {
+                removeFromPinned(data);
+              } else {
+                addToPinned(data);
+              }
+            }}
+            onKeyPress={() => (pinned ? removeFromPinned(data) : addToPinned(data))}
             role="presentation"
           >
-            PIN TO TOP
+            {pinned ? 'REMOVE PIN' : 'PIN TO TOP'}
           </div>
           <div
             className="hoverinfo-text"
@@ -42,8 +51,25 @@ const Event = ({
       )}
       <div
         className="event-peak"
-        style={{ width: data.eventWidth, background: expanded ? '#51b8c0' : '#ffffff' }}
-      />
+        style={{ width: data.eventWidth, background: expanded ? '#51b8c0' : eventColor }}
+      >
+        <div className="event-peak-st">
+          <svg width="19px" height="26px" className="event-peak-shadow">
+            <path
+              d="M19,26V0C12,0,10.94,5,7.56,7.88a16.62,16.62,0,0,1-7,3.38C-.09,11.56,0,12,0,13s-.09,1.44.53,1.75a16.62,16.62,0,0,1,7,3.38C10.94,21,12,26,19,26Z"
+              fill={expanded ? '#51b8c0' : eventColor}
+            />
+          </svg>
+        </div>
+        <div className="event-peak-nd" style={{ left: data.eventWidth - 3 }}>
+          <svg width="19px" height="26px" className="event-peak-shadow">
+            <path
+              d="M0,26L0,0c7,0,8.1,5,11.4,7.9c3.2,2.8,6.5,3.1,7,3.4C19.1,11.6,19,12,19,13s0.1,1.4-0.5,1.8c-0.5,0.3-3.8,0.6-7,3.4C8.1,21,7,26,0,26z"
+              fill={expanded ? '#51b8c0' : eventColor}
+            />
+          </svg>
+        </div>
+      </div>
       <div className="event-text" style={{ paddingLeft: data.paddingLeft }}>
         {data.gmdd_short_description}
       </div>
@@ -55,9 +81,11 @@ const Event = ({
 Event.propTypes = {
   data: PropTypes.object.isRequired,
   expanded: PropTypes.bool.isRequired,
+  pinned: PropTypes.bool.isRequired,
   windowSize: PropTypes.object.isRequired,
   addToExpanded: PropTypes.func.isRequired,
-  addToPinned: PropTypes.func.isRequired
+  addToPinned: PropTypes.func.isRequired,
+  removeFromPinned: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -70,6 +98,9 @@ const mapDispatchToProps = dispatch => ({
   },
   addToPinned: (dat) => {
     dispatch(addPinned(dat));
+  },
+  removeFromPinned: (dat) => {
+    dispatch(removePinned(dat));
   }
 });
 

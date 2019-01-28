@@ -36,7 +36,7 @@ const expanded = (state = [], action) => {
         }
         // if one in that row already exists, need to remove it
         const idx = rows.indexOf(action.data.val.row);
-        if (idx > -1 && newState[idx].row !== action.data.val.row) {
+        if (idx > -1 && newState[idx].row === action.data.val.row) {
           newState.splice(idx, 1);
         }
       }
@@ -54,7 +54,15 @@ const pinned = (state = [], action) => {
       if (action.data.what === 'add') {
         const ids = newState.map(d => d.gmdd_unique);
         if (ids.indexOf(action.data.val.gmdd_unique) < 0) {
+          // action.data.val.row = action.data.val.row.replace(/[a-zA-z]+-/, 'pinned-');
           newState.push(action.data.val);
+        }
+      }
+      if (action.data.what === 'remove') {
+        const ids = newState.map(d => d.gmdd_unique);
+        const idx = ids.indexOf(action.data.val.gmdd_unique);
+        if (idx > -1) {
+          newState.splice(idx, 1);
         }
       }
       newState.sort((a, b) => ((a.xStart > b.xStart) ? 1 : -1));
