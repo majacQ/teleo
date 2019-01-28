@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Event from './Event';
+import ExpandInfo from './ExpandInfo';
 
 const EventsList = ({
   data, gid, pinned, xScaleFoc, windowSize, expanded
@@ -80,9 +81,7 @@ const EventsList = ({
                 </div>
               </div>
               { idx > -1 && (
-                <div className="expand-info">
-                  {expanded[idx].gmdd_short_description}
-                </div>
+                <ExpandInfo data={expanded[idx]} />
               )}
             </div>
           );

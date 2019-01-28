@@ -181,7 +181,7 @@ body {
 .event-hoverinfo {
   position: absolute;
   top: 0px;
-  background: rgba(1, 1, 1, 0.75);
+  background: rgba(0, 0, 0, 0.75);
   z-index: 1000;
 }
 
@@ -191,12 +191,6 @@ body {
   padding-right: 8px;
   color: #51b8c0;
   font-weight: 400;
-}
-
-/* this transition is when they become inactive */
-/* text goes away immediately, height after */
-.event.inactive {
-  transition: height 0.15s ease-in-out 0.25s, opacity 0.1s ease-out 0s;
 }
 
 /* .event2 {
@@ -210,50 +204,41 @@ body {
 .expand-info {
   background: #202a3b;
   color: white;
-  padding: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   margin-bottom: 15px
 }
 
-/* tweak this to get the rounded shape of divs in design */
-/*
- .card {
-  width:200px;
-  height:60px;
-  margin:40px;
+.expand-info-header {
+  font-size: 22px;
+  font-weight: 600;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
-.element {
-  position: relative;
-  background-color: #32CBFF;
-  border-radius: 25px;
+.expand-info-age-container {
+  width: 90px;
+  display: inline-block;
+  padding-left: 15px;
 }
 
-.element:before {
-  content: "";
-  position: absolute;
-  left: -30px;
-  top: 10px;
-  width: 67px;
-  height: 40px;
-  background:radial-gradient(ellipse at top left,transparent 34px, #32CBFF 0) top left,
-    radial-gradient(ellipse at bottom left,transparent 34px, #32CBFF 0) bottom left;
-  background-size:50% 50%;
-  background-repeat:no-repeat;
+.expand-info-age {
+  font-weight: 600;
 }
 
-.element:after {
-  content: "";
-  position: absolute;
-  right: -30px;
-  top: 10px;
-  width: 67px;
-  height: 40px;
-  background:radial-gradient(ellipse at top right,transparent 34px, #32CBFF 0) top right,
-    radial-gradient(ellipse at bottom right,transparent 34px, #32CBFF 0) bottom right;
-  background-size:50% 50%;
-  background-repeat:no-repeat;
+.expand-info-hline {
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.6);
+  height: 1px;
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
-*/
+
+.expand-info-detail {
+  padding-left: 15px;
+  padding-right: 15px;
+}
 
 /* end events elements */
 

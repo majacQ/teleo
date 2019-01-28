@@ -41,7 +41,7 @@ const Event = ({
           </div>
           <div
             className="hoverinfo-text"
-            onClick={() => addToExpanded(data)}
+            onClick={(e) => { e.stopPropagation(); addToExpanded(data); }}
             onKeyPress={() => addToExpanded(data)}
             role="presentation"
           >
@@ -77,6 +77,7 @@ const Event = ({
   );
 };
 
+// Q: what is gmdd_age_description? (e.g. "1 Year - Adolescence")
 
 Event.propTypes = {
   data: PropTypes.object.isRequired,
