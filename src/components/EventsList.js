@@ -35,11 +35,17 @@ const EventsList = ({
       }
       // see if any existing row is narrow enough to fit a new element
       let foundSpot = false;
-      const newDat = Object.assign({
+      const newDat = Object.assign(d, {
         xStart,
         eventWidth,
         paddingLeft
-      }, d);
+      });
+
+      // const newDat = Object.assign({}, d);
+      // newDat.xStart = xStart;
+      // newDat.eventWidth = eventWidth;
+      // newDat.paddingLeft = paddingLeft;
+
       for (let ii = 0; ii < rowEnds.length; ii += 1) {
         const rw = rowEnds[ii];
         // if we are on an empty row or the element fits on this row, we add the element
