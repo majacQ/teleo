@@ -29,7 +29,7 @@ const EventsGroup = ({
 };
 
 EventsGroup.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
   gid: PropTypes.string.isRequired,
   windowSize: PropTypes.object.isRequired
 };

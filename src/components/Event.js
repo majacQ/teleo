@@ -71,7 +71,7 @@ const Event = ({
         </div>
       </div>
       <div className="event-text" style={{ paddingLeft: data.paddingLeft }}>
-        {data.gmdd_short_description}
+        {data.desc_short}
       </div>
     </div>
   );

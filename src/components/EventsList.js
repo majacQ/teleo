@@ -10,7 +10,7 @@ const EventsList = ({
   // get positions of elements that should be visible
   const rows = [[]];
   const rowEnds = [0];
-  const rowPad = 8;
+  const rowPad = 22;
   const focWidth = windowSize.appWidth;
   // compute data structure containing layout information
   const expandedRows = expanded.map(d => d.row);
@@ -19,9 +19,9 @@ const EventsList = ({
     return (<div />);
   }
 
-  data.data.forEach((d) => {
-    const xStart = xScaleFoc(d.gmdd_start_age / 7);
-    const eventWidth = Math.max(xScaleFoc(d.gmdd_end_age / 7) - xStart, 5);
+  data.forEach((d) => {
+    const xStart = xScaleFoc(d.age_start / 7);
+    const eventWidth = Math.max(xScaleFoc(d.age_end / 7) - xStart, 5);
     const outOfRange = xStart + eventWidth < 0 || xStart > focWidth;
     if (!outOfRange) {
       let curWidth = Math.max(d.textWidth, eventWidth) + rowPad;
@@ -78,9 +78,9 @@ const EventsList = ({
                     rowdat.map(d => (
                       <Event
                         data={{ row: rowId, ...d }}
-                        expanded={idx > -1 && d.gmdd_unique === expanded[idx].gmdd_unique}
+                        expanded={idx > -1 && d.uid === expanded[idx].uid}
                         pinned={pinned}
-                        key={d.gmdd_unique}
+                        key={d.uid}
                       />
                     ))
                   }
@@ -98,7 +98,7 @@ const EventsList = ({
 };
 
 EventsList.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
   gid: PropTypes.string.isRequired,
   pinned: PropTypes.bool.isRequired,
   xScaleFoc: PropTypes.func.isRequired,

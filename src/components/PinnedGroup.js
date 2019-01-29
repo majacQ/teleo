@@ -19,7 +19,7 @@ const PinnedGroup = ({
         </div>
       </div>
       { data.length > 0 && (
-        <EventsList data={{ data }} gid="pinned" pinned />
+        <EventsList data={data} gid="pinned" pinned />
       )}
       {data.length === 0 && (
         <div className="pinned-instructions">

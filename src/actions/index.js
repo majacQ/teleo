@@ -72,13 +72,27 @@ export const fetchData = url => (dispatch) => {
     const ctx = tmpEl.getContext('2d');
     ctx.font = '14px "Roboto Condensed"';
 
-    const keys = Object.keys(dat);
+    const keys = Object.keys(dat.ogm.data);
     keys.forEach((ky) => {
-      const dt = dat[ky].data;
-      for (let i = 0; i < dt.length; i += 1) {
-        dt[i].textWidth = ctx.measureText(dt[i].gmdd_short_description).width;
+      const dt1 = dat.ogm.data[ky]['Growth & Maturation'];
+      for (let i = 0; i < dt1.length; i += 1) {
+        dt1[i].textWidth = ctx.measureText(dt1[i].desc_short).width;
       }
-      dat[ky].data = dt; // eslint-disable-line no-param-reassign
+      dat.ogm.data[ky].Organogenesis = dt1; // eslint-disable-line no-param-reassign
+      const dt2 = dat.ogm.data[ky].Organogenesis;
+      for (let i = 0; i < dt2.length; i += 1) {
+        dt2[i].textWidth = ctx.measureText(dt2[i].desc_short).width;
+      }
+      dat.ogm.data[ky].Organogenesis = dt2; // eslint-disable-line no-param-reassign
+    });
+
+    const keys2 = Object.keys(dat.nd.data);
+    keys2.forEach((ky) => {
+      const dt = dat.nd.data[ky];
+      for (let i = 0; i < dt.length; i += 1) {
+        dt[i].textWidth = ctx.measureText(dt[i].desc_short).width;
+      }
+      dat.nd.data[ky] = dt; // eslint-disable-line no-param-reassign
     });
 
     dispatch(receiveData(dat));

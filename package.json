@@ -19,7 +19,9 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "throttle-debounce": "^2.1.0"
+    "throttle-debounce": "^2.1.0",
+    "typeface-roboto": "^0.0.54",
+    "typeface-roboto-condensed": "^0.0.54"
   },
   "scripts": {
     "start": "react-scripts start",

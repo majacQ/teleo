@@ -9,13 +9,13 @@ const ExpandInfo = ({
 
   return (
     <div className="expand-info" style={{ width: focWidth }}>
-      <div className="expand-info-header">{data.gmdd_short_description}</div>
+      <div className="expand-info-header">{data.desc_short}</div>
       <div className="expand-info-age-container">
         <div className="expand-info-age-label">
           Start age
         </div>
         <div className="expand-info-age">
-          {data.gmdd_start_age}
+          {data.age_start}
         </div>
       </div>
       <div className="expand-info-age-container">
@@ -23,7 +23,7 @@ const ExpandInfo = ({
           Peak start
         </div>
         <div className="expand-info-age">
-          {data.gmdd_peak_start_age ? data.gmdd_peak_start_age : 'n/a'}
+          {data.age_start_peak ? data.age_start_peak : 'n/a'}
         </div>
       </div>
       <div className="expand-info-age-container">
@@ -31,7 +31,7 @@ const ExpandInfo = ({
           Peak end
         </div>
         <div className="expand-info-age">
-          {data.gmdd_peak_end_age ? data.gmdd_peak_end_age : 'n/a'}
+          {data.age_end_peak ? data.age_end_peak : 'n/a'}
         </div>
       </div>
       <div className="expand-info-age-container">
@@ -39,12 +39,12 @@ const ExpandInfo = ({
           End age
         </div>
         <div className="expand-info-age">
-          {data.gmdd_end_age}
+          {data.age_end}
         </div>
       </div>
       <div className="expand-info-hline" />
       <div className="expand-info-detail">
-        {data.gmdd_long_description}
+        {data.desc_long}
       </div>
       <div className="expand-info-hline" />
     </div>
@@ -52,7 +52,7 @@ const ExpandInfo = ({
 };
 
 ExpandInfo.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired,
   windowSize: PropTypes.object.isRequired
 };
 

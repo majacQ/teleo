@@ -6,7 +6,7 @@ import EventsGroup from './EventsGroup';
 import PinnedGroup from './PinnedGroup';
 import { ui } from '../constants';
 
-const Body = ({ data, windowSize }) => (
+const Body = ({ filters, data, windowSize }) => (
   <div>
     <div className="slider-container" style={{ height: ui.slider.height, top: ui.header.height }}>
       <AgeSlider />
@@ -16,36 +16,44 @@ const Body = ({ data, windowSize }) => (
       <span className="action-item">Expand All</span>
       <span className="action-item">Clear</span>
     </div>
-    <div className="events-container" style={{ top: ui.slider.height + ui.header.height + 20, height: windowSize.height - ui.header.height - ui.slider.height }}>
+    <div
+      className="events-container"
+      style={{
+        top: ui.slider.height + ui.header.height + 20,
+        height: windowSize.height - ui.header.height - ui.slider.height
+      }}
+    >
       <PinnedGroup />
-      {data['Growth and Maturation'] !== undefined && (
-        <EventsGroup
-          data={data['Growth and Maturation']}
-          gid="gm"
-        />
-      )}
-      {data['Developmental Domains'] !== undefined && (
+      {data.ogm && filters.ogm.length > 0 && filters.ogm.map(d => (
+        <div key={d}>
+          <EventsGroup
+            data={data.ogm.data[d]['Growth & Maturation']}
+            gid={`gm_${d}`}
+          />
+          <EventsGroup
+            data={data.ogm.data[d].Organogenesis}
+            gid={`o_${d}`}
+          />
+        </div>
+      ))}
+      {/* {data.nd && filters.nd.length > 0 (
         <EventsGroup
           data={data['Developmental Domains']}
           gid="dd"
         />
-      )}
-      {data.Organogenesis !== undefined && (
-        <EventsGroup
-          data={data.Organogenesis}
-          gid="or"
-        />
-      )}
+      )} */}
     </div>
   </div>
 );
 
 Body.propTypes = {
-  windowSize: PropTypes.object.isRequired,
-  data: PropTypes.object.isRequired
+  filters: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
+  windowSize: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
+  filters: state.filters,
   data: state.timelineData.data,
   windowSize: state.windowSize
 });

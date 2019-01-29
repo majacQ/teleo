@@ -38,9 +38,9 @@ const expanded = (state = [], action) => {
     case SET_EXPANDED: {
       const newState = Object.assign([], state);
       if (action.data.what === 'add') {
-        const ids = newState.map(d => d.gmdd_unique);
+        const ids = newState.map(d => d.uid);
         const rows = newState.map(d => d.row);
-        if (ids.indexOf(action.data.val.gmdd_unique) < 0) {
+        if (ids.indexOf(action.data.val.uid) < 0) {
           newState.push(action.data.val);
         }
         // if one in that row already exists, need to remove it
@@ -61,15 +61,15 @@ const pinned = (state = [], action) => {
     case SET_PINNED: {
       const newState = Object.assign([], state);
       if (action.data.what === 'add') {
-        const ids = newState.map(d => d.gmdd_unique);
-        if (ids.indexOf(action.data.val.gmdd_unique) < 0) {
+        const ids = newState.map(d => d.uid);
+        if (ids.indexOf(action.data.val.uid) < 0) {
           // action.data.val.row = action.data.val.row.replace(/[a-zA-z]+-/, 'pinned-');
           newState.push(action.data.val);
         }
       }
       if (action.data.what === 'remove') {
-        const ids = newState.map(d => d.gmdd_unique);
-        const idx = ids.indexOf(action.data.val.gmdd_unique);
+        const ids = newState.map(d => d.uid);
+        const idx = ids.indexOf(action.data.val.uid);
         if (idx > -1) {
           newState.splice(idx, 1);
         }
