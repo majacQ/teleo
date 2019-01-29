@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?ok5rfp');
-  src:  url('fonts/icomoon.eot?ok5rfp#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?ok5rfp') format('truetype'),
-    url('fonts/icomoon.woff?ok5rfp') format('woff'),
-    url('fonts/icomoon.svg?ok5rfp#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?zd423');
+  src:  url('fonts/icomoon.eot?zd423#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?zd423') format('truetype'),
+    url('fonts/icomoon.woff?zd423') format('woff'),
+    url('fonts/icomoon.svg?zd423#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,8 +24,23 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-search2:before {
+  content: "\e90b";
+}
+.icon-unbookmark:before {
+  content: "\e909";
+}
+.icon-drag_handle:before {
+  content: "\e90a";
+}
 .icon-bookmark2:before {
   content: "\e908";
+}
+.icon-chevron-left:before {
+  content: "\e90d";
+}
+.icon-chevron-right:before {
+  content: "\e90c";
 }
 .icon-bookmark:before {
   content: "\e900";
