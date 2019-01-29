@@ -48,6 +48,7 @@ const Body = ({
       )}
       {data.ogm && filters.ogm.length > 0 && filters.ogm.map(d => (
         <EventsGroup
+          key={d}
           data={data.ogm.data[d]}
           gid={`gm_${d}`}
           category="Organogenesis, Growth, & Maturation"
@@ -57,6 +58,7 @@ const Body = ({
       ))}
       {data.nd && filters.nd.length > 0 && filters.nd.map(d => (
         <EventsGroup
+          key={d}
           data={data.nd.data[d]}
           gid={`nd_${d}`}
           category="Neurodevelopment"
