@@ -184,7 +184,13 @@ body {
 
 .action-item {
   padding-left: 20px;
+  cursor: pointer;
 }
+
+.action-item:focus {
+  outline: 0;
+}
+
 
 .pinned-container {
   background: rgba(255, 255, 255, 0.7);

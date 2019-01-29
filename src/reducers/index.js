@@ -56,7 +56,7 @@ const filterOpen = (state = false, action) => {
 const expanded = (state = [], action) => {
   switch (action.type) {
     case SET_EXPANDED: {
-      const newState = Object.assign([], state);
+      let newState = Object.assign([], state);
       if (action.data.what === 'add') {
         const ids = newState.map(d => d.uid);
         const rows = newState.map(d => d.row);
@@ -68,6 +68,8 @@ const expanded = (state = [], action) => {
         if (idx > -1 && newState[idx].row === action.data.val.row) {
           newState.splice(idx, 1);
         }
+      } else if (action.data.what === 'clear') {
+        newState = [];
       }
       return newState;
     }

@@ -5,14 +5,25 @@ import AgeSlider from './AgeSlider';
 import EventsGroup from './EventsGroup';
 import PinnedGroup from './PinnedGroup';
 import { ui } from '../constants';
+import { clearExpanded } from '../actions';
 
-const Body = ({ filters, data, windowSize }) => (
+const Body = ({
+  filters, data, windowSize, clearAllExpanded
+}) => (
   <div>
     <div className="slider-container" style={{ height: ui.slider.height, top: ui.header.height }}>
       <AgeSlider />
     </div>
     <div className="actions-header" style={{ top: ui.slider.height + ui.header.height, width: windowSize.appWidth, height: 20 }}>
-      <span className="action-item">Collapse All</span>
+      <span
+        className="action-item"
+        onClick={() => { clearAllExpanded(); }}
+        onKeyPress={() => {}}
+        role="button"
+        tabIndex="-9"
+      >
+        Collapse All
+      </span>
       <span className="action-item">Expand All</span>
       <span className="action-item">Clear</span>
     </div>
@@ -62,7 +73,8 @@ const Body = ({ filters, data, windowSize }) => (
 Body.propTypes = {
   filters: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
-  windowSize: PropTypes.object.isRequired
+  windowSize: PropTypes.object.isRequired,
+  clearAllExpanded: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -71,6 +83,13 @@ const mapStateToProps = state => ({
   windowSize: state.windowSize
 });
 
+const mapDispatchToProps = dispatch => ({
+  clearAllExpanded: () => {
+    dispatch(clearExpanded());
+  }
+});
+
 export default connect(
   mapStateToProps,
+  mapDispatchToProps
 )(Body);
