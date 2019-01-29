@@ -35,8 +35,13 @@ const filters = (state = { ogm: ['Gastrointestinal', 'Genitourinary'], nd: [] },
         } else {
           newState[group].splice(idx, 1);
         }
-      } else if (type === 'clear') {
+      } else if (type === 'clear-all') {
         newState = { ogm: [], nd: [] };
+      } else if (type === 'unset') {
+        const idx = newState[group].indexOf(val);
+        if (idx > -1) {
+          newState[group].splice(idx, 1);
+        }
       }
       return newState;
     }

@@ -8,15 +8,17 @@ export const m2w = x => x * (365.25 / 12 / 7) + 40;
 export const w2m = x => (x - 40) / (365.25 / 12 / 7);
 
 export const niceAge = (age) => {
-  const neg = age / 7 - 40 < 0;
-  const ww = Math.round(Math.abs(age / 7 - 40));
+  if (age / 7 - 40 < 0) {
+    return `${Math.round(age / 7)} Weeks G`;
+  }
+  const ww = Math.round(age / 7 - 40);
   if (ww < 12) {
-    return `${ww} Weeks${neg ? ' G' : ''}`;
+    return `${ww} Weeks`;
   }
-  const mm = Math.round(Math.abs(w2m(age / 7)));
+  const mm = Math.round(w2m(age / 7));
   if (mm < 24) {
-    return `${mm} Months${neg ? ' G' : ''}`;
+    return `${mm} Months`;
   }
-  const yy = Math.round(Math.abs(w2y(age / 7)));
-  return `${yy} Years${neg ? ' G' : ''}`;
+  const yy = Math.round(w2y(age / 7));
+  return `${yy} Years`;
 };

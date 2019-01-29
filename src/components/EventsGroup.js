@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import EventsList from './EventsList';
+import { setFilters } from '../actions';
 
 const EventsGroup = ({
-  data, subcategory, category, gid, windowSize
+  windowSize, removeGroup, data, subcategory, category, gid, group
 }) => {
   const focWidth = windowSize.appWidth;
   return (
@@ -20,7 +21,12 @@ const EventsGroup = ({
         <div className="eventgroup-header-icons">
           <span className="icon-menu eventgroup-header-icon" />
           <span className="icon-chevron-down eventgroup-header-icon" />
-          <span className="icon-x eventgroup-header-icon" />
+          <span
+            className="icon-x eventgroup-header-icon"
+            onClick={() => { removeGroup(subcategory, group); }}
+            onKeyPress={() => {}}
+            role="presentation"
+          />
         </div>
       </div>
       <EventsList data={data} gid={gid} pinned={false} />
@@ -29,17 +35,29 @@ const EventsGroup = ({
 };
 
 EventsGroup.propTypes = {
+  windowSize: PropTypes.object.isRequired,
+  removeGroup: PropTypes.func.isRequired,
   data: PropTypes.array.isRequired,
   subcategory: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   gid: PropTypes.string.isRequired,
-  windowSize: PropTypes.object.isRequired
+  group: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
   windowSize: state.windowSize
 });
 
+const mapDispatchToProps = dispatch => ({
+  // clearAllExpanded: () => {
+  //   dispatch(clearExpanded());
+  // },
+  removeGroup: (val, group) => {
+    dispatch(setFilters({ val, group, type: 'unset' }));
+  }
+});
+
 export default connect(
   mapStateToProps,
+  mapDispatchToProps
 )(EventsGroup);

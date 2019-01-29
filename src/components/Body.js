@@ -52,6 +52,7 @@ const Body = ({
           gid={`gm_${d}`}
           category="Organogenesis, Growth, & Maturation"
           subcategory={d}
+          group="ogm"
         />
       ))}
       {data.nd && filters.nd.length > 0 && filters.nd.map(d => (
@@ -60,6 +61,7 @@ const Body = ({
           gid={`nd_${d}`}
           category="Neurodevelopment"
           subcategory={d}
+          group="nd"
         />
       ))}
     </div>
@@ -85,7 +87,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(clearExpanded());
   },
   clearFilters: () => {
-    dispatch(setFilters({ type: 'clear' }));
+    dispatch(setFilters({ type: 'clear-all' }));
   }
 });
 

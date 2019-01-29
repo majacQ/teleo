@@ -23,7 +23,15 @@ const Event = ({
       role="presentation"
     >
       {hover && !expanded && (
-        <div className="event-hoverinfo" style={{ left: Math.min(Math.max(data.textWidth, data.eventWidth) - 10, windowSize.appWidth - data.xStart - 170) }}>
+        <div className="event-hoverinfo" style={{ left: Math.min(Math.max(data.textWidth, data.eventWidth) - 10, windowSize.appWidth - data.xStart - 80) }}>
+          <div
+            className="hoverinfo-text"
+            onClick={(e) => { e.stopPropagation(); addToExpanded(data); }}
+            onKeyPress={() => addToExpanded(data)}
+            role="presentation"
+          >
+            VIEW
+          </div>
           <div
             className="hoverinfo-text"
             onClick={(e) => {
@@ -37,16 +45,14 @@ const Event = ({
             onKeyPress={() => (pinned ? removeFromPinned(data) : addToPinned(data))}
             role="presentation"
           >
-            {pinned ? 'REMOVE PIN' : 'PIN TO TOP'}
+            {pinned ? (<span className="icon-unbookmark" />) : (<span className="icon-bookmark2" />) }
           </div>
-          <div
+          {/* <div
             className="hoverinfo-text"
-            onClick={(e) => { e.stopPropagation(); addToExpanded(data); }}
-            onKeyPress={() => addToExpanded(data)}
             role="presentation"
           >
-            EXPAND
-          </div>
+            <span className="icon-menu" />
+          </div> */}
         </div>
       )}
       {data.age_start_peak && data.age_end_peak && (

@@ -10,7 +10,7 @@ const Header = ({ windowSize, filterOpen, toggleFilterOpen }) => (
       Seminal Events Timeline
     </div>
     <div className="header-icons">
-      <span className="header-icon icon-search" />
+      <span className="header-icon icon-search2" />
       <span className="header-icon icon-link" />
       <span className="header-icon icon-download" />
     </div>
