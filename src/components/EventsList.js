@@ -30,7 +30,7 @@ const EventsList = ({
       // we still want the full text to show if the event is on the left edge of the timeline
       let paddingLeft = 5;
       if (xStart < 0) {
-        paddingLeft = -xStart + 5;xScaleFoc(d.age_end / 7);
+        paddingLeft = -xStart + 5;
         curWidth = Math.max(d.textWidth, xEnd - xStart);
         xStart2 = 0;
       }
