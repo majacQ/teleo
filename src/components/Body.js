@@ -47,20 +47,12 @@ const Body = ({
         <div className="events-empty">Open the &quot;variables&quot; filtering in the header to add events to the timeline.</div>
       )}
       {data.ogm && filters.ogm.length > 0 && filters.ogm.map(d => (
-        <div key={d}>
-          <EventsGroup
-            data={data.ogm.data[d]['Growth & Maturation']}
-            gid={`gm_${d}`}
-            category="Growth & Maturation"
-            subcategory={d}
-          />
-          <EventsGroup
-            data={data.ogm.data[d].Organogenesis}
-            gid={`o_${d}`}
-            category="Organogenesis"
-            subcategory={d}
-          />
-        </div>
+        <EventsGroup
+          data={data.ogm.data[d]}
+          gid={`gm_${d}`}
+          category="Organogenesis, Growth, & Maturation"
+          subcategory={d}
+        />
       ))}
       {data.nd && filters.nd.length > 0 && filters.nd.map(d => (
         <EventsGroup
