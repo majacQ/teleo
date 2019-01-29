@@ -30,6 +30,8 @@ const EventsGroup = ({
 
 EventsGroup.propTypes = {
   data: PropTypes.array.isRequired,
+  subcategory: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
   gid: PropTypes.string.isRequired,
   windowSize: PropTypes.object.isRequired
 };

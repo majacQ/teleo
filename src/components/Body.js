@@ -40,6 +40,15 @@ const Body = ({ filters, data, windowSize }) => (
           />
         </div>
       ))}
+      {data.nd && filters.nd.length > 0 && filters.nd.map(d => (
+        <EventsGroup
+          data={data.nd.data[d]}
+          gid={`nd_${d}`}
+          category="Neurodevelopment"
+          subcategory={d}
+        />
+      ))}
+
       {/* {data.nd && filters.nd.length > 0 (
         <EventsGroup
           data={data['Developmental Domains']}

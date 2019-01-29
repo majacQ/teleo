@@ -14,9 +14,9 @@ export const setTimelineFocusScale = val => ({
   val
 });
 
-export const setFilters = val => ({
+export const setFilters = data => ({
   type: SET_FILTERS,
-  val
+  data
 });
 
 export const setFilterOpen = val => ({

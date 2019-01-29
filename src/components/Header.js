@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { ui } from '../constants';
 import { setFilterOpen } from '../actions';
 
-const Header = ({ windowSize, filterOpen, setFilterOpen }) => (
+const Header = ({ windowSize, filterOpen, toggleFilterOpen }) => (
   <div className="header" style={{ height: ui.header.height, width: windowSize.appWidth }}>
     <div className="header-text">
       Seminal Events Timeline
@@ -21,8 +21,8 @@ const Header = ({ windowSize, filterOpen, setFilterOpen }) => (
       </span>
       <span
         className={`header-filter ${filterOpen ? 'white-text' : ''}`}
-        onClick={() => setFilterOpen(!filterOpen)}
-        onKeyPress={() => setFilterOpen(!filterOpen)}
+        onClick={() => toggleFilterOpen(!filterOpen)}
+        onKeyPress={() => toggleFilterOpen(!filterOpen)}
         role="button"
         tabIndex="-1"
       >
@@ -44,7 +44,7 @@ const Header = ({ windowSize, filterOpen, setFilterOpen }) => (
 Header.propTypes = {
   windowSize: PropTypes.object.isRequired,
   filterOpen: PropTypes.bool.isRequired,
-  setFilterOpen: PropTypes.func.isRequired
+  toggleFilterOpen: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -53,7 +53,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setFilterOpen: (val) => {
+  toggleFilterOpen: (val) => {
     dispatch(setFilterOpen(val));
   }
 });

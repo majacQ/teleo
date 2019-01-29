@@ -23,10 +23,21 @@ const timelineFocusScale = (state = () => {}, action) => {
   return state;
 };
 
-const filters = (state = { ogm: ['Gastrointestinal', 'Genitourinary'] }, action) => {
+const filters = (state = { ogm: ['Gastrointestinal', 'Genitourinary'], nd: [] }, action) => {
   switch (action.type) {
-    case SET_FILTERS:
-      return Object.assign({}, state, action.val);
+    case SET_FILTERS: {
+      const newState = Object.assign({}, state);
+      const { val, group, type } = action.data;
+      if (type === 'toggle') {
+        const idx = newState[group].indexOf(val);
+        if (idx < 0) {
+          newState[group].push(val);
+        } else {
+          newState[group].splice(idx, 1);
+        }
+      }
+      return newState;
+    }
     default:
   }
   return state;

@@ -1,19 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setFilters, setFilterOpen } from '../actions';
+import { setFilters } from '../actions';
 import { ui } from '../constants';
 
 const FilterVariable = ({
-  windowSize, filters, filterOpen, data, setFilters, closeFilter
+  windowSize, filters, filterOpen, data, toggleFilters
 }) => {
-
   if (filterOpen === false || data.ogm === undefined) {
     return '';
   }
-
-  const colWidth = 250;
-  // style={{ width: colWidth }}
 
   return (
     <div className="filters-container" style={{ width: windowSize.appWidth, top: ui.header.height }}>
@@ -24,8 +20,8 @@ const FilterVariable = ({
         <div className="filter-column-content">
           { Object.keys(data.ogm.data).map(d => (
             <div
-              className="filter-button"
-              onClick={() => {}}
+              className={`filter-button ${filters.ogm.indexOf(d) > -1 ? 'selected' : 'unselected'}`}
+              onClick={() => { toggleFilters(d, 'ogm'); }}
               onKeyPress={() => {}}
               role="button"
               tabIndex="-10"
@@ -39,7 +35,19 @@ const FilterVariable = ({
         <div className="filter-column-header">
           <span>Neurodevelopment</span>
         </div>
-        <div className="filter-column-content" />
+        <div className="filter-column-content">
+          { Object.keys(data.nd.data).map(d => (
+            <div
+              className={`filter-button ${filters.nd.indexOf(d) > -1 ? 'selected' : 'unselected'}`}
+              onClick={() => { toggleFilters(d, 'nd'); }}
+              onKeyPress={() => {}}
+              role="button"
+              tabIndex="-10"
+            >
+              {d}
+            </div>
+          )) }
+        </div>
       </div>
       <div className="filter-column">
         <div className="filter-column-header">
@@ -56,8 +64,8 @@ FilterVariable.propTypes = {
   filters: PropTypes.object.isRequired,
   filterOpen: PropTypes.bool.isRequired,
   data: PropTypes.object.isRequired,
-  setFilters: PropTypes.func.isRequired,
-  closeFilter: PropTypes.func.isRequired
+  toggleFilters: PropTypes.func.isRequired
+  // closeFilter: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -68,12 +76,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setFilters: (dat) => {
-    dispatch(setFilters(dat));
-  },
-  closeFilter: () => {
-    dispatch(setFilterOpen(false));
+  toggleFilters: (val, group) => {
+    dispatch(setFilters({ val, group, type: 'toggle' }));
   }
+  // closeFilter: () => {
+  //   dispatch(setFilterOpen(false));
+  // }
 });
 
 export default connect(

@@ -138,24 +138,32 @@ body {
 
 .filter-button {
   height: 30px;
-  border: 1px solid #6B6B6D;
   border-radius: 20px;
-  background-color: #202A2B;
   cursor: pointer;
   display: table;
   margin-bottom: 5px;
   padding-left: 10px;
   padding-right: 10px;
   line-height: 30px;
-  color: #CCCCCC;
   font-family: Roboto;
   font-size: 14px;
+}
+
+.filter-button.unselected {
+  border: 1px solid #6B6B6D;
+  background-color: #202A2B;
+  color: #CCCCCC;
+}
+
+.filter-button.selected {
+  background-color: #4EB8C1;
+  color: #FFFFFF;
+  border: 1px solid #4EB8C1;
 }
 
 .filter-button:focus {
   outline: 0;
 }
-
 
 .slider-container {
   position: absolute;
