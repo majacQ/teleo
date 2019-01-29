@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 import {
-  SET_AGE_RANGE, SET_FOCUS_SCALE, REQUEST_DATA, RECEIVE_DATA,
+  SET_AGE_RANGE, SET_FOCUS_SCALE, REQUEST_DATA, RECEIVE_DATA, SET_COLLAPSED_GROUP,
   SET_FILTERS, SET_FILTER_OPEN, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED, ui
 } from '../constants';
 
@@ -54,6 +54,35 @@ const filterOpen = (state = false, action) => {
   switch (action.type) {
     case SET_FILTER_OPEN:
       return action.val;
+    default:
+  }
+  return state;
+};
+
+const collapsedGroups = (state = [], action) => {
+  switch (action.type) {
+    case SET_COLLAPSED_GROUP: {
+      let newState = Object.assign([], state);
+      const { val, type } = action.data;
+      if (type === 'toggle') {
+        const idx = newState.indexOf(val);
+        if (idx < 0) {
+          newState.push(val);
+        } else {
+          newState.splice(idx, 1);
+        }
+      } else if (type === 'clear-all') {
+        newState = [];
+      } else if (type === 'unset') {
+        const idx = newState.indexOf(val);
+        if (idx > -1) {
+          newState.splice(idx, 1);
+        }
+      } else if (type === 'set-all') {
+        newState = val;
+      }
+      return newState;
+    }
     default:
   }
   return state;
@@ -157,6 +186,7 @@ const reducers = combineReducers({
   filterOpen,
   expanded,
   pinned,
+  collapsedGroups,
   timelineData,
   windowSize
 });

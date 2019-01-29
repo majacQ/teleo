@@ -1,7 +1,8 @@
 import { json } from 'd3-request';
 import {
   SET_AGE_RANGE, SET_FOCUS_SCALE, REQUEST_DATA, RECEIVE_DATA,
-  SET_FILTERS, SET_FILTER_OPEN, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED
+  SET_FILTERS, SET_FILTER_OPEN, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED,
+  SET_COLLAPSED_GROUP
 } from '../constants';
 
 export const setAgeRange = val => ({
@@ -22,6 +23,11 @@ export const setFilters = data => ({
 export const setFilterOpen = val => ({
   type: SET_FILTER_OPEN,
   val
+});
+
+export const setCollapsedGroup = data => ({
+  type: SET_COLLAPSED_GROUP,
+  data
 });
 
 export const addExpanded = val => ({

@@ -7,7 +7,7 @@ import { arc } from 'd3-shape';
 import { brushX } from 'd3-brush';
 import { select, event as curEvent } from 'd3-selection';
 import { throttle } from 'throttle-debounce';
-import { setAgeRange, setTimelineFocusScale } from '../actions';
+import { setAgeRange, setTimelineFocusScale, clearExpanded } from '../actions';
 import { ui } from '../constants';
 import {
   y2w, w2y, m2w, w2m
@@ -448,6 +448,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   setRange: (range) => {
     dispatch(setAgeRange(range));
+    // clear expanded items in case events move to a different row
+    dispatch(clearExpanded());
   },
   setScale: (domain, range) => {
     const scl = scaleLinear()

@@ -5,10 +5,10 @@ import AgeSlider from './AgeSlider';
 import EventsGroup from './EventsGroup';
 import PinnedGroup from './PinnedGroup';
 import { ui } from '../constants';
-import { clearExpanded, setFilters } from '../actions';
+import { setCollapsedGroup, setFilters } from '../actions';
 
 const Body = ({
-  filters, data, windowSize, clearAllExpanded, clearFilters
+  filters, data, windowSize, expandAll, collapseAll, clearFilters
 }) => (
   <div>
     <div className="slider-container" style={{ height: ui.slider.height, top: ui.header.height }}>
@@ -17,14 +17,22 @@ const Body = ({
     <div className="actions-header" style={{ top: ui.slider.height + ui.header.height, width: windowSize.appWidth, height: 20 }}>
       <span
         className="action-item"
-        onClick={() => { clearAllExpanded(); }}
+        onClick={() => { collapseAll([...filters.ogm.map(d => `ogm_${d}`), ...filters.nd.map(d => `nd_${d}`)]); }}
         onKeyPress={() => {}}
         role="button"
         tabIndex="-9"
       >
         Collapse All
       </span>
-      <span className="action-item">Expand All</span>
+      <span
+        className="action-item"
+        onClick={() => { expandAll(); }}
+        onKeyPress={() => {}}
+        role="button"
+        tabIndex="-9"
+      >
+        Expand All
+      </span>
       <span
         className="action-item"
         onClick={() => { clearFilters(); }}
@@ -50,7 +58,7 @@ const Body = ({
         <EventsGroup
           key={d}
           data={data.ogm.data[d]}
-          gid={`gm_${d}`}
+          gid={`ogm_${d}`}
           category="Organogenesis, Growth, & Maturation"
           subcategory={d}
           group="ogm"
@@ -74,7 +82,8 @@ Body.propTypes = {
   filters: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
   windowSize: PropTypes.object.isRequired,
-  clearAllExpanded: PropTypes.func.isRequired,
+  expandAll: PropTypes.func.isRequired,
+  collapseAll: PropTypes.func.isRequired,
   clearFilters: PropTypes.func.isRequired
 };
 
@@ -85,8 +94,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  clearAllExpanded: () => {
-    dispatch(clearExpanded());
+  expandAll: () => {
+    dispatch(setCollapsedGroup({ type: 'clear-all' }));
+  },
+  collapseAll: (val) => {
+    dispatch(setCollapsedGroup({ val, type: 'set-all' }));
   },
   clearFilters: () => {
     dispatch(setFilters({ type: 'clear-all' }));
