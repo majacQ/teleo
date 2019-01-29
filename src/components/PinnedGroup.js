@@ -10,7 +10,13 @@ const PinnedGroup = ({
   return (
     <div className="pinned-container" style={{ width: focWidth }}>
       <div className="pinned-header">
-        Pinned Events
+        <div className="pinned-text">
+          Pinned Events
+          <span className="icon-bookmark pinned-icon" />
+        </div>
+        <div className="pinned-button">
+          Compare Details
+        </div>
       </div>
       { data.length > 0 && (
         <EventsList data={{ data }} gid="pinned" pinned />

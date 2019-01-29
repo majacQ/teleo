@@ -201,7 +201,7 @@ class AgeSlider extends Component {
       .attr('height', heightFoc);
 
     const gAxisFoc = focus.append('g')
-      .attr('class', 'axis axis--x')
+      .attr('class', 'axis axis--x4')
       .attr('transform', `translate(0,${5})`)
       .call(xAxisFoc);
 
@@ -381,7 +381,7 @@ class AgeSlider extends Component {
       setScale2(focDomain, focRange);
 
       // update the ticks in the focused timeline view
-      focus.select('.axis--x')
+      focus.select('.axis--x4')
         .call(xAxisFoc)
         .selectAll('text')
         .attr('y', 2)
@@ -400,14 +400,16 @@ class AgeSlider extends Component {
       svg.selectAll('.context .axis--x3 text')
         .attr('fill', (d) => {
           if (d === xTicks3[0]) {
-            return (curDom[0] <= xTicks3[1]) ? ui.slider.selectColor : ui.slider.unselectColor;
+            return (curDom[0] <= xTicks3[1])
+              ? ui.slider.selectColorLabels : ui.slider.unselectColor;
           }
           if (d === xTicks3[1]) {
             const inRange = curDom[0] <= xTicks3[2] && curDom[1] >= xTicks3[1];
-            return inRange ? ui.slider.selectColor : ui.slider.unselectColor;
+            return inRange ? ui.slider.selectColorLabels : ui.slider.unselectColor;
           }
           if (d === xTicks3[2]) {
-            return (curDom[1] >= xTicks3[2]) ? ui.slider.selectColor : ui.slider.unselectColor;
+            return (curDom[1] >= xTicks3[2])
+              ? ui.slider.selectColorLabels : ui.slider.unselectColor;
           }
           return ui.slider.unselectColor;
         });

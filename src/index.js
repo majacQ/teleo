@@ -9,6 +9,7 @@ import { fetchData, windowResize } from './actions';
 import { ui } from './constants';
 
 import './index.css';
+import './assets/icons/style.css';
 import App from './App';
 import reducers from './reducers';
 // import registerServiceWorker from './registerServiceWorker';

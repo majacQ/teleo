@@ -5,16 +5,18 @@ export const SET_PINNED = 'SET_PINNED';
 export const REQUEST_DATA = 'REQUEST_DATA';
 export const RECEIVE_DATA = 'RECEIVE_DATA';
 export const WINDOW_RESIZE = 'WINDOW_RESIZE';
+export const SET_FILTERS = 'SET_FILTERS';
 
 export const ui = {
   maxWidth: 1000,
   header: {
-    height: 47
+    height: 64
   },
   slider: {
     height: 70, // includes the focus ticks as well
-    unselectColor: '#6b6b6d',
-    selectColor: '#72b6bb'
+    unselectColor: '#6B6B6D',
+    selectColor: '#70B6BC',
+    selectColorLabels: '#4EB8C1'
   },
   timeline: {
     entryHeight: 20

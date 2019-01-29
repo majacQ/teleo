@@ -77,8 +77,6 @@ const Event = ({
   );
 };
 
-// Q: what is gmdd_age_description? (e.g. "1 Year - Adolescence")
-
 Event.propTypes = {
   data: PropTypes.object.isRequired,
   expanded: PropTypes.bool.isRequired,

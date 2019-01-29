@@ -1,7 +1,7 @@
 import { json } from 'd3-request';
 import {
   SET_AGE_RANGE, SET_FOCUS_SCALE, REQUEST_DATA, RECEIVE_DATA,
-  WINDOW_RESIZE, SET_EXPANDED, SET_PINNED
+  SET_FILTERS, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED
 } from '../constants';
 
 export const setAgeRange = val => ({
@@ -11,6 +11,11 @@ export const setAgeRange = val => ({
 
 export const setTimelineFocusScale = val => ({
   type: SET_FOCUS_SCALE,
+  val
+});
+
+export const setFilters = val => ({
+  type: SET_FILTERS,
   val
 });
 
@@ -65,7 +70,7 @@ export const fetchData = url => (dispatch) => {
     // compute the text width so we can compute layout when displaying events
     const tmpEl = document.createElement('canvas');
     const ctx = tmpEl.getContext('2d');
-    ctx.font = '14px "Open sans"';
+    ctx.font = '14px "Roboto Condensed"';
 
     const keys = Object.keys(dat);
     keys.forEach((ky) => {

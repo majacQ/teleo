@@ -11,7 +11,12 @@ const Body = ({ data, windowSize }) => (
     <div className="slider-container" style={{ height: ui.slider.height, top: ui.header.height }}>
       <AgeSlider />
     </div>
-    <div className="events-container" style={{ top: ui.slider.height + ui.header.height, height: windowSize.height - ui.header.height - ui.slider.height }}>
+    <div className="actions-header" style={{ top: ui.slider.height + ui.header.height, width: windowSize.appWidth, height: 20 }}>
+      <span className="action-item">Collapse All</span>
+      <span className="action-item">Expand All</span>
+      <span className="action-item">Clear</span>
+    </div>
+    <div className="events-container" style={{ top: ui.slider.height + ui.header.height + 20, height: windowSize.height - ui.header.height - ui.slider.height }}>
       <PinnedGroup />
       {data['Growth and Maturation'] !== undefined && (
         <EventsGroup
