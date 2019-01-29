@@ -29,10 +29,14 @@ const Body = ({ filters, data, windowSize }) => (
           <EventsGroup
             data={data.ogm.data[d]['Growth & Maturation']}
             gid={`gm_${d}`}
+            category="Growth & Maturation"
+            subcategory={d}
           />
           <EventsGroup
             data={data.ogm.data[d].Organogenesis}
             gid={`o_${d}`}
+            category="Organogenesis"
+            subcategory={d}
           />
         </div>
       ))}

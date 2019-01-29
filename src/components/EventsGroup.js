@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import EventsList from './EventsList';
 
 const EventsGroup = ({
-  data, gid, windowSize
+  data, subcategory, category, gid, windowSize
 }) => {
   const focWidth = windowSize.appWidth;
   return (
@@ -14,8 +14,8 @@ const EventsGroup = ({
       </svg>
       <div className="eventgroup-header" style={{ width: focWidth }}>
         <div className="eventgroup-header-text">
-          <span className="eventgroup-subcat">{data.subcategory}</span>
-          <span className="eventgroup-cat">{data.category}</span>
+          <span className="eventgroup-subcat">{subcategory}</span>
+          <span className="eventgroup-cat">{category}</span>
         </div>
         <div className="eventgroup-header-icons">
           <span className="icon-menu eventgroup-header-icon" />
