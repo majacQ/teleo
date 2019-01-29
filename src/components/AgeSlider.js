@@ -9,14 +9,9 @@ import { select, event as curEvent } from 'd3-selection';
 import { throttle } from 'throttle-debounce';
 import { setAgeRange, setTimelineFocusScale } from '../actions';
 import { ui } from '../constants';
-
-// ~52.18 weeks in a year
-// add 40 weeks for to account for gestation
-const y2w = x => x * (365.25 / 7) + 40;
-const w2y = x => (x - 40) / (365.25 / 7);
-// ~4.35 weeks in a month
-const m2w = x => x * (365.25 / 12 / 7) + 40;
-const w2m = x => (x - 40) / (365.25 / 12 / 7);
+import {
+  y2w, w2y, m2w, w2m
+} from '../utils';
 
 class AgeSlider extends Component {
   constructor(props) {

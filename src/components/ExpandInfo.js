@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { niceAge } from '../utils';
 
 const ExpandInfo = ({
   data, windowSize
@@ -15,7 +16,7 @@ const ExpandInfo = ({
           Start age
         </div>
         <div className="expand-info-age">
-          {data.age_start}
+          {niceAge(data.age_start)}
         </div>
       </div>
       <div className="expand-info-age-container">
@@ -23,7 +24,7 @@ const ExpandInfo = ({
           Peak start
         </div>
         <div className="expand-info-age">
-          {data.age_start_peak ? data.age_start_peak : 'n/a'}
+          {data.age_start_peak ? niceAge(data.age_start_peak) : 'n/a'}
         </div>
       </div>
       <div className="expand-info-age-container">
@@ -31,7 +32,7 @@ const ExpandInfo = ({
           Peak end
         </div>
         <div className="expand-info-age">
-          {data.age_end_peak ? data.age_end_peak : 'n/a'}
+          {data.age_end_peak ? niceAge(data.age_end_peak) : 'n/a'}
         </div>
       </div>
       <div className="expand-info-age-container">
@@ -39,7 +40,7 @@ const ExpandInfo = ({
           End age
         </div>
         <div className="expand-info-age">
-          {data.age_end}
+          {niceAge(data.age_end)}
         </div>
       </div>
       <div className="expand-info-hline" />
