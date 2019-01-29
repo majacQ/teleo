@@ -21,6 +21,7 @@ const FilterVariable = ({
         <div className="filter-column-content">
           { Object.keys(data.ogm.data).map(d => (
             <div
+              key={d}
               className={`filter-button ${filters.ogm.indexOf(d) > -1 ? 'selected' : 'unselected'}`}
               onClick={() => { toggleFilters(d, 'ogm'); }}
               onKeyPress={() => {}}
@@ -39,6 +40,7 @@ const FilterVariable = ({
         <div className="filter-column-content">
           { Object.keys(data.nd.data).map(d => (
             <div
+              key={d}
               className={`filter-button ${filters.nd.indexOf(d) > -1 ? 'selected' : 'unselected'}`}
               onClick={() => { toggleFilters(d, 'nd'); }}
               onKeyPress={() => {}}

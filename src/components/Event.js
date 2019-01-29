@@ -49,9 +49,15 @@ const Event = ({
           </div>
         </div>
       )}
+      {data.age_start_peak && data.age_end_peak && (
+        <div
+          className="event-nonpeak"
+          style={{ width: data.eventWidth, background: expanded ? '#4eb8c1' : eventColor }}
+        />
+      )}
       <div
         className="event-peak"
-        style={{ width: data.eventWidth, background: expanded ? '#4eb8c1' : eventColor }}
+        style={{ left: data.eventPeakStart - data.xStart, width: data.eventPeakWidth, background: expanded ? '#4eb8c1' : eventColor }}
       >
         <div className="event-peak-st">
           <svg width="19px" height="26px" className="event-peak-shadow">
@@ -61,7 +67,7 @@ const Event = ({
             />
           </svg>
         </div>
-        <div className="event-peak-nd" style={{ left: data.eventWidth - 3 }}>
+        <div className="event-peak-nd" style={{ left: Math.max(data.eventPeakWidth - 3, 2) }}>
           <svg width="19px" height="26px" className="event-peak-shadow">
             <path
               d="M0,26L0,0c7,0,8.1,5,11.4,7.9c3.2,2.8,6.5,3.1,7,3.4C19.1,11.6,19,12,19,13s0.1,1.4-0.5,1.8c-0.5,0.3-3.8,0.6-7,3.4C8.1,21,7,26,0,26z"

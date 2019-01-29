@@ -23,6 +23,12 @@ const EventsList = ({
     const xStart = xScaleFoc(d.age_start / 7);
     const xEnd = xScaleFoc(d.age_end / 7);
     const eventWidth = Math.max(xEnd - xStart, 5);
+    let eventPeakWidth = eventWidth;
+    let eventPeakStart = xStart;
+    if (d.age_start_peak && d.age_end_peak) {
+      eventPeakStart = xScaleFoc(d.age_start_peak / 7);
+      eventPeakWidth = xScaleFoc(d.age_end_peak / 7) - eventPeakStart;
+    }
     const outOfRange = xStart + eventWidth < 0 || xStart > focWidth;
     if (!outOfRange) {
       let curWidth = Math.max(d.textWidth, eventWidth) + rowPad;
@@ -39,6 +45,8 @@ const EventsList = ({
       const newDat = Object.assign(d, {
         xStart,
         eventWidth,
+        eventPeakStart,
+        eventPeakWidth,
         paddingLeft
       });
 
