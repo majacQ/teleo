@@ -44,7 +44,7 @@ const Body = ({
     >
       <PinnedGroup />
       {filters.ogm.length === 0 && filters.nd.length === 0 && (
-        <div className="events-empty">Open the "Variables" filtering in the header to add events to the timeline.</div>
+        <div className="events-empty">Open the &quot;variables&quot; filtering in the header to add events to the timeline.</div>
       )}
       {data.ogm && filters.ogm.length > 0 && filters.ogm.map(d => (
         <div key={d}>
