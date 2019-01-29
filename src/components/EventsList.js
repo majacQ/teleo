@@ -21,7 +21,8 @@ const EventsList = ({
 
   data.forEach((d) => {
     const xStart = xScaleFoc(d.age_start / 7);
-    const eventWidth = Math.max(xScaleFoc(d.age_end / 7) - xStart, 5);
+    const xEnd = xScaleFoc(d.age_end / 7);
+    const eventWidth = Math.max(xEnd - xStart, 5);
     const outOfRange = xStart + eventWidth < 0 || xStart > focWidth;
     if (!outOfRange) {
       let curWidth = Math.max(d.textWidth, eventWidth) + rowPad;
@@ -29,8 +30,8 @@ const EventsList = ({
       // we still want the full text to show if the event is on the left edge of the timeline
       let paddingLeft = 5;
       if (xStart < 0) {
-        paddingLeft = -xStart + 5;
-        curWidth = Math.max(d.textWidth, -xStart);
+        paddingLeft = -xStart + 5;xScaleFoc(d.age_end / 7);
+        curWidth = Math.max(d.textWidth, xEnd - xStart);
         xStart2 = 0;
       }
       // see if any existing row is narrow enough to fit a new element
