@@ -1,7 +1,7 @@
 import { json } from 'd3-request';
 import {
   SET_AGE_RANGE, SET_FOCUS_SCALE, REQUEST_DATA, RECEIVE_DATA,
-  SET_FILTERS, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED
+  SET_FILTERS, SET_FILTER_OPEN, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED
 } from '../constants';
 
 export const setAgeRange = val => ({
@@ -16,6 +16,11 @@ export const setTimelineFocusScale = val => ({
 
 export const setFilters = val => ({
   type: SET_FILTERS,
+  val
+});
+
+export const setFilterOpen = val => ({
+  type: SET_FILTER_OPEN,
   val
 });
 

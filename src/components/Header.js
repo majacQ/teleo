@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ui } from '../constants';
+import { setFilterOpen } from '../actions';
 
-const Header = ({ windowSize }) => (
+const Header = ({ windowSize, filterOpen, setFilterOpen }) => (
   <div className="header" style={{ height: ui.header.height, width: windowSize.appWidth }}>
     <div className="header-text">
       Seminal Events Timeline
@@ -16,11 +17,22 @@ const Header = ({ windowSize }) => (
     <div className="header-filters">
       <span className="header-filter">
         AGE RANGE
-        <span className="icon-chevron-down" />
+        <span className="icon-chevron-down header-filter-icon" />
       </span>
-      <span className="header-filter">
+      <span
+        className={`header-filter ${filterOpen ? 'white-text' : ''}`}
+        onClick={() => setFilterOpen(!filterOpen)}
+        onKeyPress={() => setFilterOpen(!filterOpen)}
+        role="button"
+        tabIndex="-1"
+      >
         VARIABLES
-        <span className="icon-chevron-down" />
+        { filterOpen && (
+          <span className="icon-chevron-up header-filter-icon" />
+        )}
+        { !filterOpen && (
+          <span className="icon-chevron-down header-filter-icon" />
+        )}
       </span>
       <span className="header-filter">
         REVIEW REFERENCES
@@ -30,13 +42,23 @@ const Header = ({ windowSize }) => (
 );
 
 Header.propTypes = {
-  windowSize: PropTypes.object.isRequired
+  windowSize: PropTypes.object.isRequired,
+  filterOpen: PropTypes.bool.isRequired,
+  setFilterOpen: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  windowSize: state.windowSize
+  windowSize: state.windowSize,
+  filterOpen: state.filterOpen
+});
+
+const mapDispatchToProps = dispatch => ({
+  setFilterOpen: (val) => {
+    dispatch(setFilterOpen(val));
+  }
 });
 
 export default connect(
   mapStateToProps,
+  mapDispatchToProps,
 )(Header);

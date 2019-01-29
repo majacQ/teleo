@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 
 import {
   SET_AGE_RANGE, SET_FOCUS_SCALE, REQUEST_DATA, RECEIVE_DATA,
-  SET_FILTERS, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED, ui
+  SET_FILTERS, SET_FILTER_OPEN, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED, ui
 } from '../constants';
 
 const ageRange = (state = [39.99, 120], action) => {
@@ -27,6 +27,15 @@ const filters = (state = { ogm: ['Gastrointestinal', 'Genitourinary'] }, action)
   switch (action.type) {
     case SET_FILTERS:
       return Object.assign({}, state, action.val);
+    default:
+  }
+  return state;
+};
+
+const filterOpen = (state = false, action) => {
+  switch (action.type) {
+    case SET_FILTER_OPEN:
+      return action.val;
     default:
   }
   return state;
@@ -125,6 +134,7 @@ const reducers = combineReducers({
   ageRange,
   timelineFocusScale,
   filters,
+  filterOpen,
   expanded,
   pinned,
   timelineData,
