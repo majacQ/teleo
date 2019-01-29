@@ -11,6 +11,7 @@ const FilterVariable = ({
     return '';
   }
 
+  // https://www.npmjs.com/package/react-click-outside
   return (
     <div className="filters-container" style={{ width: windowSize.appWidth, top: ui.header.height }}>
       <div className="filter-column">

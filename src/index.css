@@ -247,6 +247,14 @@ body {
   overflow-y: auto;
 }
 
+.events-empty {
+  padding-top: 20px;
+  font-style: italic;
+  color: #939598;
+  font-family: Roboto;
+  font-size: 14px;
+}
+
 .eventgroup-hline {
   stroke: #51b8c0;
   stroke-width: 2px;

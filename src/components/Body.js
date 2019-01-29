@@ -5,10 +5,10 @@ import AgeSlider from './AgeSlider';
 import EventsGroup from './EventsGroup';
 import PinnedGroup from './PinnedGroup';
 import { ui } from '../constants';
-import { clearExpanded } from '../actions';
+import { clearExpanded, setFilters } from '../actions';
 
 const Body = ({
-  filters, data, windowSize, clearAllExpanded
+  filters, data, windowSize, clearAllExpanded, clearFilters
 }) => (
   <div>
     <div className="slider-container" style={{ height: ui.slider.height, top: ui.header.height }}>
@@ -25,16 +25,27 @@ const Body = ({
         Collapse All
       </span>
       <span className="action-item">Expand All</span>
-      <span className="action-item">Clear</span>
+      <span
+        className="action-item"
+        onClick={() => { clearFilters(); }}
+        onKeyPress={() => {}}
+        role="button"
+        tabIndex="-9"
+      >
+        Clear
+      </span>
     </div>
     <div
       className="events-container"
       style={{
         top: ui.slider.height + ui.header.height + 20,
-        height: windowSize.height - ui.header.height - ui.slider.height
+        height: windowSize.height - ui.header.height - ui.slider.height - 20
       }}
     >
       <PinnedGroup />
+      {filters.ogm.length === 0 && filters.nd.length === 0 && (
+        <div className="events-empty">Open the "Variables" filtering in the header to add events to the timeline.</div>
+      )}
       {data.ogm && filters.ogm.length > 0 && filters.ogm.map(d => (
         <div key={d}>
           <EventsGroup
@@ -59,13 +70,6 @@ const Body = ({
           subcategory={d}
         />
       ))}
-
-      {/* {data.nd && filters.nd.length > 0 (
-        <EventsGroup
-          data={data['Developmental Domains']}
-          gid="dd"
-        />
-      )} */}
     </div>
   </div>
 );
@@ -74,7 +78,8 @@ Body.propTypes = {
   filters: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
   windowSize: PropTypes.object.isRequired,
-  clearAllExpanded: PropTypes.func.isRequired
+  clearAllExpanded: PropTypes.func.isRequired,
+  clearFilters: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -86,6 +91,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   clearAllExpanded: () => {
     dispatch(clearExpanded());
+  },
+  clearFilters: () => {
+    dispatch(setFilters({ type: 'clear' }));
   }
 });
 
