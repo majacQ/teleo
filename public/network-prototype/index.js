@@ -151,7 +151,8 @@ const hideOthers = (d) => {
           .transition()
           .duration(500)
           .style('opacity', 0)
-          .transition('display', 'none');
+          .transition()
+          .style('display', 'none');
       } else {
         d3.select(`#node-${a.index}`)
           .attr('class', 'node-div node-showing')
@@ -226,6 +227,7 @@ const showAll = (d) => {
 
   // restore visibility of hidden nodes
   d3.selectAll('.node-hidden')
+    .style('display', '')
     .transition()
     .delay(600)
     .duration(500)
