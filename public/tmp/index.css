@@ -1,0 +1,50 @@
+body {
+  background-color: #202A2B;
+}
+
+#bounding {
+  background-color: #202A2B;
+}
+
+#bounding-inner {
+  position: relative;
+}
+
+#textmeasure {
+  position: absolute;
+  font-family: sans-serif;
+  font-size: 10px;
+  left: 0px;
+  top: 0px;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.node-div {
+  position: absolute;
+  font-family: sans-serif;
+  font-size: 10px;
+  padding: 5px;
+  box-sizing: border-box;
+  color: #CCCCCC;
+}
+
+.node-div-hl {
+  color: red !important;
+}
+
+.links {
+  fill: none;
+  stroke: #CCCCCC;
+  stroke-opacity: 0.2
+}
+
+.link-hl {
+  stroke: red;
+  stroke-width: 2;
+  stroke-opacity: 0.6;
+}
+
+.dots {
+  fill: #CCCCCC;
+}
