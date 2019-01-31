@@ -213,7 +213,7 @@ const hideOthers = (d) => {
     .on('click', () => {});
 
   d3.select(`#node-${d.index}`)
-    .style('border', '1px solid red')
+    .classed('active-node', true)
     .on('click', a => showAll(a));
 };
 
@@ -278,7 +278,7 @@ const showAll = (d) => {
 
   // remove rectangle around clicked div
   d3.select(`#node-${d.index}`)
-    .style('border', 'none');
+    .classed('active-node', false);
 
   // restore clickability of all divs
   d3.selectAll('.node-div')

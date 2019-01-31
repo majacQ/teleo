@@ -66,6 +66,10 @@ body {
   color: red !important;
 }
 
+.active-node {
+  background: #3A4445; /* lightened 10% */
+}
+
 .links {
   fill: none;
   stroke: #CCCCCC;
