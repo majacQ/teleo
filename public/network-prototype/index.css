@@ -2,6 +2,38 @@ body {
   background-color: #202A2B;
 }
 
+#headers {
+  width: 960px;
+  height: 30px;
+  position: relative;
+}
+
+.header-text {
+  position: absolute;
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  padding-bottom: 6px;
+  border-bottom: 1px dotted #fff;
+}
+
+#h1 {
+  left: 5px;
+}
+
+#h2 {
+  left: 283px;
+}
+
+#h3 {
+  left: 558px;
+}
+
+#h4 {
+  left: 833px;
+}
+
 #bounding {
   background-color: #202A2B;
 }
@@ -27,6 +59,7 @@ body {
   padding: 5px;
   box-sizing: border-box;
   color: #CCCCCC;
+  cursor: pointer;
 }
 
 .node-div-hl {
