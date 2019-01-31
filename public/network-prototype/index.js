@@ -7,6 +7,11 @@ const dv = d3.select('#bounding-inner');
 const width = +svg.attr('width');
 const height = +svg.attr('height');
 
+const linkYOffset = 12; // how far down from top of node to place link
+const transVisibleDur = 500;
+const transMoveDur = 600;
+const nodeWidth = 130;
+
 const textMeasure = bounding.append('div')
   .attr('id', 'textmeasure')
   .style('visibility', 'hidden')
@@ -15,7 +20,7 @@ const textMeasure = bounding.append('div')
   .style('font-family', 'sans-serif');
 
 const sankey = d3.sankey()
-  .nodeWidth(130)
+  .nodeWidth(nodeWidth)
   .nodePadding(0)
   .extent([[1, 1], [width - 1, height - 6]]);
 
@@ -53,8 +58,8 @@ data.nodes.forEach((d) => {
 });
 
 data.links.forEach((d) => {
-  d.y0 = yLookup[d.source.index][0] + 12; // eslint-disable-line no-param-reassign
-  d.y1 = yLookup[d.target.index][0] + 12; // eslint-disable-line no-param-reassign
+  d.y0 = yLookup[d.source.index][0] + linkYOffset; // eslint-disable-line no-param-reassign
+  d.y1 = yLookup[d.target.index][0] + linkYOffset; // eslint-disable-line no-param-reassign
 });
 
 // links
@@ -109,7 +114,7 @@ svg.append('g')
   .attr('id', d => `dot2-${d.index}`)
   .attr('r', 1)
   .attr('cx', d => d.target.x0)
-  .attr('cy', d => d.target.y0 + 12);
+  .attr('cy', d => d.target.y0 + linkYOffset);
 
 const getPathway = (d) => {
   const idxs = [d.index];
@@ -149,7 +154,7 @@ const hideOthers = (d) => {
         d3.select(`#node-${a.index}`)
           .attr('class', 'node-div node-hidden')
           .transition()
-          .duration(500)
+          .duration(transVisibleDur)
           .style('opacity', 0)
           .transition()
           .style('display', 'none');
@@ -157,8 +162,8 @@ const hideOthers = (d) => {
         d3.select(`#node-${a.index}`)
           .attr('class', 'node-div node-showing')
           .transition()
-          .delay(500)
-          .duration(600)
+          .delay(transVisibleDur)
+          .duration(transMoveDur)
           .style('top', `${cumHeight}px`);
         curHeights[a.index] = cumHeight;
         cumHeight = cumHeight + a.height + 5;
@@ -172,40 +177,40 @@ const hideOthers = (d) => {
       d3.select(`#link-${ll.index}`)
         .attr('class', 'link link-hidden')
         .transition()
-        .duration(500)
+        .duration(transVisibleDur)
         .style('opacity', 0);
       d3.select(`#dot1-${ll.index}`)
         .attr('class', 'dot1 dot1-hidden')
         .transition()
-        .duration(500)
+        .duration(transVisibleDur)
         .style('opacity', 0);
       d3.select(`#dot2-${ll.index}`)
         .attr('class', 'dot2 dot2-hidden')
         .transition()
-        .duration(500)
+        .duration(transVisibleDur)
         .style('opacity', 0);
     } else {
       // reposition links in pathway
       d3.select(`#link-${ll.index}`)
         .attr('class', 'link link-showing')
         .transition()
-        .delay(500)
-        .duration(600)
+        .delay(transVisibleDur)
+        .duration(transMoveDur)
         .attr('d', d3.sankeyLinkHorizontal()
-          .source(a => [a.source.x1, curHeights[a.source.index] + 12])
-          .target(a => [a.target.x0, curHeights[a.target.index] + 12]));
+          .source(a => [a.source.x1, curHeights[a.source.index] + linkYOffset])
+          .target(a => [a.target.x0, curHeights[a.target.index] + linkYOffset]));
       d3.select(`#dot1-${ll.index}`)
         .attr('class', 'dot1 dot1-showing')
         .transition()
-        .delay(500)
-        .duration(600)
-        .attr('cy', a => curHeights[a.source.index] + 12);
+        .delay(transVisibleDur)
+        .duration(transMoveDur)
+        .attr('cy', a => curHeights[a.source.index] + linkYOffset);
       d3.select(`#dot2-${ll.index}`)
         .attr('class', 'dot2 dot2-showing')
         .transition()
-        .delay(500)
-        .duration(600)
-        .attr('cy', a => curHeights[a.target.index] + 12);
+        .delay(transVisibleDur)
+        .duration(transMoveDur)
+        .attr('cy', a => curHeights[a.target.index] + linkYOffset);
     }
   });
 
@@ -221,7 +226,7 @@ const showAll = (d) => {
   // restore height of visible nodes
   d3.selectAll('.node-showing')
     .transition()
-    .duration(600)
+    .duration(transMoveDur)
     .attr('class', 'node-div')
     .style('top', a => `${a.y0}px`);
 
@@ -229,8 +234,8 @@ const showAll = (d) => {
   d3.selectAll('.node-hidden')
     .style('display', '')
     .transition()
-    .delay(600)
-    .duration(500)
+    .delay(transMoveDur)
+    .duration(transVisibleDur)
     .attr('class', 'node-div')
     .style('opacity', 1)
     .transition();
@@ -238,7 +243,7 @@ const showAll = (d) => {
   // restore position of visible links
   d3.selectAll('.link-showing')
     .transition()
-    .duration(600)
+    .duration(transMoveDur)
     .attr('class', 'link')
     .attr('d', d3.sankeyLinkHorizontal());
 
@@ -246,33 +251,33 @@ const showAll = (d) => {
   d3.selectAll('.link-hidden')
     .attr('class', 'link')
     .transition()
-    .delay(600)
-    .duration(500)
+    .delay(transMoveDur)
+    .duration(transVisibleDur)
     .style('opacity', 1);
 
   // restore position of visible dots
   d3.selectAll('.dot1-showing')
     .transition()
-    .duration(600)
+    .duration(transMoveDur)
     .attr('class', 'dot1')
     .attr('cy', a => a.y0);
   d3.selectAll('.dot2-showing')
     .transition()
-    .duration(600)
+    .duration(transMoveDur)
     .attr('class', 'dot2')
-    .attr('cy', a => a.target.y0 + 12);
+    .attr('cy', a => a.target.y0 + linkYOffset);
 
   // restore visibility of hidden dots
   d3.selectAll('.dot1-hidden')
     .transition()
-    .delay(600)
-    .duration(500)
+    .delay(transMoveDur)
+    .duration(transVisibleDur)
     .attr('class', 'dot1')
     .style('opacity', 1);
   d3.selectAll('.dot2-hidden')
     .transition()
-    .delay(600)
-    .duration(500)
+    .delay(transMoveDur)
+    .duration(transVisibleDur)
     .attr('class', 'dot2')
     .style('opacity', 1);
 
