@@ -55,6 +55,7 @@ cats.forEach((item) => {
   el0.textContent = '';
   el0.value = '';
   select.appendChild(el0);
+  orfee.nodes[item].data.sort((a, b) => (`${a.name}`).localeCompare(b.name));
   orfee.nodes[item].data.forEach((d) => {
     const el = document.createElement('option');
     el.textContent = d.name;
@@ -405,3 +406,7 @@ const makeGraph = (nodeId, category, direct) => {
       .on('click', (a) => { hideOthers(a); });
   };
 };
+
+
+makeGraph('int_66', 'int', false);
+document.getElementById(`select-int`).value = 'int_66';
