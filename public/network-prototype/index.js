@@ -100,6 +100,17 @@ const makeGraph = (nodeId, category, direct) => {
       nodeIds.push(d.int);
     }
   });
+
+  // there will be some redundant links, so remove them
+  data.links = data.links.reduce((p, c) => {
+    const id = [c.source, c.target].join('-');
+    if (p.temp.indexOf(id) === -1) {
+      p.out.push(c);
+      p.temp.push(id);
+    }
+    return p;
+  }, { temp: [], out: [] }).out;
+
   nodeIds = unique(nodeIds);
   orfi.nodes.ho.data.forEach((d) => {
     if (nodeIds.indexOf(d.id) > -1) data.nodes.push(d);
