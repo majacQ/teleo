@@ -1,4 +1,4 @@
-const d33 = Object.assign({}, d3);
+// const d33 = Object.assign({}, d3);
 // let data;
 
 const cats = ['ho', 'path', 'rf', 'int'];
@@ -49,7 +49,6 @@ const setDirect = () => {
   }
 };
 
-
 cats.forEach((item) => {
   const select = document.getElementById(`select-${item}`);
   const el0 = document.createElement('option');
@@ -63,12 +62,6 @@ cats.forEach((item) => {
     select.appendChild(el);
   });
 });
-
-// const selectedNode = orfi.nodes.int.data[150];
-// const ids = {
-//   source: lnks.map(d => d.source),
-//   target: lnks.map(d => d.target)
-// };
 
 const unique = a => a.filter((item, i, ar) => ar.indexOf(item) === i);
 
@@ -84,84 +77,43 @@ const makeGraph = (nodeId, category, direct) => {
     if (d.id === nodeId) selectedNode = d;
   });
 
-  const lnks = orfi.links;
-
   // const direct = false;
   let dcheck = ['NA', 'Y', 'N'];
   if (direct === true) {
     dcheck = ['NA', 'Y'];
   }
-  const startIdx = [];
-  lnks.forEach((d) => {
-    if ((d.source === selectedNode.id || d.target === selectedNode.id)
-      && dcheck.indexOf(d.direct) > -1) {
-      startIdx.push(d.idx);
-    }
-  });
-
-  const finalIdxs = Object.assign([], startIdx);
-
-  const traverseLinks = (idxs, d1, d2) => {
-    // get all unique source/target ids from idxs
-    const ids = [];
-    idxs.forEach((i) => {
-      // && dcheck.indexOf(lnks[i][d1].direct) > -1
-      if (ids.indexOf(lnks[i][d1]) < 0) {
-        ids.push(lnks[i][d1]);
-      }
-    });
-    const uids = unique(ids);
-    // now find all nodes with these ids as target/source
-    const newIdxs = [];
-    uids.forEach((id) => {
-      lnks.forEach((d) => {
-        if (d[d2] === id && dcheck.indexOf(d.direct) > -1) {
-          newIdxs.push(d.idx);
-        }
-      });
-    });
-    const unewIdxs = unique(newIdxs);
-    if (unewIdxs.length > 0) {
-      unewIdxs.forEach(i => finalIdxs.push(i));
-      traverseLinks(unewIdxs, d1, d2);
-    }
-  };
-debugger;
-  traverseLinks(startIdx, 'target', 'source');
-  traverseLinks(startIdx, 'source', 'target');
 
   const data = { nodes: [], links: [] };
 
+  const cls = selectedNode.class;
+  const lnks = orfi.links;
   let nodeIds = [];
-  finalIdxs.forEach((d) => {
-    data.links.push(orfi.links[d]);
-    nodeIds.push(orfi.links[d].source);
-    nodeIds.push(orfi.links[d].target);
+  lnks.forEach((d) => {
+    if (d[cls] === selectedNode.id && dcheck.indexOf(d.direct) > -1) {
+      data.links.push({ source: d.ho, target: d.path, value: 1 });
+      data.links.push({ source: d.path, target: d.rf, value: 1 });
+      data.links.push({ source: d.rf, target: d.int, value: 1 });
+      nodeIds.push(d.ho);
+      nodeIds.push(d.path);
+      nodeIds.push(d.rf);
+      nodeIds.push(d.int);
+    }
   });
-
   nodeIds = unique(nodeIds);
   orfi.nodes.ho.data.forEach((d) => {
-    d.class = 'ho'; // eslint-disable-line no-param-reassign
     if (nodeIds.indexOf(d.id) > -1) data.nodes.push(d);
   });
   orfi.nodes.path.data.forEach((d) => {
-    d.class = 'path'; // eslint-disable-line no-param-reassign
     if (nodeIds.indexOf(d.id) > -1) data.nodes.push(d);
   });
   orfi.nodes.rf.data.forEach((d) => {
-    d.class = 'rf'; // eslint-disable-line no-param-reassign
     if (nodeIds.indexOf(d.id) > -1) data.nodes.push(d);
   });
   orfi.nodes.int.data.forEach((d) => {
-    d.class = 'int'; // eslint-disable-line no-param-reassign
     if (nodeIds.indexOf(d.id) > -1) data.nodes.push(d);
   });
-debugger;
-  // const nodeIds2 = data.nodes.map(d => d.id);
-  // data.links.forEach((d) => {
-  //   d.source = nodeIds2.indexOf(d.source); // eslint-disable-line no-param-reassign
-  //   d.target = nodeIds2.indexOf(d.target); // eslint-disable-line no-param-reassign
-  // });
+
+  debugger;
 
   const svg = d3.select('svg');
   const bounding = d3.select('#bounding');
@@ -181,7 +133,7 @@ debugger;
     .style('font-size', '10px')
     .style('font-family', 'sans-serif');
 
-  const sankey = d33.sankey()
+  const sankey = d3.sankey()
     .nodeWidth(nodeWidth)
     .nodePadding(0)
     .nodeId(d => d.id)
