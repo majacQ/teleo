@@ -114,8 +114,6 @@ const makeGraph = (nodeId, category, direct) => {
     if (nodeIds.indexOf(d.id) > -1) data.nodes.push(d);
   });
 
-  debugger;
-
   const svg = d3.select('svg');
   const bounding = d3.select('#bounding');
   const dv = d3.select('#bounding-inner');
