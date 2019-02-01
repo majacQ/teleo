@@ -1,291 +1,455 @@
-// let d3;
+const d33 = Object.assign({}, d3);
 // let data;
 
-const svg = d3.select('svg');
-const bounding = d3.select('#bounding');
-const dv = d3.select('#bounding-inner');
-const width = +svg.attr('width');
-const height = +svg.attr('height');
+const cats = ['ho', 'path', 'rf', 'int'];
 
-const linkYOffset = 12; // how far down from top of node to place link
-const transVisibleDur = 500;
-const transMoveDur = 600;
-const nodeWidth = 130;
+const selectUpdate = (value, which) => {
+  cats.forEach((d) => {
+    if (d !== which) {
+      document.getElementById(`select-${d}`).value = '';
+    }
+  });
+  d3.select('#all').classed('active', true);
+  d3.select('#direct').classed('active', false);
 
-const textMeasure = bounding.append('div')
-  .attr('id', 'textmeasure')
-  .style('visibility', 'hidden')
-  .style('width', '130px')
-  .style('font-size', '10px')
-  .style('font-family', 'sans-serif');
-
-const sankey = d3.sankey()
-  .nodeWidth(nodeWidth)
-  .nodePadding(0)
-  .extent([[1, 1], [width - 1, height - 6]]);
-
-sankey(data);
-
-// create new y values to align to the top
-// and have height set to be the vertical size of the text
-const yy = {
-  ho: [], path: [], rf: [], int: []
+  makeGraph(value, which, false);
 };
-data.nodes.forEach(d => (yy[d.class].push({
-  y0: d.y0, index: d.index, name: d.name
-})));
-const yLookup = {};
-let maxHeight = 0;
-Object.keys(yy).forEach((k) => {
-  yy[k].sort((a, b) => a.y0 - b.y0);
-  let cumHeight = 0;
-  yy[k].forEach((d, i) => {
-    textMeasure.html(d.name);
-    const curHeight = textMeasure.node().clientHeight;
-    yy[k][i].height = curHeight;
-    yLookup[d.index] = [cumHeight, cumHeight + curHeight];
-    cumHeight = cumHeight + curHeight + 5;
-    maxHeight = Math.max(cumHeight, maxHeight);
+
+const setAll = () => {
+  let value = '';
+  let which = '';
+  cats.forEach((d) => {
+    const curVal = document.getElementById(`select-${d}`).value;
+    if (curVal !== '') {
+      value = curVal;
+      which = d;
+    }
+  });
+  if (value !== '') {
+    d3.select('#all').classed('active', true);
+    d3.select('#direct').classed('active', false);
+    makeGraph(value, which, false);
+  }
+};
+
+const setDirect = () => {
+  let value = '';
+  let which = '';
+  cats.forEach((d) => {
+    const curVal = document.getElementById(`select-${d}`).value;
+    if (curVal !== '') {
+      value = curVal;
+      which = d;
+    }
+  });
+  if (value !== '') {
+    d3.select('#all').classed('active', false);
+    d3.select('#direct').classed('active', true);
+    makeGraph(value, which, true);
+  }
+};
+
+
+cats.forEach((item) => {
+  const select = document.getElementById(`select-${item}`);
+  const el0 = document.createElement('option');
+  el0.textContent = '';
+  el0.value = '';
+  select.appendChild(el0);
+  orfee.nodes[item].data.forEach((d) => {
+    const el = document.createElement('option');
+    el.textContent = d.name;
+    el.value = d.id;
+    select.appendChild(el);
   });
 });
 
-bounding.style('height', `${maxHeight}px`);
-svg.attr('height', maxHeight);
+// const selectedNode = orfi.nodes.int.data[150];
+// const ids = {
+//   source: lnks.map(d => d.source),
+//   target: lnks.map(d => d.target)
+// };
 
-data.nodes.forEach((d) => {
-  d.y0 = yLookup[d.index][0] + 0; // eslint-disable-line no-param-reassign
-  d.y1 = yLookup[d.index][1] + 0; // eslint-disable-line no-param-reassign
-});
+const unique = a => a.filter((item, i, ar) => ar.indexOf(item) === i);
 
-data.links.forEach((d) => {
-  d.y0 = yLookup[d.source.index][0] + linkYOffset; // eslint-disable-line no-param-reassign
-  d.y1 = yLookup[d.target.index][0] + linkYOffset; // eslint-disable-line no-param-reassign
-});
+const makeGraph = (nodeId, category, direct) => {
+  d3.select('svg').selectAll('*').remove();
+  d3.select('#bounding-inner').selectAll('div').remove();
 
-// links
-const links = svg.append('g')
-  .attr('class', 'links')
-  .selectAll('path')
-  .data(data.links)
-  .enter()
-  .append('path')
-  .attr('class', 'link')
-  .attr('d', d3.sankeyLinkHorizontal())
-  .attr('id', d => `link-${d.index}`)
-  .attr('stroke-width', 1);
+  // const orfi = Object.assign({}, {}, orfee);
+  const orfi = JSON.parse(JSON.stringify(orfee));
 
-// nodes
-dv.selectAll('div')
-  .data(data.nodes)
-  .enter().append('div')
-  .attr('class', 'node-div')
-  .attr('id', d => `node-${d.index}`)
-  .style('left', d => `${d.x0}px`)
-  .style('top', d => `${d.y0}px`)
-  .style('height', d => `${d.y1 - d.y0}px`)
-  .style('width', d => `${d.x1 - d.x0}px`)
-  .html(d => d.name)
-  .on('mouseover', (d) => { highlight(d); })
-  .on('mouseout', () => {
-    d3.selectAll('.node-div').classed('node-div-hl', false);
-    d3.selectAll('.link-hl').classed('link-hl', false);
-  })
-  .on('click', (d) => { hideOthers(d); });
-
-svg.append('g')
-  .attr('class', 'dots')
-  .selectAll('dot')
-  .data(data.links)
-  .enter()
-  .append('circle')
-  .attr('class', 'dot1')
-  .attr('id', d => `dot1-${d.index}`)
-  .attr('r', 1)
-  .attr('cx', d => d.source.x1)
-  .attr('cy', d => d.y0);
-
-svg.append('g')
-  .attr('class', 'dots')
-  .selectAll('dot')
-  .data(data.links)
-  .enter()
-  .append('circle')
-  .attr('class', 'dot2')
-  .attr('id', d => `dot2-${d.index}`)
-  .attr('r', 1)
-  .attr('cx', d => d.target.x0)
-  .attr('cy', d => d.target.y0 + linkYOffset);
-
-const getPathway = (d) => {
-  const idxs = [d.index];
-  const lidxs = [];
-  const traverse = (obj, item) => {
-    obj[item.a].forEach((a) => {
-      lidxs.push(a.index);
-      if (idxs.indexOf(a[item.b].index) < 0) {
-        idxs.push(a[item.b].index);
-        traverse(a[item.b], item);
-      }
-    });
-  };
-  const vals = [
-    { a: 'sourceLinks', b: 'target' },
-    { a: 'targetLinks', b: 'source' }
-  ];
-  vals.forEach(it => traverse(d, it));
-  return [idxs, lidxs];
-};
-
-const highlight = (d) => {
-  const [idxs, lidxs] = getPathway(d);
-  idxs.forEach(id => d3.select(`#node-${id}`).classed('node-div-hl', true));
-  lidxs.forEach(id => d3.select(`#link-${id}`).classed('link-hl', true));
-};
-
-const hideOthers = (d) => {
-  const [idxs, lidxs] = getPathway(d);
-
-  // hide nodes not in pathway and move remaining ones
-  const curHeights = {}
-  Object.keys(yy).forEach((k) => {
-    let cumHeight = 0;
-    yy[k].forEach((a) => {
-      if (idxs.indexOf(a.index) < 0) {
-        d3.select(`#node-${a.index}`)
-          .attr('class', 'node-div node-hidden')
-          .transition()
-          .duration(transVisibleDur)
-          .style('opacity', 0)
-          .transition()
-          .style('display', 'none');
-      } else {
-        d3.select(`#node-${a.index}`)
-          .attr('class', 'node-div node-showing')
-          .transition()
-          .delay(transVisibleDur)
-          .duration(transMoveDur)
-          .style('top', `${cumHeight}px`);
-        curHeights[a.index] = cumHeight;
-        cumHeight = cumHeight + a.height + 5;
-      }
-    });
+  let selectedNode = {};
+  orfi.nodes[category].data.forEach((d) => {
+    if (d.id === nodeId) selectedNode = d;
   });
 
-  data.links.forEach((ll) => {
-    if (lidxs.indexOf(ll.index) < 0) {
-      // hide links not in pathway
-      d3.select(`#link-${ll.index}`)
-        .attr('class', 'link link-hidden')
-        .transition()
-        .duration(transVisibleDur)
-        .style('opacity', 0);
-      d3.select(`#dot1-${ll.index}`)
-        .attr('class', 'dot1 dot1-hidden')
-        .transition()
-        .duration(transVisibleDur)
-        .style('opacity', 0);
-      d3.select(`#dot2-${ll.index}`)
-        .attr('class', 'dot2 dot2-hidden')
-        .transition()
-        .duration(transVisibleDur)
-        .style('opacity', 0);
-    } else {
-      // reposition links in pathway
-      d3.select(`#link-${ll.index}`)
-        .attr('class', 'link link-showing')
-        .transition()
-        .delay(transVisibleDur)
-        .duration(transMoveDur)
-        .attr('d', d3.sankeyLinkHorizontal()
-          .source(a => [a.source.x1, curHeights[a.source.index] + linkYOffset])
-          .target(a => [a.target.x0, curHeights[a.target.index] + linkYOffset]));
-      d3.select(`#dot1-${ll.index}`)
-        .attr('class', 'dot1 dot1-showing')
-        .transition()
-        .delay(transVisibleDur)
-        .duration(transMoveDur)
-        .attr('cy', a => curHeights[a.source.index] + linkYOffset);
-      d3.select(`#dot2-${ll.index}`)
-        .attr('class', 'dot2 dot2-showing')
-        .transition()
-        .delay(transVisibleDur)
-        .duration(transMoveDur)
-        .attr('cy', a => curHeights[a.target.index] + linkYOffset);
+  const lnks = orfi.links;
+
+  // const direct = false;
+  let dcheck = ['NA', 'Y', 'N'];
+  if (direct === true) {
+    dcheck = ['NA', 'Y'];
+  }
+  const startIdx = [];
+  lnks.forEach((d) => {
+    if ((d.source === selectedNode.id || d.target === selectedNode.id)
+      && dcheck.indexOf(d.direct) > -1) {
+      startIdx.push(d.idx);
     }
   });
 
-  d3.selectAll('.node-div')
-    .on('click', () => {});
+  const finalIdxs = Object.assign([], startIdx);
 
-  d3.select(`#node-${d.index}`)
-    .classed('active-node', true)
-    .on('click', a => showAll(a));
-};
+  const traverseLinks = (idxs, d1, d2) => {
+    // get all unique source/target ids from idxs
+    const ids = [];
+    idxs.forEach((i) => {
+      // && dcheck.indexOf(lnks[i][d1].direct) > -1
+      if (ids.indexOf(lnks[i][d1]) < 0) {
+        ids.push(lnks[i][d1]);
+      }
+    });
+    const uids = unique(ids);
+    // now find all nodes with these ids as target/source
+    const newIdxs = [];
+    uids.forEach((id) => {
+      lnks.forEach((d) => {
+        if (d[d2] === id && dcheck.indexOf(d.direct) > -1) {
+          newIdxs.push(d.idx);
+        }
+      });
+    });
+    const unewIdxs = unique(newIdxs);
+    if (unewIdxs.length > 0) {
+      unewIdxs.forEach(i => finalIdxs.push(i));
+      traverseLinks(unewIdxs, d1, d2);
+    }
+  };
+debugger;
+  traverseLinks(startIdx, 'target', 'source');
+  traverseLinks(startIdx, 'source', 'target');
 
-const showAll = (d) => {
-  // restore height of visible nodes
-  d3.selectAll('.node-showing')
-    .transition()
-    .duration(transMoveDur)
-    .attr('class', 'node-div')
-    .style('top', a => `${a.y0}px`);
+  const data = { nodes: [], links: [] };
 
-  // restore visibility of hidden nodes
-  d3.selectAll('.node-hidden')
-    .style('display', '')
-    .transition()
-    .delay(transMoveDur)
-    .duration(transVisibleDur)
-    .attr('class', 'node-div')
-    .style('opacity', 1)
-    .transition();
+  let nodeIds = [];
+  finalIdxs.forEach((d) => {
+    data.links.push(orfi.links[d]);
+    nodeIds.push(orfi.links[d].source);
+    nodeIds.push(orfi.links[d].target);
+  });
 
-  // restore position of visible links
-  d3.selectAll('.link-showing')
-    .transition()
-    .duration(transMoveDur)
+  nodeIds = unique(nodeIds);
+  orfi.nodes.ho.data.forEach((d) => {
+    d.class = 'ho'; // eslint-disable-line no-param-reassign
+    if (nodeIds.indexOf(d.id) > -1) data.nodes.push(d);
+  });
+  orfi.nodes.path.data.forEach((d) => {
+    d.class = 'path'; // eslint-disable-line no-param-reassign
+    if (nodeIds.indexOf(d.id) > -1) data.nodes.push(d);
+  });
+  orfi.nodes.rf.data.forEach((d) => {
+    d.class = 'rf'; // eslint-disable-line no-param-reassign
+    if (nodeIds.indexOf(d.id) > -1) data.nodes.push(d);
+  });
+  orfi.nodes.int.data.forEach((d) => {
+    d.class = 'int'; // eslint-disable-line no-param-reassign
+    if (nodeIds.indexOf(d.id) > -1) data.nodes.push(d);
+  });
+debugger;
+  // const nodeIds2 = data.nodes.map(d => d.id);
+  // data.links.forEach((d) => {
+  //   d.source = nodeIds2.indexOf(d.source); // eslint-disable-line no-param-reassign
+  //   d.target = nodeIds2.indexOf(d.target); // eslint-disable-line no-param-reassign
+  // });
+
+  const svg = d3.select('svg');
+  const bounding = d3.select('#bounding');
+  const dv = d3.select('#bounding-inner');
+  const width = +svg.attr('width');
+  const height = +svg.attr('height');
+
+  const linkYOffset = 12; // how far down from top of node to place link
+  const transVisibleDur = 200;
+  const transMoveDur = 600;
+  const nodeWidth = 130;
+
+  const textMeasure = bounding.append('div')
+    .attr('id', 'textmeasure')
+    .style('visibility', 'hidden')
+    .style('width', '130px')
+    .style('font-size', '10px')
+    .style('font-family', 'sans-serif');
+
+  const sankey = d33.sankey()
+    .nodeWidth(nodeWidth)
+    .nodePadding(0)
+    .nodeId(d => d.id)
+    .extent([[1, 1], [width - 1, height - 6]]);
+
+  sankey(data);
+
+  // create new y values to align to the top
+  // and have height set to be the vertical size of the text
+  const yy = {
+    ho: [], path: [], rf: [], int: []
+  };
+  data.nodes.forEach(d => (yy[d.class].push({
+    y0: d.y0, index: d.index, name: d.name
+  })));
+  const yLookup = {};
+  let maxHeight = 0;
+  Object.keys(yy).forEach((k) => {
+    yy[k].sort((a, b) => a.y0 - b.y0);
+    let cumHeight = 0;
+    yy[k].forEach((d, i) => {
+      textMeasure.html(d.name);
+      const curHeight = textMeasure.node().clientHeight;
+      yy[k][i].height = curHeight;
+      yLookup[d.index] = [cumHeight, cumHeight + curHeight];
+      cumHeight = cumHeight + curHeight + 5;
+      maxHeight = Math.max(cumHeight, maxHeight);
+    });
+  });
+
+  bounding.style('height', `${maxHeight}px`);
+  svg.attr('height', maxHeight);
+
+  data.nodes.forEach((d) => {
+    d.y0 = yLookup[d.index][0] + 0; // eslint-disable-line no-param-reassign
+    d.y1 = yLookup[d.index][1] + 0; // eslint-disable-line no-param-reassign
+  });
+
+  data.links.forEach((d) => {
+    d.y0 = yLookup[d.source.index][0] + linkYOffset; // eslint-disable-line no-param-reassign
+    d.y1 = yLookup[d.target.index][0] + linkYOffset; // eslint-disable-line no-param-reassign
+  });
+
+  // links
+  svg.append('g')
+    .attr('class', 'links')
+    .selectAll('path')
+    .data(data.links)
+    .enter()
+    .append('path')
     .attr('class', 'link')
-    .attr('d', d3.sankeyLinkHorizontal());
+    .attr('d', d3.sankeyLinkHorizontal())
+    .attr('id', d => `link-${d.index}`)
+    .attr('stroke-width', 1);
 
-  // restore visibility of hidden links
-  d3.selectAll('.link-hidden')
-    .attr('class', 'link')
-    .transition()
-    .delay(transMoveDur)
-    .duration(transVisibleDur)
-    .style('opacity', 1);
+  // nodes
+  dv.selectAll('div')
+    .data(data.nodes)
+    .enter().append('div')
+    .attr('class', 'node-div')
+    .attr('id', d => `node-${d.index}`)
+    .style('left', d => `${d.x0}px`)
+    .style('top', d => `${d.y0}px`)
+    .style('height', d => `${d.y1 - d.y0}px`)
+    .style('width', d => `${d.x1 - d.x0}px`)
+    .html(d => d.name)
+    .on('mouseover', (d) => { highlight(d); })
+    .on('mouseout', () => {
+      d3.selectAll('.node-div').classed('node-div-hl', false);
+      d3.selectAll('.link-hl').classed('link-hl', false);
+    })
+    .on('click', (d) => { hideOthers(d); });
 
-  // restore position of visible dots
-  d3.selectAll('.dot1-showing')
-    .transition()
-    .duration(transMoveDur)
+  svg.append('g')
+    .attr('class', 'dots')
+    .selectAll('dot')
+    .data(data.links)
+    .enter()
+    .append('circle')
     .attr('class', 'dot1')
-    .attr('cy', a => a.y0);
-  d3.selectAll('.dot2-showing')
-    .transition()
-    .duration(transMoveDur)
+    .attr('id', d => `dot1-${d.index}`)
+    .attr('r', 1)
+    .attr('cx', d => d.source.x1)
+    .attr('cy', d => d.y0);
+
+  svg.append('g')
+    .attr('class', 'dots')
+    .selectAll('dot')
+    .data(data.links)
+    .enter()
+    .append('circle')
     .attr('class', 'dot2')
-    .attr('cy', a => a.target.y0 + linkYOffset);
+    .attr('id', d => `dot2-${d.index}`)
+    .attr('r', 1)
+    .attr('cx', d => d.target.x0)
+    .attr('cy', d => d.target.y0 + linkYOffset);
 
-  // restore visibility of hidden dots
-  d3.selectAll('.dot1-hidden')
-    .transition()
-    .delay(transMoveDur)
-    .duration(transVisibleDur)
-    .attr('class', 'dot1')
-    .style('opacity', 1);
-  d3.selectAll('.dot2-hidden')
-    .transition()
-    .delay(transMoveDur)
-    .duration(transVisibleDur)
-    .attr('class', 'dot2')
-    .style('opacity', 1);
+  const getPathway = (d) => {
+    const idxs = [d.index];
+    const lidxs = [];
+    const traverse = (obj, item) => {
+      obj[item.a].forEach((a) => {
+        lidxs.push(a.index);
+        if (idxs.indexOf(a[item.b].index) < 0) {
+          idxs.push(a[item.b].index);
+          traverse(a[item.b], item);
+        }
+      });
+    };
+    const vals = [
+      { a: 'sourceLinks', b: 'target' },
+      { a: 'targetLinks', b: 'source' }
+    ];
+    vals.forEach(it => traverse(d, it));
+    return [idxs, lidxs];
+  };
 
-  // remove rectangle around clicked div
-  d3.select(`#node-${d.index}`)
-    .classed('active-node', false);
+  const highlight = (d) => {
+    const [idxs, lidxs] = getPathway(d);
+    idxs.forEach(id => d3.select(`#node-${id}`).classed('node-div-hl', true));
+    lidxs.forEach(id => d3.select(`#link-${id}`).classed('link-hl', true));
+  };
 
-  // restore clickability of all divs
-  d3.selectAll('.node-div')
-    .on('click', (a) => { hideOthers(a); });
+  const hideOthers = (d) => {
+    const [idxs, lidxs] = getPathway(d);
+
+    // hide nodes not in pathway and move remaining ones
+    const curHeights = {};
+    Object.keys(yy).forEach((k) => {
+      let cumHeight = 0;
+      yy[k].forEach((a) => {
+        if (idxs.indexOf(a.index) < 0) {
+          d3.select(`#node-${a.index}`)
+            .attr('class', 'node-div node-hidden')
+            .transition()
+            .duration(transVisibleDur)
+            .style('opacity', 0)
+            .transition()
+            .style('display', 'none');
+        } else {
+          d3.select(`#node-${a.index}`)
+            .attr('class', 'node-div node-showing')
+            .transition()
+            .delay(transVisibleDur)
+            .duration(transMoveDur)
+            .style('top', `${cumHeight}px`);
+          curHeights[a.index] = cumHeight;
+          cumHeight = cumHeight + a.height + 5;
+        }
+      });
+    });
+
+    data.links.forEach((ll) => {
+      if (lidxs.indexOf(ll.index) < 0) {
+        // hide links not in pathway
+        d3.select(`#link-${ll.index}`)
+          .attr('class', 'link link-hidden')
+          .transition()
+          .duration(transVisibleDur)
+          .style('opacity', 0);
+        d3.select(`#dot1-${ll.index}`)
+          .attr('class', 'dot1 dot1-hidden')
+          .transition()
+          .duration(transVisibleDur)
+          .style('opacity', 0);
+        d3.select(`#dot2-${ll.index}`)
+          .attr('class', 'dot2 dot2-hidden')
+          .transition()
+          .duration(transVisibleDur)
+          .style('opacity', 0);
+      } else {
+        // reposition links in pathway
+        d3.select(`#link-${ll.index}`)
+          .attr('class', 'link link-showing')
+          .transition()
+          .delay(transVisibleDur)
+          .duration(transMoveDur)
+          .attr('d', d3.sankeyLinkHorizontal()
+            .source(a => [a.source.x1, curHeights[a.source.index] + linkYOffset])
+            .target(a => [a.target.x0, curHeights[a.target.index] + linkYOffset]));
+        d3.select(`#dot1-${ll.index}`)
+          .attr('class', 'dot1 dot1-showing')
+          .transition()
+          .delay(transVisibleDur)
+          .duration(transMoveDur)
+          .attr('cy', a => curHeights[a.source.index] + linkYOffset);
+        d3.select(`#dot2-${ll.index}`)
+          .attr('class', 'dot2 dot2-showing')
+          .transition()
+          .delay(transVisibleDur)
+          .duration(transMoveDur)
+          .attr('cy', a => curHeights[a.target.index] + linkYOffset);
+      }
+    });
+
+    d3.selectAll('.node-div')
+      .on('click', () => {});
+
+    d3.select(`#node-${d.index}`)
+      .classed('active-node', true)
+      .on('click', a => showAll(a));
+  };
+
+  const showAll = (d) => {
+    // restore height of visible nodes
+    d3.selectAll('.node-showing')
+      .transition()
+      .duration(transMoveDur)
+      .attr('class', 'node-div')
+      .style('top', a => `${a.y0}px`);
+
+    // restore visibility of hidden nodes
+    d3.selectAll('.node-hidden')
+      .style('display', '')
+      .transition()
+      .delay(transMoveDur)
+      .duration(transVisibleDur)
+      .attr('class', 'node-div')
+      .style('opacity', 1)
+      .transition();
+
+    // restore position of visible links
+    d3.selectAll('.link-showing')
+      .transition()
+      .duration(transMoveDur)
+      .attr('class', 'link')
+      .attr('d', d3.sankeyLinkHorizontal());
+
+    // restore visibility of hidden links
+    d3.selectAll('.link-hidden')
+      .attr('class', 'link')
+      .transition()
+      .delay(transMoveDur)
+      .duration(transVisibleDur)
+      .style('opacity', 1);
+
+    // restore position of visible dots
+    d3.selectAll('.dot1-showing')
+      .transition()
+      .duration(transMoveDur)
+      .attr('class', 'dot1')
+      .attr('cy', a => a.y0);
+    d3.selectAll('.dot2-showing')
+      .transition()
+      .duration(transMoveDur)
+      .attr('class', 'dot2')
+      .attr('cy', a => a.target.y0 + linkYOffset);
+
+    // restore visibility of hidden dots
+    d3.selectAll('.dot1-hidden')
+      .transition()
+      .delay(transMoveDur)
+      .duration(transVisibleDur)
+      .attr('class', 'dot1')
+      .style('opacity', 1);
+    d3.selectAll('.dot2-hidden')
+      .transition()
+      .delay(transMoveDur)
+      .duration(transVisibleDur)
+      .attr('class', 'dot2')
+      .style('opacity', 1);
+
+    // remove rectangle around clicked div
+    d3.select(`#node-${d.index}`)
+      .classed('active-node', false);
+
+    // restore clickability of all divs
+    d3.selectAll('.node-div')
+      .on('click', (a) => { hideOthers(a); });
+  };
 };

@@ -1,4 +1,20 @@
 <!DOCTYPE html>
+<div class="form">
+  <form>
+    <select id="select-ho" class="orfi-select" onchange="selectUpdate(this.value, 'ho')">
+    </select>
+    <select id="select-path" class="orfi-select" onchange="selectUpdate(this.value, 'path')">
+    </select>
+    <select id="select-rf" class="orfi-select" onchange="selectUpdate(this.value, 'rf')">
+    </select>
+    <select id="select-int" class="orfi-select" onchange="selectUpdate(this.value, 'int')">
+    </select>
+  </form>
+</div>
+<div class="alldirect">
+  <a id="all" onclick="setAll()">ALL</a>
+  <a id="direct" onclick="setDirect()">DIRECT</a>
+</div>
 <div id="headers">
   <div id="h1" class="header-text">Health Outcome</div>
   <div id="h2" class="header-text">Pathogenesis</div>
@@ -13,5 +29,6 @@
 <link rel="stylesheet" href="index.css">
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://unpkg.com/d3-sankey@0.7"></script>
-<script src="data.js"></script>
+<!-- <script src="data.js"></script> -->
+<script src="orfi.js"></script>
 <script src="index.js"></script>

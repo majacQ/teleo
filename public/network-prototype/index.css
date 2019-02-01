@@ -1,5 +1,6 @@
 body {
   background-color: #202A2B;
+  font-family: sans-serif;
 }
 
 #headers {
@@ -32,6 +33,50 @@ body {
 
 #h4 {
   left: 833px;
+}
+
+.form {
+  position: relative;
+  height: 30px;
+}
+
+.orfi-select {
+  width: 240px;
+  position: absolute;
+}
+
+#select-ho {
+  left: 3px;
+}
+
+#select-path {
+  left: 281px;
+}
+
+#select-rf {
+  left: 556px;
+}
+
+#select-int {
+  left: 830px;
+}
+
+.alldirect {
+  padding-bottom: 10px;
+  color: #fff;
+  font-family: sans-serif;
+}
+
+.alldirect {
+  cursor: pointer;
+}
+
+.alldirect > a:hover {
+  color: red;
+}
+
+.alldirect > a.active {
+  color: red;
 }
 
 #bounding {
