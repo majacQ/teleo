@@ -26,7 +26,8 @@ class AgeSlider extends Component {
   componentDidUpdate(prevProps) {
     // only redraw if windowSize.appWidth has changed
     const { windowSize } = this.props;
-    if (prevProps.windowSize.appWidth !== windowSize.appWidth) {
+    if (prevProps.windowSize.appWidth !== windowSize.appWidth
+      || prevProps.windowSize.appLeft !== windowSize.appLeft) {
       select(this.node).html('');
       this.createAgeSlider();
     }
@@ -79,20 +80,38 @@ class AgeSlider extends Component {
     const marginCtx = {
       top: 0,
       right: 0,
-      bottom: windowSize.height - ui.header.height - ui.slider.height,
+      bottom: windowSize.height - ui.header.height,
       left: 0
     }; // bottom should be svg height
-    const width = +svg.attr('width') - marginFoc.left - marginFoc.right;
+    const width = windowSize.appWidth - 30;
+    const wwidth = windowSize.width;
+    const wleft = (wwidth - width) / 2;
     const heightFoc = +svg.attr('height') - marginFoc.top - marginFoc.bottom;
     const heightCtx = +svg.attr('height') - marginCtx.top - marginCtx.bottom;
 
     // const xDomain = [0, 40, 196, 716];
-    const xDomain = [-4, 40, 196, 850]; // this adds some padding to left and right of timeline
-    const xRange = [0, width * xProps[0], width * (xProps[0] + xProps[1]), width];
+    // this adds some padding to left and right of timeline
+    const xDomain = [-10, 0, 40, 196, 719, 726];
+    const xRange = [
+      0,
+      0 + wleft,
+      width * xProps[0] + wleft,
+      width * (xProps[0] + xProps[1]) + wleft,
+      width + wleft,
+      wwidth
+    ];
+
+    const xDomainFoc = [0, 40, 196, 719];
+    const xRangeFoc = [
+      0,
+      wwidth * xProps[0],
+      wwidth * (xProps[0] + xProps[1]),
+      wwidth
+    ];
 
     const xScaleFoc = scaleLinear()
-      .range(xRange)
-      .domain(xDomain);
+      .range(xRangeFoc)
+      .domain(xDomainFoc);
 
     const xScaleCtx = scaleLinear()
       .range(xRange)
@@ -111,7 +130,7 @@ class AgeSlider extends Component {
     // focus view ticks
     const xAxisFoc2 = axisBottom(xScaleFoc)
       .tickValues(xTicks)
-      .tickSize(windowSize.height - ui.header.height - ui.slider.height)
+      .tickSize(windowSize.height - ui.header.height)
       .tickFormat(() => null);
 
     // focus view tick labels
@@ -179,7 +198,7 @@ class AgeSlider extends Component {
     svg.append('defs').append('clipPath')
       .attr('id', 'clip')
       .append('rect')
-      .attr('width', width)
+      .attr('width', wwidth)
       .attr('height', heightFoc);
 
     const context = svg.append('g')
@@ -192,7 +211,7 @@ class AgeSlider extends Component {
 
     focus.append('rect')
       .attr('class', 'focus-area')
-      .attr('width', width)
+      .attr('width', wwidth)
       .attr('height', heightFoc);
 
     const gAxisFoc = focus.append('g')
@@ -210,7 +229,7 @@ class AgeSlider extends Component {
       .attr('stroke', null);
 
     const gAxisFoc2 = focus.append('g')
-      .attr('class', 'axis axis--x2')
+      .attr('class', 'axis axis--x5')
       .attr('transform', `translate(0,${5})`);
 
     gAxisFoc2.call(xAxisFoc2)
@@ -253,7 +272,7 @@ class AgeSlider extends Component {
       .attr('stroke', ui.slider.unselectColor);
 
     const brush = brushX()
-      .extent([[0, heightCtx], [width, heightCtx + brushHeight]]);
+      .extent([[0 + wleft + 1, heightCtx], [wwidth - wleft - 1, heightCtx + brushHeight]]);
 
     const gBrush = context.append('g')
       .attr('class', 'brush')
@@ -293,50 +312,56 @@ class AgeSlider extends Component {
     function updateXDomainRange(curDom) {
       // const xd = [];
       // const xr = [];
-      const idx1 = findIndex(curDom[0], xDomain);
-      const idx2 = findIndex(curDom[1], xDomain);
+      // const curDom2 = curDom.sort();
+      const curDom2 = curDom;
+      const idx1 = findIndex(curDom2[0], xDomain) - 1;
+      const idx2 = findIndex(curDom2[1], xDomain) - 1;
       const newDomain = [];
       const newRange = [];
 
       if (idx1 === idx2) {
-        newDomain.push(curDom[0], curDom[1]);
-        newRange.push(0, width);
+        newDomain.push(curDom2[0], curDom2[1]);
+        newRange.push(0, wwidth);
       } else if ((idx2 - idx1) === 1) {
         const newLengths = [
-          xLengths[idx1] * (xDomain[idx1 + 1] - curDom[0]) / (xDomain[idx1 + 1] - xDomain[idx1]),
-          xLengths[idx2] * (curDom[1] - xDomain[idx2]) / (xDomain[idx2 + 1] - xDomain[idx2])
+          xLengths[idx1] * (xDomainFoc[idx1 + 1] - curDom2[0])
+            / (xDomainFoc[idx1 + 1] - xDomainFoc[idx1]),
+          xLengths[idx2] * (curDom2[1] - xDomainFoc[idx2])
+            / (xDomainFoc[idx2 + 1] - xDomainFoc[idx2])
         ];
         const denom = newLengths[0] + newLengths[1];
         const newProps = newLengths.map(d => d / denom);
         newDomain.push(
-          curDom[0],
-          xDomain[idx1 + 1],
-          curDom[1]
+          curDom2[0],
+          xDomainFoc[idx1 + 1],
+          curDom2[1]
         );
         newRange.push(
           0,
-          newProps[0] * width,
-          width
+          newProps[0] * wwidth,
+          wwidth
         );
       } else if ((idx2 - idx1) === 2) {
         const newLengths = [
-          xLengths[idx1] * (xDomain[idx1 + 1] - curDom[0]) / (xDomain[idx1 + 1] - xDomain[idx1]),
+          xLengths[idx1] * (xDomainFoc[idx1 + 1] - curDom2[0])
+            / (xDomainFoc[idx1 + 1] - xDomainFoc[idx1]),
           xLengths[idx1 + 1],
-          xLengths[idx2] * (curDom[1] - xDomain[idx2]) / (xDomain[idx2 + 1] - xDomain[idx2])
+          xLengths[idx2] * (curDom2[1] - xDomainFoc[idx2])
+            / (xDomainFoc[idx2 + 1] - xDomainFoc[idx2])
         ];
         const denom = newLengths[0] + newLengths[1] + newLengths[2];
         const newProps = newLengths.map(d => d / denom);
         newDomain.push(
-          curDom[0],
-          xDomain[idx1 + 1],
-          xDomain[idx1 + 2],
-          curDom[1]
+          curDom2[0],
+          xDomainFoc[idx1 + 1],
+          xDomainFoc[idx1 + 2],
+          curDom2[1]
         );
         newRange.push(
           0,
-          newProps[0] * width,
-          (newProps[0] + newProps[1]) * width,
-          width
+          newProps[0] * wwidth,
+          (newProps[0] + newProps[1]) * wwidth,
+          wwidth
         );
       }
       return { domain: newDomain, range: newRange };
@@ -383,7 +408,7 @@ class AgeSlider extends Component {
         .attr('x', 2)
         .style('text-anchor', 'start');
 
-      focus.select('.axis--x2').call(xAxisFoc2);
+      focus.select('.axis--x5').call(xAxisFoc2);
 
       // highlight selected axis ticks
       svg.selectAll('.context .axis--x text')
@@ -426,8 +451,8 @@ class AgeSlider extends Component {
     return (
       <svg
         ref={(node) => { this.node = node; }}
-        width={windowSize.appWidth}
-        height={windowSize.height - ui.header.height - ui.slider.height}
+        width={windowSize.width}
+        height={windowSize.height - ui.header.height}
       />
     );
   }

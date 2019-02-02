@@ -10,11 +10,11 @@ const EventsGroup = ({
   const focWidth = windowSize.appWidth;
   const isCollapsed = collapsedGroups.indexOf(gid) > -1;
   return (
-    <div style={{ width: focWidth }}>
-      <svg width={focWidth} height="25">
-        <line className="eventgroup-hline" strokeDasharray="1, 5" x1="0" y1="23" x2={focWidth} y2="23" />
+    <div style={{ width: windowSize.width }}>
+      <svg width={windowSize.width} height="25">
+        <line className="eventgroup-hline" strokeDasharray="1, 5" x1="0" y1="23" x2={windowSize.width} y2="23" />
       </svg>
-      <div className="eventgroup-header" style={{ width: focWidth }}>
+      <div className="eventgroup-header" style={{ width: focWidth, left: windowSize.appLeft }}>
         <div className="eventgroup-header-text">
           <span className="eventgroup-subcat">{subcategory}</span>
           <span className="eventgroup-cat">{category}</span>

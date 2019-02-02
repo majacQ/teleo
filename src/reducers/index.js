@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 
 import {
   SET_AGE_RANGE, SET_FOCUS_SCALE, REQUEST_DATA, RECEIVE_DATA, SET_COLLAPSED_GROUP,
+  REQUEST_NETWORK_DATA, RECEIVE_NETWORK_DATA,
   SET_FILTERS, SET_FILTER_OPEN, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED, ui
 } from '../constants';
 
@@ -143,7 +144,8 @@ const pinned = (state = [], action) => {
 const windowSize = (state = {
   height: window.innerHeight,
   width: window.innerWidth,
-  appWidth: Math.min(ui.maxWidth, window.innerWidth)
+  appWidth: Math.min(ui.maxWidth, window.innerWidth),
+  appLeft: (window.innerWidth - Math.min(ui.maxWidth, window.innerWidth)) / 2
 }, action) => {
   switch (action.type) {
     case WINDOW_RESIZE:
@@ -179,6 +181,32 @@ const timelineData = (state = {
   }
 };
 
+const networkData = (state = {
+  isFetching: false,
+  isLoaded: false,
+  didInvalidate: false,
+  data: {}
+}, action) => {
+  switch (action.type) {
+    case REQUEST_NETWORK_DATA:
+      return Object.assign({}, state, {
+        isFetching: true,
+        isLoaded: false,
+        didInvalidate: false
+      });
+    case RECEIVE_NETWORK_DATA:
+      return Object.assign({}, state, {
+        isFetching: false,
+        didInvalidate: false,
+        isLoaded: true,
+        data: action.data,
+        lastUpdated: action.receivedAt
+      });
+    default:
+      return state;
+  }
+};
+
 const reducers = combineReducers({
   ageRange,
   timelineFocusScale,
@@ -188,6 +216,7 @@ const reducers = combineReducers({
   pinned,
   collapsedGroups,
   timelineData,
+  networkData,
   windowSize
 });
 

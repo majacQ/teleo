@@ -5,30 +5,27 @@ import EventsList from './EventsList';
 
 const PinnedGroup = ({
   data, windowSize
-}) => {
-  const focWidth = windowSize.appWidth;
-  return (
-    <div className="pinned-container" style={{ width: focWidth }}>
-      <div className="pinned-header">
-        <div className="pinned-text">
-          Pinned Events
-          <span className="icon-bookmark pinned-icon" />
-        </div>
-        <div className="pinned-button">
-          Compare Details
-        </div>
+}) => (
+  <div className="pinned-container" style={{ width: windowSize.width }}>
+    <div className="pinned-header" style={{ width: windowSize.appWidth, marginLeft: windowSize.appLeft, marginRight: windowSize.appLeft }}>
+      <div className="pinned-text">
+        Pinned Events
+        <span className="icon-bookmark pinned-icon" />
       </div>
-      { data.length > 0 && (
-        <EventsList data={data} gid="pinned" pinned />
-      )}
-      {data.length === 0 && (
-        <div className="pinned-instructions">
-          Pin or drag items to top for direct comparison
-        </div>
-      )}
+      <div className="pinned-button">
+        Compare Details
+      </div>
     </div>
-  );
-};
+    { data.length > 0 && (
+      <EventsList data={data} gid="pinned" pinned />
+    )}
+    {data.length === 0 && (
+      <div className="pinned-instructions" style={{ marginLeft: windowSize.appLeft }}>
+        Pin or drag items to top for direct comparison
+      </div>
+    )}
+  </div>
+);
 
 PinnedGroup.propTypes = {
   data: PropTypes.array.isRequired,

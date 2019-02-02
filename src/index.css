@@ -10,18 +10,25 @@ body {
 
 .root {
   flex: 1;
-  max-width: 1000px;
+  /* max-width: 1000px; */
   /* padding-left: 20px; */
   /* padding-right: 20px; */
   margin: auto;
   position: relative;
 }
 
+.header-wrapper {
+  background: #202a2b;
+  /* background: #2D3738; */
+  position: fixed;
+  top: 0;
+  left: 0;  
+}
+
 .header {
+  background: #202a2b;
   position: absolute;
   top: 0;
-  left: 0;
-  background: #202a2b;
 }
 
 .header-text {
@@ -30,7 +37,7 @@ body {
   font-size: 22px;
   font-weight: bold;
   line-height: 64px;
-  padding-left: 24px;
+  padding-left: 15px;
   display: inline-block;
 }
 
@@ -168,12 +175,12 @@ body {
 .slider-container {
   position: absolute;
   left: 0px;
+  /* background: #2D3738; */
   background: #202a2b;
 }
 
 .actions-header {
   position: absolute;
-  left: 0px;
   color: #4EB8C1;
   font-size: 12px;
   font-weight: bold;
@@ -196,16 +203,18 @@ body {
   background: rgba(255, 255, 255, 0.7);
   padding-top: 10px;
   padding-bottom: 5px;
+  position: relative;
 }
 
 .pinned-header {
-  padding-left: 5px;
+  position: relative;
+  padding-left: 15px;
   padding-bottom: 5px;
   color: #202A2B;
   font-family: "Roboto Condensed";
   font-size: 18px;
   font-weight: bold;
-  height: 40px;
+  height: 30px;
 }
 
 .pinned-icon {
@@ -216,9 +225,10 @@ body {
 }
 
 .pinned-button {
+  display: inline-block;
   position: absolute;
-  right: 10px;
-  top: 15px;
+  right: 30px;
+  top: 5px;
   height: 32px;
   width: 140px;
   border-radius: 20px;
@@ -233,11 +243,25 @@ body {
 }
 
 .pinned-instructions {
-  padding-left: 5px;
+  padding-left: 15px;
   color: #939598;
   font-family: Roboto;
   font-size: 14px;
   font-style: italic;
+}
+
+.cover1 {
+  position: fixed;
+  background: #fff;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.cover2 {
+  position: fixed;
+  background: #fff;
+  opacity: 0.05;
+  pointer-events: none;
 }
 
 .events-container {
@@ -265,6 +289,8 @@ body {
   /* margin-top: 25px; */
   /* border-top: 2px dashed #51b8c0; */
   /* padding-top: 4px; */
+  padding-left: 15px;
+  position: relative;
   padding-bottom: 15px;
 }
 
@@ -274,7 +300,7 @@ body {
 
 .eventgroup-header-icons {
   position: absolute;
-  right: 10px;
+  right: 30px;
   display: inline-block;
   color: #70B6BC;
   font-size: 22px;
@@ -345,7 +371,7 @@ body {
   margin-left: 14px;
   position: relative;
   background-color: white;
-  border-bottom: 1px solid lightgray;
+  border-bottom: 0.5px solid lightgray;
 }
 
 .event-peak-st {
@@ -444,6 +470,10 @@ body {
   font-size: 14px;
 }
 
+.expand-info-wrapper {
+  background: #2D3738;
+}
+
 .expand-info-header {
   padding-bottom: 15px;
   padding-left: 15px;
@@ -500,6 +530,10 @@ body {
   clip-path: url(#clip);
 }
 
+.axis.axis--x5 .tick line {
+  stroke: #ffffff;
+}
+
 .axis.axis--x4 .tick text {
   color: #939598;
   font-family: Roboto;
@@ -514,6 +548,7 @@ body {
 
 .focus-area {
   fill: #f1f1f2;
+  /* fill-opacity: 0.5 */
 }
 
 .axis path {

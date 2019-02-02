@@ -23,7 +23,7 @@ const Event = ({
       role="presentation"
     >
       {hover && !expanded && (
-        <div className="event-hoverinfo" style={{ left: Math.min(Math.max(data.textWidth, data.eventWidth) - 10, windowSize.appWidth - data.xStart - 80) }}>
+        <div className="event-hoverinfo" style={{ left: Math.min(Math.max(data.textWidth, data.eventWidth) - 10, windowSize.width - data.xStart - 80) }}>
           <div
             className="hoverinfo-text"
             onClick={(e) => { e.stopPropagation(); addToExpanded(data); }}

@@ -13,7 +13,7 @@ const FilterVariable = ({
 
   // https://www.npmjs.com/package/react-click-outside
   return (
-    <div className="filters-container" style={{ width: windowSize.appWidth, top: ui.header.height }}>
+    <div className="filters-container" style={{ width: windowSize.appWidth, top: ui.header.height, left: windowSize.appLeft }}>
       <div className="filter-column">
         <div className="filter-column-header">
           <span>Organogenesis, Growth, & Maturation</span>

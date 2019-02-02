@@ -11,10 +11,18 @@ const Body = ({
   filters, data, windowSize, expandAll, collapseAll, clearFilters
 }) => (
   <div>
-    <div className="slider-container" style={{ height: ui.slider.height, top: ui.header.height }}>
+    <div className="slider-container" style={{ height: ui.slider.height, width: windowSize.width, top: ui.header.height }}>
       <AgeSlider />
     </div>
-    <div className="actions-header" style={{ top: ui.slider.height + ui.header.height, width: windowSize.appWidth, height: 20 }}>
+    <div
+      className="actions-header"
+      style={{
+        top: ui.slider.height + ui.header.height,
+        width: windowSize.appWidth,
+        height: 20,
+        left: windowSize.appLeft - 10
+      }}
+    >
       <span
         className="action-item"
         onClick={() => { collapseAll([...filters.ogm.map(d => `ogm_${d}`), ...filters.nd.map(d => `nd_${d}`)]); }}
@@ -52,7 +60,12 @@ const Body = ({
     >
       <PinnedGroup />
       {filters.ogm.length === 0 && filters.nd.length === 0 && (
-        <div className="events-empty">Open the &quot;variables&quot; filtering in the header to add events to the timeline.</div>
+        <div
+          className="events-empty"
+          style={{ marginLeft: windowSize.appLeft + 15 }}
+        >
+          Open the &quot;variables&quot; filtering in the header to add events to the timeline.
+        </div>
       )}
       {data.ogm && filters.ogm.length > 0 && filters.ogm.map(d => (
         <EventsGroup
@@ -75,6 +88,42 @@ const Body = ({
         />
       ))}
     </div>
+    <div
+      className="cover1"
+      style={{
+        top: ui.header.height + ui.slider.ctxHeight,
+        bottom: 0,
+        width: windowSize.appLeft,
+        left: 0
+      }}
+    />
+    <div
+      className="cover1"
+      style={{
+        top: ui.header.height + ui.slider.ctxHeight,
+        bottom: 0,
+        width: windowSize.appLeft,
+        right: 0
+      }}
+    />
+    <div
+      className="cover2"
+      style={{
+        height: ui.header.height + ui.slider.ctxHeight,
+        top: 0,
+        width: windowSize.appLeft,
+        left: 0
+      }}
+    />
+    <div
+      className="cover2"
+      style={{
+        height: ui.header.height + ui.slider.ctxHeight,
+        top: 0,
+        width: windowSize.appLeft,
+        right: 0
+      }}
+    />
   </div>
 );
 
