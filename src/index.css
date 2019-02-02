@@ -253,7 +253,7 @@ body {
 .cover1 {
   position: fixed;
   background: #fff;
-  opacity: 0.2;
+  opacity: 0.4;
   pointer-events: none;
 }
 

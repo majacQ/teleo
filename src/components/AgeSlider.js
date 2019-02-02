@@ -321,7 +321,7 @@ class AgeSlider extends Component {
 
       if (idx1 === idx2) {
         newDomain.push(curDom2[0], curDom2[1]);
-        newRange.push(0, wwidth);
+        newRange.push(0 + wleft, width + wleft);
       } else if ((idx2 - idx1) === 1) {
         const newLengths = [
           xLengths[idx1] * (xDomainFoc[idx1 + 1] - curDom2[0])
@@ -337,9 +337,9 @@ class AgeSlider extends Component {
           curDom2[1]
         );
         newRange.push(
-          0,
-          newProps[0] * wwidth,
-          wwidth
+          0 + wleft,
+          newProps[0] * width + wleft,
+          width + wleft
         );
       } else if ((idx2 - idx1) === 2) {
         const newLengths = [
@@ -358,10 +358,10 @@ class AgeSlider extends Component {
           curDom2[1]
         );
         newRange.push(
-          0,
-          newProps[0] * wwidth,
-          (newProps[0] + newProps[1]) * wwidth,
-          wwidth
+          0 + wleft,
+          newProps[0] * width + wleft,
+          (newProps[0] + newProps[1]) * width + wleft,
+          width + wleft
         );
       }
       return { domain: newDomain, range: newRange };
