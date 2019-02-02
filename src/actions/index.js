@@ -2,7 +2,8 @@ import { json } from 'd3-request';
 import {
   SET_AGE_RANGE, SET_FOCUS_SCALE, REQUEST_DATA, RECEIVE_DATA,
   SET_FILTERS, SET_FILTER_OPEN, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED,
-  SET_COLLAPSED_GROUP, REQUEST_NETWORK_DATA, RECEIVE_NETWORK_DATA
+  SET_COLLAPSED_GROUP, REQUEST_NETWORK_DATA, RECEIVE_NETWORK_DATA,
+  SET_SELECTED_ORFI
 } from '../constants';
 
 export const setAgeRange = val => ({
@@ -22,6 +23,11 @@ export const setFilters = data => ({
 
 export const setFilterOpen = val => ({
   type: SET_FILTER_OPEN,
+  val
+});
+
+export const setSelectedORFI = val => ({
+  type: SET_SELECTED_ORFI,
   val
 });
 
@@ -116,7 +122,6 @@ export const fetchData = url => (dispatch) => {
 export const fetchNetworkData = url => (dispatch) => {
   dispatch(requestNetworkData());
   json(url, (dat) => {
-
     const tmpEl = document.createElement('canvas');
     const ctx = tmpEl.getContext('2d');
     ctx.font = '14px "Roboto Condensed"';

@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 
 import {
   SET_AGE_RANGE, SET_FOCUS_SCALE, REQUEST_DATA, RECEIVE_DATA, SET_COLLAPSED_GROUP,
-  REQUEST_NETWORK_DATA, RECEIVE_NETWORK_DATA,
+  REQUEST_NETWORK_DATA, RECEIVE_NETWORK_DATA, SET_SELECTED_ORFI,
   SET_FILTERS, SET_FILTER_OPEN, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED, ui
 } from '../constants';
 
@@ -46,6 +46,17 @@ const filters = (state = { ogm: ['Gastrointestinal', 'Genitourinary'], nd: [] },
       }
       return newState;
     }
+    default:
+  }
+  return state;
+};
+
+const selectedORFI = (state = {
+  ho: ['ho_1', 'ho_2'], rf: [], path: [], int: ['int_1', 'int_2']
+}, action) => {
+  switch (action.type) {
+    case SET_SELECTED_ORFI:
+      return Object.assign({}, {}, action.val);
     default:
   }
   return state;
@@ -211,6 +222,7 @@ const reducers = combineReducers({
   ageRange,
   timelineFocusScale,
   filters,
+  selectedORFI,
   filterOpen,
   expanded,
   pinned,

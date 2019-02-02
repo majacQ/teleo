@@ -10,6 +10,7 @@ export const WINDOW_RESIZE = 'WINDOW_RESIZE';
 export const SET_FILTERS = 'SET_FILTERS';
 export const SET_FILTER_OPEN = 'SET_FILTER_OPEN';
 export const SET_COLLAPSED_GROUP = 'SET_COLLAPSED_GROUP';
+export const SET_SELECTED_ORFI = 'SET_SELECTED_ORFI';
 
 export const ui = {
   maxWidth: 1000,

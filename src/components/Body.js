@@ -8,7 +8,7 @@ import { ui } from '../constants';
 import { setCollapsedGroup, setFilters } from '../actions';
 
 const Body = ({
-  filters, data, windowSize, expandAll, collapseAll, clearFilters
+  filters, orfi, data, ndata, windowSize, expandAll, collapseAll, clearFilters
 }) => (
   <div>
     <div className="slider-container" style={{ height: ui.slider.height, width: windowSize.width, top: ui.header.height }}>
@@ -87,6 +87,23 @@ const Body = ({
           group="nd"
         />
       ))}
+      {ndata.isLoaded && Object.keys(orfi).map((k) => {
+        if (orfi[k].length > 0) {
+          const curDat = ndata.data.nodes[k];
+          curDat.data.filter(d => orfi[k].indexOf(d.uid) > -1);
+          return (
+            <EventsGroup
+              key={k}
+              data={curDat.data.filter(d => orfi[k].indexOf(d.uid) > -1)}
+              gid={`orfi_${k}`}
+              category=""
+              subcategory={curDat.name}
+              group="orfi"
+            />
+          );
+        }
+        return '';
+      })}
     </div>
     <div
       className="cover1"
@@ -129,7 +146,9 @@ const Body = ({
 
 Body.propTypes = {
   filters: PropTypes.object.isRequired,
+  orfi: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
+  ndata: PropTypes.object.isRequired,
   windowSize: PropTypes.object.isRequired,
   expandAll: PropTypes.func.isRequired,
   collapseAll: PropTypes.func.isRequired,
@@ -138,7 +157,9 @@ Body.propTypes = {
 
 const mapStateToProps = state => ({
   filters: state.filters,
+  orfi: state.selectedORFI,
   data: state.timelineData.data,
+  ndata: state.networkData,
   windowSize: state.windowSize
 });
 
