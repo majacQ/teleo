@@ -6,7 +6,7 @@ import { axisBottom } from 'd3-axis';
 import { arc } from 'd3-shape';
 import { brushX } from 'd3-brush';
 import { select, event as curEvent } from 'd3-selection';
-import { throttle } from 'throttle-debounce';
+// import { throttle } from 'throttle-debounce';
 import { setAgeRange, setTimelineFocusScale, clearExpanded } from '../actions';
 import { ui } from '../constants';
 import {
@@ -41,13 +41,13 @@ class AgeSlider extends Component {
 
     const brushHeight = 18;
 
-    const setRange2 = throttle(100, (curDom) => {
-      setRange(curDom);
-    });
+    // const setRange2 = throttle(100, (curDom) => {
+    //   setRange(curDom);
+    // });
 
-    const setScale2 = throttle(100, (focDomain, focRange) => {
-      setScale(focDomain, focRange);
-    });
+    // const setScale2 = throttle(100, (focDomain, focRange) => {
+    //   setScale(focDomain, focRange);
+    // });
 
     // Conception to prenatal: 40 weeks
     // Infant to toddler: 0 to 36 months (40 to 196 weeks)
@@ -367,18 +367,13 @@ class AgeSlider extends Component {
       return { domain: newDomain, range: newRange };
     }
 
-    function updateView() {
+    function updateBrush() {
       if (curEvent.sourceEvent && curEvent.sourceEvent.type === 'zoom') return; // ignore brush-by-zoom
       // const s = curEvent.selection || xScaleCtx.range();
       const s = curEvent.selection;
       let curDom;
-      let focDomain;
-      let focRange;
       if (s) { // if there is a selection
         curDom = s.map(xScaleCtx.invert);
-        const newDR = updateXDomainRange(curDom);
-        focDomain = newDR.domain;
-        focRange = newDR.range;
         handle.attr('display', null)
           .attr('transform', (d, i) => `translate(${s[i]},${brushHeight / 2})`);
         brushLine
@@ -387,28 +382,9 @@ class AgeSlider extends Component {
       } else {
         // curDom = [Infinity, Infinity];
         curDom = [xDomain[0], xDomain[xDomain.length - 1]];
-        focDomain = xDomain;
-        focRange = xRange;
         handle.attr('display', 'none');
         brushLine.attr('width', 0);
       }
-
-      xScaleFoc.domain(focDomain);
-      xScaleFoc.range(focRange);
-
-      // trigger a change to ageRange
-      setRange2(curDom);
-      setScale2(focDomain, focRange);
-
-      // update the ticks in the focused timeline view
-      focus.select('.axis--x4')
-        .call(xAxisFoc)
-        .selectAll('text')
-        .attr('y', 2)
-        .attr('x', 2)
-        .style('text-anchor', 'start');
-
-      focus.select('.axis--x5').call(xAxisFoc2);
 
       // highlight selected axis ticks
       svg.selectAll('.context .axis--x text')
@@ -441,7 +417,53 @@ class AgeSlider extends Component {
         ));
     }
 
-    brush.on('brush end', updateView);
+    function updateView() {
+      if (curEvent.sourceEvent && curEvent.sourceEvent.type === 'zoom') return; // ignore brush-by-zoom
+      // const s = curEvent.selection || xScaleCtx.range();
+      const s = curEvent.selection;
+      let curDom;
+      let focDomain;
+      let focRange;
+      if (s) { // if there is a selection
+        curDom = s.map(xScaleCtx.invert);
+        const newDR = updateXDomainRange(curDom);
+        focDomain = newDR.domain;
+        focRange = newDR.range;
+        handle.attr('display', null)
+          .attr('transform', (d, i) => `translate(${s[i]},${brushHeight / 2})`);
+        brushLine
+          .attr('width', s[1] - s[0])
+          .attr('transform', `translate(${s[0]},${0})`);
+      } else {
+        // curDom = [Infinity, Infinity];
+        curDom = [xDomain[0], xDomain[xDomain.length - 1]];
+        focDomain = xDomain;
+        focRange = xRange;
+        handle.attr('display', 'none');
+        brushLine.attr('width', 0);
+      }
+
+      xScaleFoc.domain(focDomain);
+      xScaleFoc.range(focRange);
+
+      // trigger a change to ageRange
+      setRange(curDom);
+      setScale(focDomain, focRange);
+
+      // update the ticks in the focused timeline view
+      focus.select('.axis--x4')
+        .call(xAxisFoc)
+        .selectAll('text')
+        .attr('y', 2)
+        .attr('x', 2)
+        .style('text-anchor', 'start');
+
+      focus.select('.axis--x5').call(xAxisFoc2);
+    }
+
+    brush
+      .on('end', updateView)
+      .on('brush', updateBrush);
 
     gBrush.call(brush.move, [xScaleCtx(ageRange[0]), xScaleCtx(ageRange[1])]);
   }
