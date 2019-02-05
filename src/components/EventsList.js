@@ -86,7 +86,7 @@ const EventsList = ({
                   {
                     rowdat.map(d => (
                       <Event
-                        data={{ row: rowId, ...d }}
+                        data={{ ...d, row: rowId }}
                         expanded={idx > -1 && d.uid === expanded[idx].uid}
                         pinned={pinned}
                         key={d.uid}
