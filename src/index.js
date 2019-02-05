@@ -5,8 +5,8 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { throttle } from 'throttle-debounce';
-import 'typeface-roboto';
-import 'typeface-roboto-condensed';
+// import 'typeface-roboto';
+// import 'typeface-roboto-condensed';
 import { fetchData, fetchNetworkData, windowResize } from './actions';
 import { ui } from './constants';
 
