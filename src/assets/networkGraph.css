@@ -1,0 +1,71 @@
+.nw-alldirect {
+  padding-bottom: 10px;
+  color: #fff;
+  font-family: sans-serif;
+}
+
+.nw-alldirect {
+  cursor: pointer;
+}
+
+.nw-alldirect > a:hover {
+  color: red;
+}
+
+.nw-alldirect > a.active {
+  color: red;
+}
+
+#nw-bounding {
+  background-color: #202A2B;
+}
+
+#nw-bounding-inner {
+  position: relative;
+}
+
+#textmeasure {
+  position: absolute;
+  font-family: sans-serif;
+  line-height: normal;
+  font-size: 10px;
+  left: 0px;
+  top: 0px;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.nw-node-div {
+  position: absolute;
+  font-family: sans-serif;
+  font-size: 10px;
+  padding: 5px;
+  box-sizing: border-box;
+  color: #CCCCCC;
+  cursor: pointer;
+  line-height: normal;
+}
+
+.nw-node-div-hl {
+  color: red !important;
+}
+
+.nw-active-node {
+  background: #3A4445; /* lightened 10% */
+}
+
+.nw-links {
+  fill: none;
+  stroke: #CCCCCC;
+  stroke-opacity: 0.2
+}
+
+.nw-link-hl {
+  stroke: red;
+  stroke-width: 2;
+  stroke-opacity: 0.6;
+}
+
+.nw-dots {
+  fill: #CCCCCC;
+}

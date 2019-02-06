@@ -10,7 +10,9 @@ import { throttle } from 'throttle-debounce';
 import { fetchData, fetchNetworkData, windowResize } from './actions';
 import { ui } from './constants';
 
-import './index.css';
+import './assets/index.css';
+import './assets/ageSlider.css';
+import './assets/networkGraph.css';
 import './assets/icons/style.css';
 import App from './App';
 import reducers from './reducers';

@@ -11,7 +11,7 @@ import { setAgeRange, setTimelineFocusScale, clearExpanded } from '../actions';
 import { ui } from '../constants';
 import {
   y2w, w2y, m2w, w2m
-} from '../utils';
+} from '../utils/ageCalc';
 
 class AgeSlider extends Component {
   constructor(props) {

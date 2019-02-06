@@ -5,7 +5,7 @@ import AgeSlider from './AgeSlider';
 import EventsGroup from './EventsGroup';
 import PinnedGroup from './PinnedGroup';
 import { ui } from '../constants';
-import { setCollapsedGroup, setFilters } from '../actions';
+import { setCollapsedGroup, setFilters, setSelectedORFI } from '../actions';
 
 const Body = ({
   filters, orfi, data, ndata, windowSize, expandAll, collapseAll, clearFilters
@@ -25,7 +25,12 @@ const Body = ({
     >
       <span
         className="action-item"
-        onClick={() => { collapseAll([...filters.ogm.map(d => `ogm_${d}`), ...filters.nd.map(d => `nd_${d}`)]); }}
+        onClick={() => {
+          const res = [...filters.ogm.map(d => `ogm_${d}`), ...filters.nd.map(d => `nd_${d}`)];
+          const keys = Object.keys(orfi);
+          keys.forEach((d) => { if (orfi[d].length > 0) { res.push(`orfi_${d}`); } });
+          collapseAll(res);
+        }}
         onKeyPress={() => {}}
         role="button"
         tabIndex="-9"
@@ -172,6 +177,7 @@ const mapDispatchToProps = dispatch => ({
   },
   clearFilters: () => {
     dispatch(setFilters({ type: 'clear-all' }));
+    dispatch(setSelectedORFI({}));
   }
 });
 

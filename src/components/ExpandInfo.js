@@ -1,12 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { niceAge } from '../utils';
+import { niceAge } from '../utils/ageCalc';
+import NetworkGraph from './NetworkGraph';
+// import { CSSTransition } from 'react-transition-group';
 
 const ExpandInfo = ({
   data, windowSize
 }) => {
   const focWidth = windowSize.appWidth;
+
+  // <CSSTransition
+  //   timeout={300}
+  //   classNames="expand-info"
+  //   onEnter={() => alert('hi')}
+  // >
 
   return (
     <div className="expand-info-wrapper" style={{ width: windowSize.width }}>
@@ -46,7 +54,8 @@ const ExpandInfo = ({
         </div>
         <div className="expand-info-hline" />
         <div className="expand-info-detail">
-          {data.desc_long}
+          { data.class !== undefined && <NetworkGraph data={data} /> }
+          { data.class === undefined && data.desc_long}
         </div>
         <div className="expand-info-hline" />
       </div>
@@ -60,7 +69,8 @@ ExpandInfo.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  windowSize: state.windowSize
+  windowSize: state.windowSize,
+  networkData: state.networkData
 });
 
 export default connect(
