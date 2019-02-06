@@ -54,6 +54,7 @@ NetworkGraph.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  windowSize: state.windowSize,
   networkData: state.networkData
 });
 
