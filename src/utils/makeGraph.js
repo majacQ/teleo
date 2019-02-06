@@ -78,11 +78,11 @@ const makeGraph = (div, nodeId, category, direct, orfee) => {
   const nodeWidth = 130;
 
   const textMeasure = div.append('div')
-    .attr('id', 'textmeasure')
+    .attr('id', 'nw-textmeasure')
     .style('visibility', 'hidden')
     .style('width', '130px')
     .style('font-size', '10px')
-    .style('font-family', 'sans-serif');
+    .style('font-family', 'Roboto');
 
   const sankeyObj = sankey()
     .nodeWidth(nodeWidth)
@@ -135,9 +135,9 @@ const makeGraph = (div, nodeId, category, direct, orfee) => {
     .data(data.links)
     .enter()
     .append('path')
-    .attr('class', 'link')
+    .attr('class', 'nw-link')
     .attr('d', sankeyLinkHorizontal())
-    .attr('id', d => `link-${d.index}`)
+    .attr('id', d => `nw-link-${d.index}`)
     .attr('stroke-width', 1);
 
   // nodes
@@ -145,7 +145,7 @@ const makeGraph = (div, nodeId, category, direct, orfee) => {
     .data(data.nodes)
     .enter().append('div')
     .attr('class', 'nw-node-div')
-    .attr('id', d => `node-${d.index}`)
+    .attr('id', d => `nw-node-${d.index}`)
     .style('left', d => `${d.x0}px`)
     .style('top', d => `${d.y0}px`)
     .style('height', d => `${d.y1 - d.y0}px`)
@@ -154,7 +154,7 @@ const makeGraph = (div, nodeId, category, direct, orfee) => {
     .on('mouseover', (d) => { highlight(d); })
     .on('mouseout', () => {
       div.selectAll('.nw-node-div').classed('nw-node-div-hl', false);
-      div.selectAll('.nw-link-hl').classed('link-hl', false);
+      div.selectAll('.nw-link-hl').classed('nw-link-hl', false);
     })
     .on('click', (d) => { hideOthers(d); });
 
@@ -164,8 +164,8 @@ const makeGraph = (div, nodeId, category, direct, orfee) => {
     .data(data.links)
     .enter()
     .append('circle')
-    .attr('class', 'dot1')
-    .attr('id', d => `dot1-${d.index}`)
+    .attr('class', 'nw-dot1')
+    .attr('id', d => `nw-dot1-${d.index}`)
     .attr('r', 1)
     .attr('cx', d => d.source.x1)
     .attr('cy', d => d.y0);
@@ -176,8 +176,8 @@ const makeGraph = (div, nodeId, category, direct, orfee) => {
     .data(data.links)
     .enter()
     .append('circle')
-    .attr('class', 'dot2')
-    .attr('id', d => `dot2-${d.index}`)
+    .attr('class', 'nw-dot2')
+    .attr('id', d => `nw-dot2-${d.index}`)
     .attr('r', 1)
     .attr('cx', d => d.target.x0)
     .attr('cy', d => d.target.y0 + linkYOffset);
@@ -204,12 +204,13 @@ const makeGraph = (div, nodeId, category, direct, orfee) => {
 
   highlight = (d) => {
     const [idxs, lidxs] = getPathway(d);
-    idxs.forEach(id => div.select(`#node-${id}`).classed('nw-node-div-hl', true));
-    lidxs.forEach(id => div.select(`#link-${id}`).classed('link-hl', true));
+    idxs.forEach(id => div.select(`#nw-node-${id}`).classed('nw-node-div-hl', true));
+    lidxs.forEach(id => div.select(`#nw-link-${id}`).classed('nw-link-hl', true));
   };
 
   hideOthers = (d) => {
     const [idxs, lidxs] = getPathway(d);
+    let curMaxHeight = 0;
 
     // hide nodes not in pathway and move remaining ones
     const curHeights = {};
@@ -217,22 +218,23 @@ const makeGraph = (div, nodeId, category, direct, orfee) => {
       let cumHeight = 0;
       yy[k].forEach((a) => {
         if (idxs.indexOf(a.index) < 0) {
-          div.select(`#node-${a.index}`)
-            .attr('class', 'nw-node-div node-hidden')
+          div.select(`#nw-node-${a.index}`)
+            .attr('class', 'nw-node-div nw-node-hidden')
             .transition()
             .duration(transVisibleDur)
             .style('opacity', 0)
             .transition()
             .style('display', 'none');
         } else {
-          div.select(`#node-${a.index}`)
-            .attr('class', 'nw-node-div node-showing')
+          div.select(`#nw-node-${a.index}`)
+            .attr('class', 'nw-node-div nw-node-showing')
             .transition()
             .delay(transVisibleDur)
             .duration(transMoveDur)
             .style('top', `${cumHeight}px`);
           curHeights[a.index] = cumHeight;
           cumHeight = cumHeight + a.height + 5;
+          curMaxHeight = Math.max(cumHeight, curMaxHeight);
         }
       });
     });
@@ -240,39 +242,39 @@ const makeGraph = (div, nodeId, category, direct, orfee) => {
     data.links.forEach((ll) => {
       if (lidxs.indexOf(ll.index) < 0) {
         // hide links not in pathway
-        div.select(`#link-${ll.index}`)
-          .attr('class', 'link link-hidden')
+        div.select(`#nw-link-${ll.index}`)
+          .attr('class', 'nw-link nw-link-hidden')
           .transition()
           .duration(transVisibleDur)
           .style('opacity', 0);
-        div.select(`#dot1-${ll.index}`)
-          .attr('class', 'dot1 dot1-hidden')
+        div.select(`#nw-dot1-${ll.index}`)
+          .attr('class', 'nw-dot1 nw-dot1-hidden')
           .transition()
           .duration(transVisibleDur)
           .style('opacity', 0);
-        div.select(`#dot2-${ll.index}`)
-          .attr('class', 'dot2 dot2-hidden')
+        div.select(`#nw-dot2-${ll.index}`)
+          .attr('class', 'nw-dot2 nw-dot2-hidden')
           .transition()
           .duration(transVisibleDur)
           .style('opacity', 0);
       } else {
         // reposition links in pathway
-        div.select(`#link-${ll.index}`)
-          .attr('class', 'link link-showing')
+        div.select(`#nw-link-${ll.index}`)
+          .attr('class', 'nw-link nw-link-showing')
           .transition()
           .delay(transVisibleDur)
           .duration(transMoveDur)
           .attr('d', sankeyLinkHorizontal()
             .source(a => [a.source.x1, curHeights[a.source.index] + linkYOffset])
             .target(a => [a.target.x0, curHeights[a.target.index] + linkYOffset]));
-        div.select(`#dot1-${ll.index}`)
-          .attr('class', 'dot1 dot1-showing')
+        div.select(`#nw-dot1-${ll.index}`)
+          .attr('class', 'nw-dot1 nw-dot1-showing')
           .transition()
           .delay(transVisibleDur)
           .duration(transMoveDur)
           .attr('cy', a => curHeights[a.source.index] + linkYOffset);
-        div.select(`#dot2-${ll.index}`)
-          .attr('class', 'dot2 dot2-showing')
+        div.select(`#nw-dot2-${ll.index}`)
+          .attr('class', 'nw-dot2 nw-dot2-showing')
           .transition()
           .delay(transVisibleDur)
           .duration(transMoveDur)
@@ -280,24 +282,35 @@ const makeGraph = (div, nodeId, category, direct, orfee) => {
       }
     });
 
+    div
+      .transition()
+      .delay(transVisibleDur)
+      .duration(transMoveDur)
+      .style('height', `${curMaxHeight}px`);
+    svg
+      .transition()
+      .delay(transVisibleDur)
+      .duration(transMoveDur)
+      .attr('height', curMaxHeight);
+
     div.selectAll('.nw-node-div')
       .on('click', () => {});
 
-    div.select(`#node-${d.index}`)
+    div.select(`#nw-node-${d.index}`)
       .classed('nw-active-node', true)
       .on('click', a => showAll(a));
   };
 
   showAll = (d) => {
     // restore height of visible nodes
-    div.selectAll('.node-showing')
+    div.selectAll('.nw-node-showing')
       .transition()
       .duration(transMoveDur)
       .attr('class', 'nw-node-div')
       .style('top', a => `${a.y0}px`);
 
     // restore visibility of hidden nodes
-    div.selectAll('.node-hidden')
+    div.selectAll('.nw-node-hidden')
       .style('display', '')
       .transition()
       .delay(transMoveDur)
@@ -307,53 +320,62 @@ const makeGraph = (div, nodeId, category, direct, orfee) => {
       .transition();
 
     // restore position of visible links
-    div.selectAll('.link-showing')
+    div.selectAll('.nw-link-showing')
       .transition()
       .duration(transMoveDur)
-      .attr('class', 'link')
+      .attr('class', 'nw-link')
       .attr('d', sankeyLinkHorizontal());
 
     // restore visibility of hidden links
-    div.selectAll('.link-hidden')
-      .attr('class', 'link')
+    div.selectAll('.nw-link-hidden')
+      .attr('class', 'nw-link')
       .transition()
       .delay(transMoveDur)
       .duration(transVisibleDur)
       .style('opacity', 1);
 
     // restore position of visible dots
-    div.selectAll('.dot1-showing')
+    div.selectAll('.nw-dot1-showing')
       .transition()
       .duration(transMoveDur)
-      .attr('class', 'dot1')
+      .attr('class', 'nw-dot1')
       .attr('cy', a => a.y0);
-    div.selectAll('.dot2-showing')
+    div.selectAll('.nw-dot2-showing')
       .transition()
       .duration(transMoveDur)
-      .attr('class', 'dot2')
+      .attr('class', 'nw-dot2')
       .attr('cy', a => a.target.y0 + linkYOffset);
 
     // restore visibility of hidden dots
-    div.selectAll('.dot1-hidden')
+    div.selectAll('.nw-dot1-hidden')
       .transition()
       .delay(transMoveDur)
       .duration(transVisibleDur)
-      .attr('class', 'dot1')
+      .attr('class', 'nw-dot1')
       .style('opacity', 1);
-    div.selectAll('.dot2-hidden')
+    div.selectAll('.nw-dot2-hidden')
       .transition()
       .delay(transMoveDur)
       .duration(transVisibleDur)
-      .attr('class', 'dot2')
+      .attr('class', 'nw-dot2')
       .style('opacity', 1);
 
     // remove rectangle around clicked div
-    div.select(`#node-${d.index}`)
+    div.select(`#nw-node-${d.index}`)
       .classed('nw-active-node', false);
 
     // restore clickability of all divs
     div.selectAll('.nw-node-div')
       .on('click', (a) => { hideOthers(a); });
+
+    div
+      .transition()
+      .duration(transMoveDur)
+      .style('height', `${maxHeight}px`);
+    svg
+      .transition()
+      .duration(transMoveDur)
+      .attr('height', maxHeight);
   };
 };
 

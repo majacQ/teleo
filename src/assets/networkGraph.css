@@ -1,18 +1,38 @@
+#nw-headers {
+  height: 30px;
+  position: relative;
+}
+
+.nw-header-text {
+  position: absolute;
+  color: #fff;
+  font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  padding-bottom: 3px;
+  border-bottom: 1px dotted #fff;
+}
+
 .nw-alldirect {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  font-weight: bold;
   padding-bottom: 10px;
   color: #fff;
-  font-family: sans-serif;
 }
 
 .nw-alldirect {
   cursor: pointer;
 }
 
-.nw-alldirect > a:hover {
+.nw-alldirect > span {
+  margin-left: 6px;
+}
+
+.nw-alldirect > span:hover {
   color: red;
 }
 
-.nw-alldirect > a.active {
+.nw-alldirect > span.active {
   color: red;
 }
 
@@ -24,9 +44,9 @@
   position: relative;
 }
 
-#textmeasure {
+#nw-textmeasure {
   position: absolute;
-  font-family: sans-serif;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
   line-height: normal;
   font-size: 10px;
   left: 0px;
@@ -37,7 +57,7 @@
 
 .nw-node-div {
   position: absolute;
-  font-family: sans-serif;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
   font-size: 10px;
   padding: 5px;
   box-sizing: border-box;

@@ -9,6 +9,7 @@ class NetworkGraph extends Component {
   constructor(props) {
     super(props);
     this.createNetworkGraph = this.createNetworkGraph.bind(this);
+    this.state = { direct: false };
   }
 
   componentDidMount() {
@@ -22,7 +23,6 @@ class NetworkGraph extends Component {
     // prevProps
     const { networkData } = this.props;
     if (networkData.isLoaded) {
-      select(this.node).html('');
       this.createNetworkGraph();
     }
   }
@@ -30,17 +30,49 @@ class NetworkGraph extends Component {
   createNetworkGraph() {
     const { node } = this;
     const { data, networkData } = this.props;
+    const { direct } = this.state;
 
     const div = select(node);
-    makeGraph(div, data.uid, data.class, false, networkData.data);
+    makeGraph(div, data.uid, data.class, direct, networkData.data);
   }
 
   render() {
     const { windowSize } = this.props;
+    const nodeWidth = 130;
+    const linkWidth = (windowSize.appWidth - 20 - (4 * nodeWidth)) / 3;
+    const { direct } = this.state;
     return (
-      <div id="nw-bounding" ref={(node) => { this.node = node; }}>
-        <div id="nw-bounding-inner" style={{ width: 960, height: 500 }}>
-          <svg width={windowSize.appWidth} height="500" />
+      <div>
+        <div className="nw-alldirect">
+          <span
+            className={`${!direct ? 'active' : ''}`}
+            id="nw-all"
+            onKeyPress={() => {}}
+            onClick={() => this.setState({ direct: false })}
+            role="presentation"
+          >
+            ALL
+          </span>
+          <span
+            className={`${direct ? 'active' : ''}`}
+            id="nw-direct"
+            onKeyPress={() => {}}
+            onClick={() => this.setState({ direct: true })}
+            role="presentation"
+          >
+            DIRECT
+          </span>
+        </div>
+        <div id="nw-headers">
+          <div className="nw-header-text" style={{ left: 5 }}>Health Outcome</div>
+          <div className="nw-header-text" style={{ left: 5 + nodeWidth + linkWidth }}>Pathogenesis</div>
+          <div className="nw-header-text" style={{ left: 5 + 2 * (nodeWidth + linkWidth) }}>Risk Factor</div>
+          <div className="nw-header-text" style={{ left: 5 + 3 * (nodeWidth + linkWidth) }}>Intervention</div>
+        </div>
+        <div id="nw-bounding" ref={(node) => { this.node = node; }}>
+          <div id="nw-bounding-inner" style={{ width: windowSize.appWidth - 20 }}>
+            <svg width={windowSize.appWidth - 20} />
+          </div>
         </div>
       </div>
     );
