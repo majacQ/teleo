@@ -4,6 +4,7 @@
   "private": true,
   "license": "Apache-2.0",
   "dependencies": {
+    "@material-ui/core": "^3.9.2",
     "d3-axis": "^1.0.12",
     "d3-brush": "^1.0.6",
     "d3-request": "^1.0.6",
