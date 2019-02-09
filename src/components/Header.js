@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Button from '@material-ui/core/Button';
 import { ui } from '../constants';
 import { setFilterOpen } from '../actions';
 
@@ -16,16 +17,13 @@ const Header = ({ windowSize, filterOpen, toggleFilterOpen }) => (
         <span className="header-icon icon-download" />
       </div>
       <div className="header-filters">
-        <span className="header-filter">
+        <Button className="header-filter-button">
           AGE RANGE
           <span className="icon-chevron-down header-filter-icon" />
-        </span>
-        <span
-          className={`header-filter ${filterOpen ? 'white-text' : ''}`}
+        </Button>
+        <Button
+          className={`header-filter-button ${filterOpen ? 'white-text' : ''}`}
           onClick={() => toggleFilterOpen(!filterOpen)}
-          onKeyPress={() => toggleFilterOpen(!filterOpen)}
-          role="button"
-          tabIndex="-1"
         >
           VARIABLES
           { filterOpen && (
@@ -34,10 +32,10 @@ const Header = ({ windowSize, filterOpen, toggleFilterOpen }) => (
           { !filterOpen && (
             <span className="icon-chevron-down header-filter-icon" />
           )}
-        </span>
-        <span className="header-filter">
+        </Button>
+        <Button className="header-filter-button">
           REVIEW REFERENCES
-        </span>
+        </Button>
       </div>
     </div>
   </div>

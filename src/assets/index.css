@@ -47,17 +47,17 @@ body {
   position: absolute;
   top: 0px;
   right: 150px;
-  color: #4EB8C1;
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: 1px;
   line-height: 64px;
   display: inline-block;
 }
 
-.header-filter {
+.header-filter-button {
   margin-left: 10px;
   cursor: pointer;
+  color: #4EB8C1 !important;
+  font-size: 12px !important;
+  font-weight: bold !important;
+  letter-spacing: 1px !important;
 }
 
 .header-filter:focus {
@@ -66,13 +66,13 @@ body {
 
 .header-filter-icon {
   position: relative;
-  top: 3px;
+  top: 0px;
   font-size: 18px;
   width: 19px;
 }
 
 .white-text {
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 .header-icons {
@@ -91,6 +91,7 @@ body {
 }
 
 .filters-container {
+  top: 0px;
   display: flex;
   position: fixed;
   margin-left: auto;
@@ -144,6 +145,23 @@ body {
   position: absolute;
   top: 80px;
   margin-left: -20px;
+}
+
+/* this is for the last column that needs to be higher */
+.filter-column-content2 {
+  top: 65px;
+}
+
+.filter-column-orfi-text {
+  color: #cccccc;
+  font-size: 14px;  
+}
+
+.orfi-add {
+  border-bottom: 1px solid #6B6B6D;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  margin-right: 20px;
 }
 
 .filter-button {
@@ -476,19 +494,6 @@ body {
 .expand-info-wrapper {
   background: #2D3738;
 }
-
-.expand-info-enter {
-  transform: scaleY(0);
-}
-.expand-info-enter-active {
-  transform: scaleY(1);
-  transition: all 300ms ease-out;
-}
-.expand-info-exit {
-}
-.expand-info-exit-active {
-}
-
 
 .expand-info-header {
   padding-bottom: 15px;

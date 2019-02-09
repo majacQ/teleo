@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Button from '@material-ui/core/Button';
 import { setFilters, setFilterOpen } from '../actions';
 import { ui } from '../constants';
 
@@ -12,10 +13,9 @@ const FilterVariable = ({
     return '';
   }
 
-  // https://www.npmjs.com/package/react-click-outside
   return (
     <ClickAwayListener onClickAway={closeFilter}>
-      <div className="filters-container" style={{ width: windowSize.appWidth, top: ui.header.height, left: windowSize.appLeft }}>
+      <div className="filters-container" style={{ width: windowSize.appWidth, marginTop: ui.header.height, left: windowSize.appLeft }}>
         <div className="filter-column">
           <div className="filter-column-header">
             <span>Organogenesis, Growth, & Maturation</span>
@@ -58,7 +58,19 @@ const FilterVariable = ({
           <div className="filter-column-header">
             <span>Outcomes, Risk Factors, & Interventions</span>
           </div>
-          <div className="filter-column-content" />
+          <div className="filter-column-content filter-column-content2">
+            <div className="orfi-add">
+              <Button className="header-filter-button">
+                Add
+                <span className="icon-chevron-right header-filter-icon" />
+              </Button>
+            </div>
+            <div className="filter-column-orfi-text">
+              Disease Pathology consists of four main categories: Health Outcomes, Pathogenesis,
+              Risk Factors, and Interventions.
+              This section connects the links between these categories.
+            </div>
+          </div>
         </div>
       </div>
     </ClickAwayListener>
