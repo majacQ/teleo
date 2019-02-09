@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Button from '@material-ui/core/Button';
-import { setFilters, setFilterOpen } from '../actions';
+import FilterPathway from './FilterPathway';
+import { setFilters, setFilterOpen, setPathwayOpen } from '../actions';
 import { ui } from '../constants';
 
 const FilterVariable = ({
-  windowSize, filters, filterOpen, data, toggleFilters, closeFilter
+  windowSize, filters, filterOpen, data, toggleFilters, closeFilter, openPathway
 }) => {
   if (filterOpen === false || data.ogm === undefined) {
     return '';
@@ -60,7 +61,7 @@ const FilterVariable = ({
           </div>
           <div className="filter-column-content filter-column-content2">
             <div className="orfi-add">
-              <Button className="header-filter-button">
+              <Button className="header-filter-button" onClick={openPathway}>
                 Add
                 <span className="icon-chevron-right header-filter-icon" />
               </Button>
@@ -72,6 +73,7 @@ const FilterVariable = ({
             </div>
           </div>
         </div>
+        <FilterPathway />
       </div>
     </ClickAwayListener>
   );
@@ -83,7 +85,8 @@ FilterVariable.propTypes = {
   filterOpen: PropTypes.bool.isRequired,
   data: PropTypes.object.isRequired,
   toggleFilters: PropTypes.func.isRequired,
-  closeFilter: PropTypes.func.isRequired
+  closeFilter: PropTypes.func.isRequired,
+  openPathway: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -99,6 +102,9 @@ const mapDispatchToProps = dispatch => ({
   },
   closeFilter: () => {
     dispatch(setFilterOpen(false));
+  },
+  openPathway: () => {
+    dispatch(setPathwayOpen(true));
   }
 });
 

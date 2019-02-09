@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 
 import {
   SET_AGE_RANGE, SET_FOCUS_SCALE, REQUEST_DATA, RECEIVE_DATA, SET_COLLAPSED_GROUP,
-  REQUEST_NETWORK_DATA, RECEIVE_NETWORK_DATA, SET_SELECTED_ORFI,
+  REQUEST_NETWORK_DATA, RECEIVE_NETWORK_DATA, SET_SELECTED_ORFI, SET_PATHWAY_OPEN,
   SET_FILTERS, SET_FILTER_OPEN, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED, ui
 } from '../constants';
 
@@ -65,6 +65,15 @@ const selectedORFI = (state = {
 const filterOpen = (state = false, action) => {
   switch (action.type) {
     case SET_FILTER_OPEN:
+      return action.val;
+    default:
+  }
+  return state;
+};
+
+const pathwayOpen = (state = false, action) => {
+  switch (action.type) {
+    case SET_PATHWAY_OPEN:
       return action.val;
     default:
   }
@@ -224,6 +233,7 @@ const reducers = combineReducers({
   filters,
   selectedORFI,
   filterOpen,
+  pathwayOpen,
   expanded,
   pinned,
   collapsedGroups,
