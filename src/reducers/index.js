@@ -52,11 +52,29 @@ const filters = (state = { ogm: ['Gastrointestinal', 'Genitourinary'], nd: [] },
 };
 
 const selectedORFI = (state = {
-  ho: ['ho_1', 'ho_2'], rf: [], path: [], int: ['int_1', 'int_2']
+  ho: [], rf: [], int: []
 }, action) => {
   switch (action.type) {
-    case SET_SELECTED_ORFI:
-      return Object.assign({}, {}, action.val);
+    case SET_SELECTED_ORFI: {
+      let newState = Object.assign({}, state);
+      const { val, group, type } = action.data;
+      if (type === 'add') {
+        const idx = newState[group].indexOf(val);
+        if (idx < 0) {
+          newState[group].push(val);
+        } else {
+          newState[group].splice(idx, 1);
+        }
+      } else if (type === 'remove') {
+        const idx = newState[group].indexOf(val);
+        if (idx > -1) {
+          newState[group].splice(idx, 1);
+        }
+      } else if (type === 'clear-all') {
+        newState = { ho: [], rf: [], int: [] };
+      }
+      return newState;
+    }
     default:
   }
   return state;

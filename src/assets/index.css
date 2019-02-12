@@ -229,6 +229,29 @@ body {
   margin-right: 20px;
 }
 
+.pathway-multi-select {
+  width: 300px;
+  display: inline-block;
+}
+
+.pathway-chip {
+  border: 1px solid #6B6B6D !important;
+  background-color: #202A2B !important;
+  color: #ffffff !important;
+  margin: 2px;
+}
+
+.pathway-chip span {
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pathway-chip svg path {
+  fill: #6F7F8F !important;
+}
+
 .slider-container {
   position: absolute;
   left: 0px;
@@ -578,3 +601,120 @@ body {
 }
 
 /* end events elements */
+
+
+
+/* select */
+
+.react-autosuggest__container {
+  position: relative;
+  display: inline-block;
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+
+.react-autosuggest__input {
+  width: 240px;
+  height: 30px;
+  padding-left: 15px;
+  font-weight: 300;
+  font-size: 16px;
+  height: 48px;
+  width: 320px;
+  box-sizing: border-box;
+  color: #ABABAB;
+  font-family: "Roboto Condensed";
+  font-size: 16px;
+  line-height: 24px;
+  background: #202A2B;
+  border: 1px solid #939598;  
+}
+
+.react-autosuggest__input:focus {
+  background-color: rgba(255,255,255,0.1);
+  outline: none;
+}
+
+.react-autosuggest__input--open {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.react-autosuggest__suggestions-container {
+  display: none;
+}
+
+.react-autosuggest__suggestions-container--open {
+  display: block;
+  position: absolute;
+  top: 51px;
+  width: 320px;
+  border: 1px solid #6B6B6D;
+  background-color: #202A2B;
+  font-family: "Roboto Condensed";
+  font-size: 16px;
+  line-height: 32px;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.12), 0 3px 6px 0 rgba(0,0,0,0.24);
+  box-sizing: border-box;
+  font-weight: 300;
+  font-size: 16px;
+  z-index: 2;
+  max-height: 450px;
+  overflow-y: auto;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.react-autosuggest__suggestions-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.react-autosuggest__suggestion-match {
+  color: white;
+  font-weight: bold;
+}
+
+.suggestion-container {
+  display: flex;
+  cursor: pointer;
+  padding-left: 10px;
+}
+
+.suggestion-container--highlighted {
+  background-color: #6B6B6D;
+}
+
+.suggestion-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 
+container: 320
+lr padding: 20
+ho: 91
+rf: 64
+int: 68
+*/
+
+.suggestion-text-ho {
+  max-width: 209px;
+}
+
+.suggestion-text-rf {
+  max-width: 236px;
+}
+
+.suggestion-text-int {
+  max-width: 232px;
+}
+
+.suggestion-class {
+  padding-left: 5px;
+  color: #939598;
+  font-family: Roboto;
+  font-size: 12px;
+}

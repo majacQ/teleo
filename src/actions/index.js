@@ -31,9 +31,9 @@ export const setPathwayOpen = val => ({
   val
 });
 
-export const setSelectedORFI = val => ({
+export const setSelectedORFI = data => ({
   type: SET_SELECTED_ORFI,
-  val
+  data
 });
 
 export const setCollapsedGroup = data => ({

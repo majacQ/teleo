@@ -16,7 +16,7 @@ const FilterVariable = ({
 
   return (
     <ClickAwayListener onClickAway={closeFilter}>
-      <div className="filters-container" style={{ width: windowSize.appWidth, marginTop: ui.header.height, left: windowSize.appLeft }}>
+      <div className="filters-container" style={{ width: windowSize.appWidth, marginTop: ui.header.height - 4, left: windowSize.appLeft }}>
         <div className="filter-column">
           <div className="filter-column-header">
             <span>Organogenesis, Growth, & Maturation</span>
