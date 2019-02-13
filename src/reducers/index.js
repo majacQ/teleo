@@ -3,10 +3,11 @@ import { combineReducers } from 'redux';
 import {
   SET_AGE_RANGE, SET_FOCUS_SCALE, REQUEST_DATA, RECEIVE_DATA, SET_COLLAPSED_GROUP,
   REQUEST_NETWORK_DATA, RECEIVE_NETWORK_DATA, SET_SELECTED_ORFI, SET_PATHWAY_OPEN,
-  SET_FILTERS, SET_FILTER_OPEN, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED, ui
+  SET_FILTERS, SET_FILTER_OPEN, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED,
+  SET_AGERANGE_OPEN, ui
 } from '../constants';
 
-const ageRange = (state = [39.99, 120], action) => {
+const ageRange = (state = [39.999, 120], action) => {
   switch (action.type) {
     case SET_AGE_RANGE:
       return Object.assign([], [], action.val);
@@ -75,6 +76,15 @@ const selectedORFI = (state = {
       }
       return newState;
     }
+    default:
+  }
+  return state;
+};
+
+const ageRangeOpen = (state = false, action) => {
+  switch (action.type) {
+    case SET_AGERANGE_OPEN:
+      return action.val;
     default:
   }
   return state;
@@ -250,6 +260,7 @@ const reducers = combineReducers({
   timelineFocusScale,
   filters,
   selectedORFI,
+  ageRangeOpen,
   filterOpen,
   pathwayOpen,
   expanded,

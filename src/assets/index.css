@@ -90,6 +90,95 @@ body {
   cursor: pointer;
 }
 
+.agerange-container {
+  top: 0px;
+  position: fixed;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #3D5052;
+  background-color: #202A2B;
+  box-sizing: border-box;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12), 0 4px 4px 0 rgba(0, 0, 0, 0.24);
+  padding-left: 23px;
+  padding-right: 23px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: #FFFFFF;
+}
+
+.agerange-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.agerange-row-divider {
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+
+.age-num-input {
+  height: 48px;
+  width: 75px;
+  margin-top: 0px !important;
+  margin-right: 10px !important;
+}
+
+.age-num-input fieldset {
+  border: 1px solid #939598 !important;
+  border-radius: 0px !important;
+}
+
+.age-num-input input {
+  font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif !important;
+  color: #ffffff !important;  
+}
+
+.age-units-input {
+  height: 48px;
+  width: 115px;
+  font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif !important;
+  color: #ffffff !important;  
+}
+
+.age-units-input path {
+  color: #ffffff !important;
+}
+
+.age-units-input fieldset {
+  border: 1px solid #939598 !important;
+}
+
+.age-units-legend {
+  color: #939598 !important;
+  font-size: 14px !important;
+  line-height: 32px !important;
+}
+
+.age-radio path {
+  fill: #ffffff !important;
+}
+
+.age-radio-label span {
+  color: #FFFFFF !important;
+  font-family: Roboto;
+  font-size: 14px;
+  line-height: 32px;
+}
+
+.age-radio-label input {
+  height: 20px !important;
+}
+
+.age-radio-checked path {
+  fill: #50b5bd !important;
+}
+
+/* :focus {
+  outline-color: red !important;
+} */
+
 .filters-container {
   top: 0px;
   display: flex;

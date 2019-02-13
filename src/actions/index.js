@@ -3,7 +3,8 @@ import {
   SET_AGE_RANGE, SET_FOCUS_SCALE, REQUEST_DATA, RECEIVE_DATA,
   SET_FILTERS, SET_FILTER_OPEN, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED,
   SET_COLLAPSED_GROUP, REQUEST_NETWORK_DATA, RECEIVE_NETWORK_DATA,
-  SET_SELECTED_ORFI, SET_PATHWAY_OPEN
+  SET_SELECTED_ORFI, SET_PATHWAY_OPEN, SET_AGERANGE_OPEN
+
 } from '../constants';
 
 export const setAgeRange = val => ({
@@ -19,6 +20,11 @@ export const setTimelineFocusScale = val => ({
 export const setFilters = data => ({
   type: SET_FILTERS,
   data
+});
+
+export const setAgeRangeOpen = val => ({
+  type: SET_AGERANGE_OPEN,
+  val
 });
 
 export const setFilterOpen = val => ({

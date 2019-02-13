@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import { ui } from '../constants';
-import { setFilterOpen } from '../actions';
+import { setFilterOpen, setAgeRangeOpen } from '../actions';
 
-const Header = ({ windowSize, filterOpen, toggleFilterOpen }) => (
+const Header = ({
+  windowSize, ageRangeOpen, filterOpen, toggleFilterOpen
+  // toggleAgeRangeOpen
+}) => (
   <div className="header-wrapper" style={{ height: ui.header.height, width: windowSize.width }}>
     <div className="header" style={{ height: ui.header.height, width: windowSize.appWidth, left: windowSize.appLeft }}>
       <div className="header-text">
@@ -17,13 +20,21 @@ const Header = ({ windowSize, filterOpen, toggleFilterOpen }) => (
         <span className="header-icon icon-download" />
       </div>
       <div className="header-filters">
-        <Button className="header-filter-button">
+        {/* <Button
+          className={`header-filter-button ${ageRangeOpen ? 'white-text' : ''}`}
+          onClick={() => toggleAgeRangeOpen(!ageRangeOpen, filterOpen)}
+        >
           AGE RANGE
-          <span className="icon-chevron-down header-filter-icon" />
-        </Button>
+          { ageRangeOpen && (
+            <span className="icon-chevron-up header-filter-icon" />
+          )}
+          { !ageRangeOpen && (
+            <span className="icon-chevron-down header-filter-icon" />
+          )}
+        </Button> */}
         <Button
           className={`header-filter-button ${filterOpen ? 'white-text' : ''}`}
-          onClick={() => toggleFilterOpen(!filterOpen)}
+          onClick={() => toggleFilterOpen(!filterOpen, ageRangeOpen)}
         >
           VARIABLES
           { filterOpen && (
@@ -44,17 +55,29 @@ const Header = ({ windowSize, filterOpen, toggleFilterOpen }) => (
 Header.propTypes = {
   windowSize: PropTypes.object.isRequired,
   filterOpen: PropTypes.bool.isRequired,
+  ageRangeOpen: PropTypes.bool.isRequired,
   toggleFilterOpen: PropTypes.func.isRequired
+  // toggleAgeRangeOpen: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   windowSize: state.windowSize,
+  ageRangeOpen: state.ageRangeOpen,
   filterOpen: state.filterOpen
 });
 
 const mapDispatchToProps = dispatch => ({
-  toggleFilterOpen: (val) => {
+  toggleFilterOpen: (val, ageRangeOpen) => {
     dispatch(setFilterOpen(val));
+    if (ageRangeOpen) {
+      dispatch(setAgeRangeOpen(false));
+    }
+  },
+  toggleAgeRangeOpen: (val, filterOpen) => {
+    dispatch(setAgeRangeOpen(val));
+    if (filterOpen) {
+      dispatch(setFilterOpen(false));
+    }
   }
 });
 
