@@ -452,13 +452,16 @@ class AgeSlider extends Component {
 
       // update the ticks in the focused timeline view
       focus.select('.axis--x4')
+        .transition()
         .call(xAxisFoc)
         .selectAll('text')
         .attr('y', 2)
         .attr('x', 2)
         .style('text-anchor', 'start');
 
-      focus.select('.axis--x5').call(xAxisFoc2);
+      focus.select('.axis--x5')
+        .transition()
+        .call(xAxisFoc2);
     }
 
     brush
