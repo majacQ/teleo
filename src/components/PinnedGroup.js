@@ -12,9 +12,9 @@ const PinnedGroup = ({
         Pinned Events
         <span className="icon-bookmark pinned-icon" />
       </div>
-      <div className="pinned-button">
+      {/* <div className="pinned-button">
         Compare Details
-      </div>
+      </div> */}
     </div>
     { data.length > 0 && (
       <EventsList data={data} gid="pinned" pinned />
