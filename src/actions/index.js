@@ -3,8 +3,8 @@ import {
   SET_AGE_RANGE, SET_FOCUS_SCALE, REQUEST_DATA, RECEIVE_DATA,
   SET_FILTERS, SET_FILTER_OPEN, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED,
   SET_COLLAPSED_GROUP, REQUEST_NETWORK_DATA, RECEIVE_NETWORK_DATA,
-  SET_SELECTED_ORFI, SET_PATHWAY_OPEN, SET_AGERANGE_OPEN
-
+  SET_SELECTED_ORFI, SET_PATHWAY_OPEN, SET_AGERANGE_OPEN,
+  REQUEST_REFS_DATA, RECEIVE_REFS_DATA
 } from '../constants';
 
 export const setAgeRange = val => ({
@@ -92,6 +92,16 @@ export const receiveData = dat => ({
   receivedAt: Date.now()
 });
 
+export const requestRefsData = () => ({
+  type: REQUEST_REFS_DATA
+});
+
+export const receiveRefsData = dat => ({
+  type: RECEIVE_REFS_DATA,
+  data: dat,
+  receivedAt: Date.now()
+});
+
 export const requestNetworkData = () => ({
   type: REQUEST_NETWORK_DATA
 });
@@ -127,6 +137,13 @@ export const fetchData = url => (dispatch) => {
     });
 
     dispatch(receiveData(dat));
+  });
+};
+
+export const fetchRefsData = url => (dispatch) => {
+  dispatch(requestRefsData());
+  json(url, (dat) => {
+    dispatch(receiveRefsData(dat));
   });
 };
 

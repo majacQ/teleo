@@ -689,6 +689,24 @@ body {
   line-height: 18px;
 }
 
+.expand-info-expand-refs {
+  color: #4EB8C1;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  line-height: 25px;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.expand-info-ref-button {
+  font-size: 18px;
+  position: relative;
+  top: 3px;
+  cursor: pointer;
+}
+
 /* end events elements */
 
 

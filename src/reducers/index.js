@@ -4,7 +4,7 @@ import {
   SET_AGE_RANGE, SET_FOCUS_SCALE, REQUEST_DATA, RECEIVE_DATA, SET_COLLAPSED_GROUP,
   REQUEST_NETWORK_DATA, RECEIVE_NETWORK_DATA, SET_SELECTED_ORFI, SET_PATHWAY_OPEN,
   SET_FILTERS, SET_FILTER_OPEN, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED,
-  SET_AGERANGE_OPEN, ui
+  SET_AGERANGE_OPEN, REQUEST_REFS_DATA, RECEIVE_REFS_DATA, ui
 } from '../constants';
 
 const ageRange = (state = [39.999, 120], action) => {
@@ -229,6 +229,32 @@ const timelineData = (state = {
   }
 };
 
+const refsData = (state = {
+  isFetching: false,
+  isLoaded: false,
+  didInvalidate: false,
+  data: {}
+}, action) => {
+  switch (action.type) {
+    case REQUEST_REFS_DATA:
+      return Object.assign({}, state, {
+        isFetching: true,
+        isLoaded: false,
+        didInvalidate: false
+      });
+    case RECEIVE_REFS_DATA:
+      return Object.assign({}, state, {
+        isFetching: false,
+        didInvalidate: false,
+        isLoaded: true,
+        data: action.data,
+        lastUpdated: action.receivedAt
+      });
+    default:
+      return state;
+  }
+};
+
 const networkData = (state = {
   isFetching: false,
   isLoaded: false,
@@ -267,6 +293,7 @@ const reducers = combineReducers({
   pinned,
   collapsedGroups,
   timelineData,
+  refsData,
   networkData,
   windowSize
 });

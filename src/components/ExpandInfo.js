@@ -1,19 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+// import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Collapse from '@material-ui/core/Collapse';
 import { niceAge } from '../utils/ageCalc';
 import NetworkGraph from './NetworkGraph';
+import RefsList from './RefsList';
 // import { CSSTransition } from 'react-transition-group';
 
 const ExpandInfo = ({
-  data, windowSize
+  data, refsData, windowSize
 }) => {
-  const [expand, setExpand] = useState(false);
+  const [refExpanded, setRefExpand] = useState(false);
 
-  useEffect(() => {
-    setExpand(true);
-  });
+  const [expand] = useState(true);
+  // // useEffect causes the component to render over and over and over
+  // const [expand, setExpand] = useState(true);
+  // useEffect(() => {
+  //   setExpand(true);
+  // });
+  // console.log('rendering a lot...')
 
   const focWidth = windowSize.appWidth;
 
@@ -60,6 +66,18 @@ const ExpandInfo = ({
             { data.class === undefined && data.desc_long}
           </div>
           <div className="expand-info-hline" />
+          <div className="expand-info-expand-refs">
+            <span>
+              {`${refExpanded ? 'HIDE' : 'EXPAND'} REFERENCES`}
+              <span
+                className={`icon-chevron-${refExpanded ? 'up' : 'down'} expand-info-ref-button`}
+                onClick={() => { setRefExpand(!refExpanded); }}
+                onKeyPress={() => {}}
+                role="presentation"
+              />
+            </span>
+          </div>
+          {refExpanded ? <RefsList data={refsData} indices={data.refs} /> : '' }
         </div>
       </div>
     </Collapse>
@@ -68,11 +86,13 @@ const ExpandInfo = ({
 
 ExpandInfo.propTypes = {
   data: PropTypes.object.isRequired,
+  refsData: PropTypes.object.isRequired,
   windowSize: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   windowSize: state.windowSize,
+  refsData: state.refsData,
   networkData: state.networkData
 });
 

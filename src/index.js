@@ -7,7 +7,7 @@ import { createLogger } from 'redux-logger';
 import { throttle } from 'throttle-debounce';
 // import 'typeface-roboto';
 // import 'typeface-roboto-condensed';
-import { fetchData, fetchNetworkData, windowResize } from './actions';
+import { fetchData, fetchRefsData, fetchNetworkData, windowResize } from './actions';
 import { ui } from './constants';
 
 import './assets/index.css';
@@ -61,6 +61,7 @@ if (module.hot) {
 // TODO: move this to the filtering components to call fetchData when filters are updated
 // for now, while designing the vis components, this is a fixed source
 store.dispatch(fetchData('events.json'));
+store.dispatch(fetchRefsData('refs.json'));
 store.dispatch(fetchNetworkData('orfi.json'));
 
 const resize = () => {
