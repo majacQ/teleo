@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const RefsList = ({
-  data, indices
+  data, indices, nCol
 }) => {
   if (data.data === undefined) {
     return '';
@@ -16,7 +16,7 @@ const RefsList = ({
   });
 
   return (
-    <div className="expand-info-ref-content">
+    <div className="expand-info-ref-content" style={{ columnCount: Math.min(nCol, indices.length) }}>
       { refDat.map((cd) => {
         const author = cd.author === null || cd.author === undefined ? '' : `${cd.author}.`;
         const cat = cd.chapter_article_title === null || cd.chapter_article_title === undefined ? '' : ` ${cd.chapter_article_title}.`;
@@ -50,7 +50,8 @@ const RefsList = ({
 
 RefsList.propTypes = {
   data: PropTypes.object.isRequired,
-  indices: PropTypes.array.isRequired
+  indices: PropTypes.array.isRequired,
+  nCol: PropTypes.number.isRequired
 };
 
 export default RefsList;

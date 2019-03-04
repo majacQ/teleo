@@ -38,12 +38,10 @@ const ExpandInfo = ({
     const lnks = networkData.data.links;
     lnks.forEach((d) => {
       if (d[cls] === data.id && dcheck.indexOf(d.direct) > -1) {
-        console.log(d)
         refs = refs.concat(d.refs);
       }
     });
     refs = refs.filter((item, i, ar) => ar.indexOf(item) === i);
-    console.log(refs.sort());
   }
   // if it's a "pathway" event, we need to get the reference indices from the graph
 
@@ -103,7 +101,7 @@ const ExpandInfo = ({
               />
             </span>
           </div>
-          {refExpanded ? <RefsList data={refsData} indices={refs} /> : '' }
+          {refExpanded ? <RefsList data={refsData} indices={refs} nCol={Math.ceil(windowSize.appWidth / 350)} /> : '' }
         </div>
       </div>
     </Collapse>
