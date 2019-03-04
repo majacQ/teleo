@@ -7,7 +7,9 @@ import { createLogger } from 'redux-logger';
 import { throttle } from 'throttle-debounce';
 // import 'typeface-roboto';
 // import 'typeface-roboto-condensed';
-import { fetchData, fetchRefsData, fetchNetworkData, windowResize } from './actions';
+import {
+  fetchData, fetchRefsData, fetchNetworkData, windowResize
+} from './actions';
 import { ui } from './constants';
 
 import './assets/index.css';
