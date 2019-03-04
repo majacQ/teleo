@@ -9,7 +9,7 @@ import RefsList from './RefsList';
 // import { CSSTransition } from 'react-transition-group';
 
 const ExpandInfo = ({
-  data, refsData, windowSize
+  data, refsData, networkData, windowSize
 }) => {
   const [refExpanded, setRefExpand] = useState(false);
 
@@ -22,6 +22,30 @@ const ExpandInfo = ({
   // console.log('rendering a lot...')
 
   const focWidth = windowSize.appWidth;
+
+  const direct = false;
+
+  // if this is a regular event, ref indices are stored in the data
+  let refs = [];
+  if (data.class === undefined) {
+    ({ refs } = data);
+  } else {
+    let dcheck = ['NA', 'Y', 'N'];
+    if (direct === true) {
+      dcheck = ['NA', 'Y'];
+    }
+    const cls = data.class;
+    const lnks = networkData.data.links;
+    lnks.forEach((d) => {
+      if (d[cls] === data.id && dcheck.indexOf(d.direct) > -1) {
+        console.log(d)
+        refs = refs.concat(d.refs);
+      }
+    });
+    refs = refs.filter((item, i, ar) => ar.indexOf(item) === i);
+    console.log(refs.sort());
+  }
+  // if it's a "pathway" event, we need to get the reference indices from the graph
 
   return (
     <Collapse in={expand}>
@@ -67,17 +91,19 @@ const ExpandInfo = ({
           </div>
           <div className="expand-info-hline" />
           <div className="expand-info-expand-refs">
-            <span>
-              {`${refExpanded ? 'HIDE' : 'EXPAND'} REFERENCES`}
+            <span
+              className="expand-info-ref-link"
+              onClick={() => { setRefExpand(!refExpanded); }}
+              onKeyPress={() => {}}
+              role="presentation"
+            >
+              {`${refExpanded ? 'HIDE' : 'EXPAND'} REFERENCES (${refs.length})`}
               <span
                 className={`icon-chevron-${refExpanded ? 'up' : 'down'} expand-info-ref-button`}
-                onClick={() => { setRefExpand(!refExpanded); }}
-                onKeyPress={() => {}}
-                role="presentation"
               />
             </span>
           </div>
-          {refExpanded ? <RefsList data={refsData} indices={data.refs} /> : '' }
+          {refExpanded ? <RefsList data={refsData} indices={refs} /> : '' }
         </div>
       </div>
     </Collapse>
@@ -87,13 +113,14 @@ const ExpandInfo = ({
 ExpandInfo.propTypes = {
   data: PropTypes.object.isRequired,
   refsData: PropTypes.object.isRequired,
+  networkData: PropTypes.object.isRequired,
   windowSize: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   windowSize: state.windowSize,
-  refsData: state.refsData,
-  networkData: state.networkData
+  networkData: state.networkData,
+  refsData: state.refsData
 });
 
 export default connect(
