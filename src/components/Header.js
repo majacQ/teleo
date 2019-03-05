@@ -16,8 +16,8 @@ const Header = ({
       </div>
       <div className="header-icons">
         <span className="header-icon icon-search2" />
-        <span className="header-icon icon-link" />
-        <span className="header-icon icon-download" />
+        {/* <span className="header-icon icon-link" />
+        <span className="header-icon icon-download" /> */}
       </div>
       <div className="header-filters">
         <Button

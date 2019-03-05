@@ -73,6 +73,8 @@ const selectedORFI = (state = {
         }
       } else if (type === 'clear-all') {
         newState = { ho: [], rf: [], int: [] };
+      } else if (type === 'remove-all-in-group') {
+        newState[group] = [];
       }
       return newState;
     }

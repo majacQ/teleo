@@ -28,7 +28,7 @@ const Body = ({
         onClick={() => {
           const res = [...filters.ogm.map(d => `ogm_${d}`), ...filters.nd.map(d => `nd_${d}`)];
           const keys = Object.keys(orfi);
-          keys.forEach((d) => { if (orfi[d].length > 0) { res.push(`orfi_${d}`); } });
+          keys.forEach((d) => { if (orfi[d].length > 0) { res.push(d); } });
           collapseAll(res);
         }}
         onKeyPress={() => {}}
@@ -100,7 +100,7 @@ const Body = ({
             <EventsGroup
               key={k}
               data={curDat.data.filter(d => orfi[k].indexOf(d.uid) > -1)}
-              gid={`orfi_${k}`}
+              gid={k}
               category=""
               subcategory={curDat.name}
               group="orfi"
@@ -177,7 +177,7 @@ const mapDispatchToProps = dispatch => ({
   },
   clearFilters: () => {
     dispatch(setFilters({ type: 'clear-all' }));
-    dispatch(setSelectedORFI({}));
+    dispatch(setSelectedORFI({ type: 'clear-all' }));
   }
 });
 

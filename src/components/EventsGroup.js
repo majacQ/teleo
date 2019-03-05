@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import EventsList from './EventsList';
-import { setFilters, setCollapsedGroup } from '../actions';
+import { setFilters, setSelectedORFI, setCollapsedGroup } from '../actions';
 
 const EventsGroup = ({
   windowSize, collapsedGroups, removeGroup, toggleCollapse, data, subcategory, category, gid, group
@@ -64,11 +64,19 @@ const mapDispatchToProps = dispatch => ({
     dispatch(setCollapsedGroup({ val, type: 'toggle' }));
   },
   removeGroup: (val, group, gid) => {
-    dispatch(setFilters({ val, group, type: 'unset' }));
-    // if it is collapsed, remove it so it won't be collapsed next time it is selected
-    // it's arguable whether we should do this, but it will help ensure the user doesn't
-    // just think there are no events when selecting the category the next time
-    dispatch(setCollapsedGroup({ val: gid, type: 'unset' }));
+    if (group === 'orfi') {
+      dispatch(setSelectedORFI({ val, group: gid, type: 'remove-all-in-group' }));
+      // if it is collapsed, make it so it won't be collapsed next time it is selected
+      // it's arguable whether we should do this, but it will help ensure the user doesn't
+      // just think there are no events when selecting the category the next time
+      dispatch(setCollapsedGroup({ val: gid, type: 'unset' }));
+    } else {
+      dispatch(setFilters({ val, group, type: 'unset' }));
+      // if it is collapsed, make it so it won't be collapsed next time it is selected
+      // it's arguable whether we should do this, but it will help ensure the user doesn't
+      // just think there are no events when selecting the category the next time
+      dispatch(setCollapsedGroup({ val: gid, type: 'unset' }));
+    }
   }
 });
 
