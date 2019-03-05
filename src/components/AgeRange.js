@@ -80,6 +80,7 @@ const AgeRange = ({
     if (id !== 0) {
       updateAgeRange([ranges[id].start, ranges[id].end]);
     }
+    closeAgeRange();
   };
 
   return (
