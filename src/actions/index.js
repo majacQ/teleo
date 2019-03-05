@@ -4,7 +4,7 @@ import {
   SET_FILTERS, SET_FILTER_OPEN, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED,
   SET_COLLAPSED_GROUP, REQUEST_NETWORK_DATA, RECEIVE_NETWORK_DATA,
   SET_SELECTED_ORFI, SET_PATHWAY_OPEN, SET_AGERANGE_OPEN,
-  REQUEST_REFS_DATA, RECEIVE_REFS_DATA
+  REQUEST_REFS_DATA, RECEIVE_REFS_DATA, SET_REVIEWREFS_OPEN
 } from '../constants';
 
 export const setAgeRange = val => ({
@@ -34,6 +34,11 @@ export const setFilterOpen = val => ({
 
 export const setPathwayOpen = val => ({
   type: SET_PATHWAY_OPEN,
+  val
+});
+
+export const setReviewRefsOpen = val => ({
+  type: SET_REVIEWREFS_OPEN,
   val
 });
 

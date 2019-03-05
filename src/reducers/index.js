@@ -4,7 +4,7 @@ import {
   SET_AGE_RANGE, SET_FOCUS_SCALE, REQUEST_DATA, RECEIVE_DATA, SET_COLLAPSED_GROUP,
   REQUEST_NETWORK_DATA, RECEIVE_NETWORK_DATA, SET_SELECTED_ORFI, SET_PATHWAY_OPEN,
   SET_FILTERS, SET_FILTER_OPEN, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED,
-  SET_AGERANGE_OPEN, REQUEST_REFS_DATA, RECEIVE_REFS_DATA, ui
+  SET_AGERANGE_OPEN, REQUEST_REFS_DATA, RECEIVE_REFS_DATA, SET_REVIEWREFS_OPEN, ui
 } from '../constants';
 
 const ageRange = (state = [39.999, 120], action) => {
@@ -102,6 +102,15 @@ const filterOpen = (state = false, action) => {
 const pathwayOpen = (state = false, action) => {
   switch (action.type) {
     case SET_PATHWAY_OPEN:
+      return action.val;
+    default:
+  }
+  return state;
+};
+
+const reviewRefsOpen = (state = false, action) => {
+  switch (action.type) {
+    case SET_REVIEWREFS_OPEN:
       return action.val;
     default:
   }
@@ -289,6 +298,7 @@ const reducers = combineReducers({
   ageRangeOpen,
   filterOpen,
   pathwayOpen,
+  reviewRefsOpen,
   expanded,
   pinned,
   collapsedGroups,

@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import { ui } from '../constants';
-import { setFilterOpen, setAgeRangeOpen } from '../actions';
+import { setFilterOpen, setAgeRangeOpen, setReviewRefsOpen } from '../actions';
 
 const Header = ({
-  windowSize, ageRangeOpen, filterOpen, toggleFilterOpen
+  windowSize, ageRangeOpen, filterOpen, reviewRefsOpen, toggleFilterOpen, toggleReviewRefsOpen
   // toggleAgeRangeOpen
 }) => (
   <div className="header-wrapper" style={{ height: ui.header.height, width: windowSize.width }}>
@@ -22,7 +22,7 @@ const Header = ({
       <div className="header-filters">
         {/* <Button
           className={`header-filter-button ${ageRangeOpen ? 'white-text' : ''}`}
-          onClick={() => toggleAgeRangeOpen(!ageRangeOpen, filterOpen)}
+          onClick={() => toggleAgeRangeOpen(!ageRangeOpen, filterOpen, reviewRefsOpen)}
         >
           AGE RANGE
           { ageRangeOpen && (
@@ -34,7 +34,7 @@ const Header = ({
         </Button> */}
         <Button
           className={`header-filter-button ${filterOpen ? 'white-text' : ''}`}
-          onClick={() => toggleFilterOpen(!filterOpen, ageRangeOpen)}
+          onClick={() => toggleFilterOpen(!filterOpen, ageRangeOpen, reviewRefsOpen)}
         >
           VARIABLES
           { filterOpen && (
@@ -44,8 +44,17 @@ const Header = ({
             <span className="icon-chevron-down header-filter-icon" />
           )}
         </Button>
-        <Button className="header-filter-button">
+        <Button
+          className={`header-filter-button ${reviewRefsOpen ? 'white-text' : ''}`}
+          onClick={() => toggleReviewRefsOpen(!reviewRefsOpen, filterOpen, ageRangeOpen)}
+        >
           REVIEW REFERENCES
+          { reviewRefsOpen && (
+            <span className="icon-chevron-up header-filter-icon" />
+          )}
+          { !reviewRefsOpen && (
+            <span className="icon-chevron-down header-filter-icon" />
+          )}
         </Button>
       </div>
     </div>
@@ -56,27 +65,45 @@ Header.propTypes = {
   windowSize: PropTypes.object.isRequired,
   filterOpen: PropTypes.bool.isRequired,
   ageRangeOpen: PropTypes.bool.isRequired,
-  toggleFilterOpen: PropTypes.func.isRequired
-  // toggleAgeRangeOpen: PropTypes.func.isRequired
+  reviewRefsOpen: PropTypes.bool.isRequired,
+  toggleFilterOpen: PropTypes.func.isRequired,
+  // toggleAgeRangeOpen: PropTypes.func.isRequired,
+  toggleReviewRefsOpen: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   windowSize: state.windowSize,
   ageRangeOpen: state.ageRangeOpen,
-  filterOpen: state.filterOpen
+  filterOpen: state.filterOpen,
+  reviewRefsOpen: state.reviewRefsOpen
 });
 
 const mapDispatchToProps = dispatch => ({
-  toggleFilterOpen: (val, ageRangeOpen) => {
+  toggleFilterOpen: (val, ageRangeOpen, reviewRefsOpen) => {
     dispatch(setFilterOpen(val));
     if (ageRangeOpen) {
       dispatch(setAgeRangeOpen(false));
     }
+    if (reviewRefsOpen) {
+      dispatch(setReviewRefsOpen(false));
+    }
   },
-  toggleAgeRangeOpen: (val, filterOpen) => {
+  toggleAgeRangeOpen: (val, filterOpen, reviewRefsOpen) => {
     dispatch(setAgeRangeOpen(val));
     if (filterOpen) {
       dispatch(setFilterOpen(false));
+    }
+    if (reviewRefsOpen) {
+      dispatch(setReviewRefsOpen(false));
+    }
+  },
+  toggleReviewRefsOpen: (val, filterOpen, ageRangeOpen) => {
+    dispatch(setReviewRefsOpen(val));
+    if (filterOpen) {
+      dispatch(setFilterOpen(false));
+    }
+    if (ageRangeOpen) {
+      dispatch(setAgeRangeOpen(false));
     }
   }
 });

@@ -5,6 +5,7 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { throttle } from 'throttle-debounce';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 // import 'typeface-roboto';
 // import 'typeface-roboto-condensed';
 import {
@@ -44,9 +45,22 @@ if (process.env.NODE_ENV !== 'production') {
   );
 }
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#4EB8C1'
+    },
+    secondary: {
+      main: '#4EB8C1'
+    }
+  }
+});
+
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <MuiThemeProvider theme={theme}>
+      <App />
+    </MuiThemeProvider>
   </Provider>,
   document.getElementById('root'));
 
@@ -54,7 +68,9 @@ if (module.hot) {
   module.hot.accept('./App', () => {
     ReactDOM.render(
       <Provider store={store}>
-        <App />
+        <MuiThemeProvider theme={theme}>
+          <App />
+        </MuiThemeProvider>
       </Provider>,
       document.getElementById('root'));
   });

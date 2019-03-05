@@ -15,6 +15,7 @@ export const SET_PATHWAY_OPEN = 'SET_PATHWAY_OPEN';
 export const SET_COLLAPSED_GROUP = 'SET_COLLAPSED_GROUP';
 export const SET_SELECTED_ORFI = 'SET_SELECTED_ORFI';
 export const SET_AGERANGE_OPEN = 'SET_AGERANGE_OPEN';
+export const SET_REVIEWREFS_OPEN = 'SET_REVIEWREFS_OPEN';
 
 export const ui = {
   maxWidth: 1000,

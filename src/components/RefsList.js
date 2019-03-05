@@ -17,7 +17,7 @@ const RefsList = ({
 
   return (
     <div className="expand-info-ref-content" style={{ columnCount: Math.min(nCol, indices.length) }}>
-      { refDat.map((cd) => {
+      { refDat.map((cd, i) => {
         const author = cd.author === null || cd.author === undefined ? '' : `${cd.author}.`;
         const cat = cd.chapter_article_title === null || cd.chapter_article_title === undefined ? '' : ` ${cd.chapter_article_title}.`;
         const jbwt = cd.journal_book_website_title === null || cd.journal_book_website_title === undefined ? '' : ` ${cd.journal_book_website_title}.`;
@@ -35,8 +35,9 @@ const RefsList = ({
         // place
         // publisher
 
+        const key = `ref-${i}`;
         return (
-          <div className="refs-entry">
+          <div className="refs-entry" key={key}>
             <span>
               {`${author}${cat}${jbwt}${year}${vol}${issue}${pageRange}${doi}`}
               {url}
