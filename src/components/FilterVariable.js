@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Dialog from '@material-ui/core/Dialog';
 import Button from '@material-ui/core/Button';
 import FilterPathway from './FilterPathway';
 import { setFilters, setFilterOpen, setPathwayOpen } from '../actions';
@@ -10,12 +10,12 @@ import { ui } from '../constants';
 const FilterVariable = ({
   windowSize, filters, filterOpen, data, toggleFilters, closeFilter, openPathway
 }) => {
-  if (filterOpen === false || data.ogm === undefined) {
+  if (data.ogm === undefined) {
     return '';
   }
 
   return (
-    <ClickAwayListener onClickAway={closeFilter}>
+    <Dialog open={filterOpen} onClose={closeFilter}>
       <div className="filters-container" style={{ width: windowSize.appWidth, marginTop: ui.header.height - 4, left: windowSize.appLeft }}>
         <div className="filter-column">
           <div className="filter-column-header">
@@ -75,7 +75,7 @@ const FilterVariable = ({
         </div>
         <FilterPathway />
       </div>
-    </ClickAwayListener>
+    </Dialog>
   );
 };
 
