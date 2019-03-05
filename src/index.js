@@ -60,8 +60,6 @@ if (module.hot) {
   });
 }
 
-// TODO: move this to the filtering components to call fetchData when filters are updated
-// for now, while designing the vis components, this is a fixed source
 store.dispatch(fetchData('events.json'));
 store.dispatch(fetchRefsData('refs.json'));
 store.dispatch(fetchNetworkData('orfi.json'));

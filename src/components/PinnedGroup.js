@@ -21,7 +21,8 @@ const PinnedGroup = ({
     )}
     {data.length === 0 && (
       <div className="pinned-instructions" style={{ marginLeft: windowSize.appLeft }}>
-        Pin or drag items to top for direct comparison
+        Pin items to top for direct comparison
+        {/* or drag */}
       </div>
     )}
   </div>
