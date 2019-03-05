@@ -246,28 +246,30 @@ body {
 }
 
 .pathway-container {
-  top: 0px;
-  position: fixed;
-  margin-left: auto;
-  margin-right: auto;
-  border: 1px solid #3D5052;
-  background-color: #202A2B;
+  /* top: 70px;
+  right: 20px;
+  position: absolute; */
+  /* border: 1px solid #3D5052; */
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12), 0 4px 4px 0 rgba(0, 0, 0, 0.24);
   color: #FFFFFF;
 }
-
 .pathways-container {
-  display: flex;
   box-sizing: border-box;
-  padding-left: 23px;
-  padding-right: 23px;
   padding-bottom: 10px;
 }
 
-
 .pathway-header {
-  padding-left: 20px;
-  padding-top: 10px;
+  /* padding-left: 20px; */
+  /* padding-top: 10px; */
+}
+
+.pathway-section-header {
+  font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0.25px;
+  line-height: 24px;
+  padding-top: 8px;
 }
 
 .pathway-container {
@@ -737,18 +739,17 @@ body {
 .react-autosuggest__container {
   position: relative;
   display: inline-block;
-  margin-left: 20px;
-  margin-bottom: 10px;
+  /* margin-left: 20px; */
+  /* margin-bottom: 10px; */
 }
 
 .react-autosuggest__input {
-  width: 240px;
   height: 30px;
   padding-left: 15px;
   font-weight: 300;
   font-size: 16px;
   height: 48px;
-  width: 320px;
+  width: 300px;
   box-sizing: border-box;
   color: #ABABAB;
   font-family: "Roboto Condensed";
@@ -778,7 +779,8 @@ body {
   top: 51px;
   width: 320px;
   border: 1px solid #6B6B6D;
-  background-color: #202A2B;
+  background-color: rgba(32, 42, 43, 0.9);
+  /* background-color: #202A2B; */
   font-family: "Roboto Condensed";
   font-size: 16px;
   line-height: 32px;

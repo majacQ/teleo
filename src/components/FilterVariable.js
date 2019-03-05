@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import FilterPathway from './FilterPathway';
-import { setFilters, setFilterOpen, setPathwayOpen } from '../actions';
+import { setFilters, setFilterOpen } from '../actions';
 import { ui } from '../constants';
 
 const FilterVariable = ({
-  windowSize, filters, filterOpen, data, toggleFilters, closeFilter, openPathway
+  windowSize, filters, filterOpen, data, toggleFilters, closeFilter
 }) => {
   if (data.ogm === undefined) {
     return '';
@@ -59,21 +59,10 @@ const FilterVariable = ({
           <div className="filter-column-header">
             <span>Outcomes, Risk Factors, & Interventions</span>
           </div>
-          <div className="filter-column-content filter-column-content2">
-            <div className="orfi-add">
-              <Button className="header-filter-button" onClick={openPathway}>
-                Add
-                <span className="icon-chevron-right header-filter-icon" />
-              </Button>
-            </div>
-            <div className="filter-column-orfi-text">
-              Disease Pathology consists of four main categories: Health Outcomes, Pathogenesis,
-              Risk Factors, and Interventions.
-              This section connects the links between these categories.
-            </div>
+          <div className="filter-column-content">
+            <FilterPathway />
           </div>
         </div>
-        <FilterPathway />
       </div>
     </Dialog>
   );
@@ -85,8 +74,7 @@ FilterVariable.propTypes = {
   filterOpen: PropTypes.bool.isRequired,
   data: PropTypes.object.isRequired,
   toggleFilters: PropTypes.func.isRequired,
-  closeFilter: PropTypes.func.isRequired,
-  openPathway: PropTypes.func.isRequired
+  closeFilter: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -102,9 +90,6 @@ const mapDispatchToProps = dispatch => ({
   },
   closeFilter: () => {
     dispatch(setFilterOpen(false));
-  },
-  openPathway: () => {
-    dispatch(setPathwayOpen(true));
   }
 });
 
