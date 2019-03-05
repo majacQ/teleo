@@ -6,8 +6,8 @@ import { ui } from '../constants';
 import { setFilterOpen, setAgeRangeOpen, setReviewRefsOpen } from '../actions';
 
 const Header = ({
-  windowSize, ageRangeOpen, filterOpen, reviewRefsOpen, toggleFilterOpen, toggleReviewRefsOpen
-  // toggleAgeRangeOpen
+  windowSize, ageRangeOpen, filterOpen, reviewRefsOpen,
+  toggleFilterOpen, toggleAgeRangeOpen, toggleReviewRefsOpen
 }) => (
   <div className="header-wrapper" style={{ height: ui.header.height, width: windowSize.width }}>
     <div className="header" style={{ height: ui.header.height, width: windowSize.appWidth, left: windowSize.appLeft }}>
@@ -20,7 +20,7 @@ const Header = ({
         <span className="header-icon icon-download" />
       </div>
       <div className="header-filters">
-        {/* <Button
+        <Button
           className={`header-filter-button ${ageRangeOpen ? 'white-text' : ''}`}
           onClick={() => toggleAgeRangeOpen(!ageRangeOpen, filterOpen, reviewRefsOpen)}
         >
@@ -31,7 +31,7 @@ const Header = ({
           { !ageRangeOpen && (
             <span className="icon-chevron-down header-filter-icon" />
           )}
-        </Button> */}
+        </Button>
         <Button
           className={`header-filter-button ${filterOpen ? 'white-text' : ''}`}
           onClick={() => toggleFilterOpen(!filterOpen, ageRangeOpen, reviewRefsOpen)}
@@ -67,7 +67,7 @@ Header.propTypes = {
   ageRangeOpen: PropTypes.bool.isRequired,
   reviewRefsOpen: PropTypes.bool.isRequired,
   toggleFilterOpen: PropTypes.func.isRequired,
-  // toggleAgeRangeOpen: PropTypes.func.isRequired,
+  toggleAgeRangeOpen: PropTypes.func.isRequired,
   toggleReviewRefsOpen: PropTypes.func.isRequired
 };
 

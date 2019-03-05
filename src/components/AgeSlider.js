@@ -25,9 +25,11 @@ class AgeSlider extends Component {
 
   componentDidUpdate(prevProps) {
     // only redraw if windowSize.appWidth has changed
-    const { windowSize } = this.props;
+    const { windowSize, ageRange } = this.props;
     if (prevProps.windowSize.appWidth !== windowSize.appWidth
-      || prevProps.windowSize.appLeft !== windowSize.appLeft) {
+      || prevProps.windowSize.appLeft !== windowSize.appLeft
+      || prevProps.ageRange[0] !== ageRange[0]
+      || prevProps.ageRange[1] !== ageRange[1]) {
       select(this.node).html('');
       this.createAgeSlider();
     }

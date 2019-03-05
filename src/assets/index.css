@@ -99,80 +99,42 @@ body {
   background-color: #202A2B;
   box-sizing: border-box;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12), 0 4px 4px 0 rgba(0, 0, 0, 0.24);
-  padding-left: 23px;
-  padding-right: 23px;
+  padding-left: 15px;
+  padding-right: 15px;
   padding-top: 10px;
   padding-bottom: 10px;
   color: #FFFFFF;
 }
 
-.agerange-row {
-  display: flex;
-  flex-direction: row;
-}
-
-.agerange-row-divider {
+.agerange-header {
   color: #FFFFFF;
-  font-size: 14px;
+  font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
+  font-size: 18px;
   font-weight: bold;
-  padding-bottom: 5px;
+  letter-spacing: 0.25px;
+  line-height: 24px;
+  padding-bottom: 12px;
 }
 
-.age-num-input {
+.agerange-text {
+  padding-bottom: 12px;
+  color: #cccccc;
+  font-size: 14px;  
+}
+
+.agerange-select {
   height: 48px;
-  width: 75px;
-  margin-top: 0px !important;
-  margin-right: 10px !important;
-}
-
-.age-num-input fieldset {
-  border: 1px solid #939598 !important;
-  border-radius: 0px !important;
-}
-
-.age-num-input input {
+  width: 280px;
   font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif !important;
   color: #ffffff !important;  
 }
 
-.age-units-input {
-  height: 48px;
-  width: 115px;
-  font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif !important;
-  color: #ffffff !important;  
-}
-
-.age-units-input path {
+.agerange-select path {
   color: #ffffff !important;
 }
 
-.age-units-input fieldset {
+.agerange-select fieldset {
   border: 1px solid #939598 !important;
-}
-
-.age-units-legend {
-  color: #939598 !important;
-  font-size: 14px !important;
-  line-height: 32px !important;
-}
-
-.age-radio path {
-  fill: #ffffff !important;
-}
-
-.age-radio-label span {
-  color: #FFFFFF !important;
-  font-family: Roboto;
-  font-size: 14px;
-  line-height: 32px;
-}
-
-.age-radio-label input {
-  height: 20px !important;
-}
-
-.age-radio-checked path {
-  fill: #50b5bd !important;
 }
 
 /* :focus {

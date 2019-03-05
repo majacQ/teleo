@@ -7,7 +7,7 @@ import {
   SET_AGERANGE_OPEN, REQUEST_REFS_DATA, RECEIVE_REFS_DATA, SET_REVIEWREFS_OPEN, ui
 } from '../constants';
 
-const ageRange = (state = [39.999, 120], action) => {
+const ageRange = (state = [279.9 / 7, 1010 / 7], action) => {
   switch (action.type) {
     case SET_AGE_RANGE:
       return Object.assign([], [], action.val);
