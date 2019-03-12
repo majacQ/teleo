@@ -44,7 +44,7 @@ const Header = ({
             <span className="icon-chevron-down header-filter-icon" />
           )}
         </Button>
-        <Button
+        {/* <Button
           className={`header-filter-button ${reviewRefsOpen ? 'white-text' : ''}`}
           onClick={() => toggleReviewRefsOpen(!reviewRefsOpen, filterOpen, ageRangeOpen)}
         >
@@ -55,7 +55,7 @@ const Header = ({
           { !reviewRefsOpen && (
             <span className="icon-chevron-down header-filter-icon" />
           )}
-        </Button>
+        </Button> */}
       </div>
     </div>
   </div>
