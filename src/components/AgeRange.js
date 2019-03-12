@@ -87,7 +87,7 @@ const AgeRange = ({
     <Dialog open={ageRangeOpen} onClose={closeAgeRange}>
       <div className="agerange-container" style={{ width: 312, marginTop: ui.header.height + 36, right: 220 + windowSize.appLeft }}>
         <div className="agerange-header">
-          Notable Age Ranges
+          Key Developmental Age Ranges
         </div>
         <div className="agerange-text">
           Select below from a list of pre-defined age ranges
