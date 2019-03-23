@@ -35,9 +35,8 @@ export const hashFromState = (state) => {
   return hash;
 };
 
-export const setStateFromHash = (store) => {
+export const setStateFromHash = (store, hash) => {
   const state = store.getState();
-  const { hash } = window.location;
   const { ageRange } = state;
   const { nd, ogm } = state.filters;
   const { ho, int, rf } = state.selectedORFI;
@@ -110,8 +109,8 @@ export const hashMiddleware = store => next => (action) => {
   if (types.indexOf(action.type) > -1) {
     const hash = hashFromState(store.getState());
     if (window.location.hash !== hash) {
-      // alert('wha?')
-      window.location.hash = hash;
+      window.history.pushState(hash, undefined, `#${hash}`);
+      // window.history.pushState(hash, undefined, '');
     }
   }
   return result;

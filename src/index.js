@@ -52,8 +52,18 @@ if (process.env.NODE_ENV !== 'production') {
 //   setStateFromHash(store);
 // }, false);
 
+window.onpopstate = (event) => {
+  setStateFromHash(store, event.state);
+};
+
+window.onpushstate = (event) => {
+  setStateFromHash(store, event.state);
+};
+
+// #from=280&to=1010&nd=&ogm=CNS&ho=&int=int_105,int_111,int_61&rf=rf_135,rf_71&cgs=ogm_CNS
+
 if (window.location.hash !== '' || window.location.hash !== '#') {
-  setStateFromHash(store);
+  setStateFromHash(store, window.location.hash);
 }
 
 const theme = createMuiTheme({
