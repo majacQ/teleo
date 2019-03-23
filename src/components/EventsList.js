@@ -5,7 +5,7 @@ import Event from './Event';
 import ExpandInfo from './ExpandInfo';
 
 const EventsList = ({
-  data, gid, pinned, xScaleFoc, windowSize, expanded
+  data, gid, pinned, collapsed, setRangeStats, xScaleFoc, windowSize, expanded
 }) => {
   // get positions of elements that should be visible
   const rows = [[]];
@@ -19,6 +19,10 @@ const EventsList = ({
     return (<div />);
   }
 
+  let beforeRange = 0;
+  let inRange = 0;
+  let afterRange = 0;
+
   data.forEach((d) => {
     const xStart = xScaleFoc(d.age_start / 7);
     const xEnd = xScaleFoc(d.age_end / 7);
@@ -29,8 +33,15 @@ const EventsList = ({
       eventPeakStart = xScaleFoc(d.age_start_peak / 7);
       eventPeakWidth = xScaleFoc(d.age_end_peak / 7) - eventPeakStart;
     }
+    if (xStart + eventWidth < 0) {
+      beforeRange += 1;
+    }
+    if (xStart > focWidth) {
+      afterRange += 1;
+    }
     const outOfRange = xStart + eventWidth < 0 || xStart > focWidth;
     if (!outOfRange) {
+      inRange += 1;
       let curWidth = Math.max(d.textWidth, eventWidth) + rowPad;
       let xStart2 = xStart;
       // we still want the full text to show if the event is on the left edge of the timeline
@@ -73,6 +84,12 @@ const EventsList = ({
     }
   });
 
+  setRangeStats({ before: beforeRange, in: inRange, after: afterRange });
+
+  if (collapsed) {
+    return ('');
+  }
+
   return (
     <div>
       {
@@ -110,6 +127,8 @@ EventsList.propTypes = {
   data: PropTypes.array.isRequired,
   gid: PropTypes.string.isRequired,
   pinned: PropTypes.bool.isRequired,
+  collapsed: PropTypes.bool.isRequired,
+  setRangeStats: PropTypes.func.isRequired,
   xScaleFoc: PropTypes.func.isRequired,
   windowSize: PropTypes.object.isRequired,
   expanded: PropTypes.array.isRequired

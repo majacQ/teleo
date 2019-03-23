@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import EventsList from './EventsList';
@@ -8,14 +8,21 @@ const EventsGroup = ({
   windowSize, collapsedGroups, filters, selectedORFI, removeGroup,
   toggleCollapse, data, subcategory, category, gid, group
 }) => {
+  const [rangeStats, setRangeStats] = useState({ before: 0, in: 0, after: 0 });
+
   const focWidth = windowSize.appWidth;
   const isCollapsed = collapsedGroups.indexOf(gid) > -1;
 
+  // all groups must be collapsed to be draggable
   const nGroups = filters.ogm.length + filters.nd.length
     + (selectedORFI.ho.length > 0 ? 1 : 0)
     + (selectedORFI.rf.length > 0 ? 1 : 0)
     + (selectedORFI.int.length > 0 ? 1 : 0);
   const draggable = nGroups === collapsedGroups.length;
+
+  const inText = isCollapsed ? ' (expand to view).' : '.';
+  const beforeText = rangeStats.before === 0 ? '' : `${rangeStats.before} events before.`;
+  const afterText = rangeStats.after === 0 ? '' : `${rangeStats.after} events after.`;
 
   return (
     <div style={{ width: windowSize.width }}>
@@ -28,6 +35,9 @@ const EventsGroup = ({
           <span className="eventgroup-cat">{category}</span>
         </div>
         <div className="eventgroup-header-icons">
+          <span className="eventgroup-header-info">
+            {`${rangeStats.in} events during this period${inText} ${beforeText} ${afterText}`}
+          </span>
           {draggable && (<span className="icon-drag_handle eventgroup-header-icon" style={{ color: 'lightgray' }} />) }
           <span
             className={`icon-chevron-${isCollapsed ? 'up' : 'down'} eventgroup-header-icon`}
@@ -43,9 +53,7 @@ const EventsGroup = ({
           />
         </div>
       </div>
-      {!isCollapsed && (
-        <EventsList data={data} gid={gid} pinned={false} />
-      )}
+      <EventsList data={data} gid={gid} pinned={false} collapsed={isCollapsed} setRangeStats={setRangeStats} />
     </div>
   );
 };
