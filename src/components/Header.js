@@ -7,7 +7,7 @@ import { setFilterOpen, setAgeRangeOpen, setReviewRefsOpen } from '../actions';
 
 const Header = ({
   windowSize, ageRangeOpen, filterOpen, reviewRefsOpen,
-  toggleFilterOpen, toggleAgeRangeOpen, toggleReviewRefsOpen
+  toggleFilterOpen, toggleAgeRangeOpen
 }) => (
   <div className="header-wrapper" style={{ height: ui.header.height, width: windowSize.width }}>
     <div className="header" style={{ height: ui.header.height, width: windowSize.appWidth, left: windowSize.appLeft }}>
@@ -16,8 +16,8 @@ const Header = ({
       </div>
       <div className="header-icons">
         <span className="header-icon icon-search2" />
-        {/* <span className="header-icon icon-link" />
-        <span className="header-icon icon-download" /> */}
+        {/* <span className="header-icon icon-link" /> */}
+        {/* <span className="header-icon icon-download" /> */}
       </div>
       <div className="header-filters">
         <Button
@@ -67,8 +67,8 @@ Header.propTypes = {
   ageRangeOpen: PropTypes.bool.isRequired,
   reviewRefsOpen: PropTypes.bool.isRequired,
   toggleFilterOpen: PropTypes.func.isRequired,
-  toggleAgeRangeOpen: PropTypes.func.isRequired,
-  toggleReviewRefsOpen: PropTypes.func.isRequired
+  toggleAgeRangeOpen: PropTypes.func.isRequired
+  // toggleReviewRefsOpen: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -96,16 +96,16 @@ const mapDispatchToProps = dispatch => ({
     if (reviewRefsOpen) {
       dispatch(setReviewRefsOpen(false));
     }
-  },
-  toggleReviewRefsOpen: (val, filterOpen, ageRangeOpen) => {
-    dispatch(setReviewRefsOpen(val));
-    if (filterOpen) {
-      dispatch(setFilterOpen(false));
-    }
-    if (ageRangeOpen) {
-      dispatch(setAgeRangeOpen(false));
-    }
   }
+  // toggleReviewRefsOpen: (val, filterOpen, ageRangeOpen) => {
+  //   dispatch(setReviewRefsOpen(val));
+  //   if (filterOpen) {
+  //     dispatch(setFilterOpen(false));
+  //   }
+  //   if (ageRangeOpen) {
+  //     dispatch(setAgeRangeOpen(false));
+  //   }
+  // }
 });
 
 export default connect(
