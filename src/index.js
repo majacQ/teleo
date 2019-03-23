@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, compose, applyMiddleware } from 'redux';
+// import createActionBuffer from 'redux-action-buffer';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { throttle } from 'throttle-debounce';
@@ -11,6 +12,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {
   fetchData, fetchRefsData, fetchNetworkData, windowResize
 } from './actions';
+import { setStateFromHash, hashMiddleware } from './utils/hash';
 import { ui } from './constants';
 
 import './assets/index.css';
@@ -30,7 +32,7 @@ if (process.env.NODE_ENV !== 'production') {
   store = createStore(
     reducers,
     // { initial state... },
-    composeEnhancer(applyMiddleware(thunkMiddleware, createLogger()))
+    composeEnhancer(applyMiddleware(thunkMiddleware, hashMiddleware, createLogger()))
   );
   if (module.hot) {
     module.hot.accept('./reducers', () => {
@@ -41,8 +43,17 @@ if (process.env.NODE_ENV !== 'production') {
   store = createStore(
     reducers,
     // { initial state... },
-    composeEnhancer(applyMiddleware(thunkMiddleware))
+    composeEnhancer(applyMiddleware(thunkMiddleware, hashMiddleware))
   );
+}
+
+// don't allow user to manually set hash - just check it on load
+// window.addEventListener('hashchange', () => {
+//   setStateFromHash(store);
+// }, false);
+
+if (window.location.hash !== '' || window.location.hash !== '#') {
+  setStateFromHash(store);
 }
 
 const theme = createMuiTheme({

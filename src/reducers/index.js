@@ -44,6 +44,8 @@ const filters = (state = { ogm: ['Gastrointestinal', 'Genitourinary'], nd: [] },
         if (idx > -1) {
           newState[group].splice(idx, 1);
         }
+      } else if (type === 'replace-all') {
+        newState = val;
       }
       return newState;
     }
@@ -75,6 +77,8 @@ const selectedORFI = (state = {
         newState = { ho: [], rf: [], int: [] };
       } else if (type === 'remove-all-in-group') {
         newState[group] = [];
+      } else if (type === 'replace-all') {
+        newState = val;
       }
       return newState;
     }
