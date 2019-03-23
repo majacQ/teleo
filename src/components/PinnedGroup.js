@@ -15,6 +15,9 @@ const PinnedGroup = ({
           Pinned Events
           <span className="icon-bookmark pinned-icon" />
         </div>
+        <div className="hidden">
+          {`${rangeStats.in + rangeStats.before + rangeStats.after} events pinned.`}
+        </div>
         {/* <div className="pinned-button">
           Compare Details
         </div> */}
@@ -30,7 +33,7 @@ const PinnedGroup = ({
       )}
     </div>
   );
-}
+};
 
 PinnedGroup.propTypes = {
   data: PropTypes.array.isRequired,

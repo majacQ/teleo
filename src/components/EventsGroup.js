@@ -53,7 +53,13 @@ const EventsGroup = ({
           />
         </div>
       </div>
-      <EventsList data={data} gid={gid} pinned={false} collapsed={isCollapsed} setRangeStats={setRangeStats} />
+      <EventsList
+        data={data}
+        gid={gid}
+        pinned={false}
+        collapsed={isCollapsed}
+        setRangeStats={setRangeStats}
+      />
     </div>
   );
 };
