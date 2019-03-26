@@ -9,7 +9,9 @@ import {
   // SET_REVIEWREFS_OPEN
 } from '../constants';
 
-import { setFilters, setSelectedORFI, setCollapsedGroup, setAllPinned } from '../actions';
+import {
+  setFilters, setSelectedORFI, setCollapsedGroup, setAllPinned
+} from '../actions';
 
 // this updates the window hash whenever the state changes
 // expanded: Array(1)
