@@ -181,8 +181,9 @@ const expanded = (state = [], action) => {
 const pinned = (state = [], action) => {
   switch (action.type) {
     case SET_PINNED: {
-      const newState = Object.assign([], state);
+      let newState;
       if (action.data.what === 'add') {
+        newState = Object.assign([], state);
         const ids = newState.map(d => d.uid);
         if (ids.indexOf(action.data.val.uid) < 0) {
           // action.data.val.row = action.data.val.row.replace(/[a-zA-z]+-/, 'pinned-');
@@ -190,13 +191,16 @@ const pinned = (state = [], action) => {
         }
       }
       if (action.data.what === 'remove') {
+        newState = Object.assign([], state);
         const ids = newState.map(d => d.uid);
         const idx = ids.indexOf(action.data.val.uid);
         if (idx > -1) {
           newState.splice(idx, 1);
         }
       }
-      newState.sort((a, b) => ((a.xStart > b.xStart) ? 1 : -1));
+      if (action.data.what === 'set-all') {
+        newState = action.data.val;
+      }
       return newState;
     }
     default:

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Event from './Event';
 import ExpandInfo from './ExpandInfo';
+import { pinnedLabWidths, getPinnedTextFromData } from '../utils/pinnedText';
 
 const EventsList = ({
   data, gid, pinned, collapsed, setRangeStats, xScaleFoc, windowSize, expanded
@@ -24,6 +25,13 @@ const EventsList = ({
   let afterRange = 0;
 
   data.forEach((d) => {
+    let extraWidth = 0; // for pinned items
+    if (pinned) {
+      extraWidth = pinnedLabWidths[getPinnedTextFromData(d)];
+      if (extraWidth === undefined) {
+        extraWidth = 0;
+      }
+    }
     const xStart = xScaleFoc(d.age_start / 7);
     const xEnd = xScaleFoc(d.age_end / 7);
     const eventWidth = Math.max(xEnd - xStart, 5);
@@ -42,13 +50,13 @@ const EventsList = ({
     const outOfRange = xStart + eventWidth < 0 || xStart > focWidth;
     if (!outOfRange) {
       inRange += 1;
-      let curWidth = Math.max(d.textWidth, eventWidth) + rowPad;
+      let curWidth = Math.max(d.textWidth + extraWidth, eventWidth) + rowPad;
       let xStart2 = xStart;
       // we still want the full text to show if the event is on the left edge of the timeline
       let paddingLeft = 5;
       if (xStart < 0) {
         paddingLeft = -xStart + 5;
-        curWidth = Math.max(d.textWidth, xEnd - xStart);
+        curWidth = Math.max(d.textWidth + extraWidth, xEnd - xStart);
         xStart2 = 0;
       }
       // see if any existing row is narrow enough to fit a new element

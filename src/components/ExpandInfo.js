@@ -84,8 +84,8 @@ const ExpandInfo = ({
           </div>
           <div className="expand-info-hline" />
           <div className="expand-info-detail">
-            { data.class !== undefined && <NetworkGraph data={data} /> }
-            { data.class === undefined && data.desc_long}
+            { data.subcat === undefined && <NetworkGraph data={data} /> }
+            { data.subcat !== undefined && data.desc_long}
           </div>
           <div className="expand-info-hline" />
           <div className="expand-info-expand-refs">

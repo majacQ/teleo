@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addExpanded, addPinned, removePinned } from '../actions';
+import { getPinnedTextFromData } from '../utils/pinnedText';
 
 // try using react hooks
 const Event = ({
@@ -10,6 +11,12 @@ const Event = ({
   const [hover, setHover] = useState(false);
 
   const eventColor = pinned ? '#d2e6e7' : '#ffffff';
+
+  let extraText = '';
+  if (pinned) {
+    const txt = getPinnedTextFromData(data);
+    extraText = (<span className="event-pinned-class-text">{txt}</span>);
+  }
 
   return (
     <div
@@ -22,7 +29,7 @@ const Event = ({
       onKeyPress={() => addToExpanded(data)}
       role="presentation"
     >
-      {hover && !expanded && (
+      {hover && (
         <div className="event-hoverinfo" style={{ left: Math.min(Math.max(data.textWidth, data.eventWidth) - 10, windowSize.width - data.xStart - 80) }}>
           <div
             className="hoverinfo-text"
@@ -30,7 +37,7 @@ const Event = ({
             onKeyPress={() => addToExpanded(data)}
             role="presentation"
           >
-            VIEW
+            {expanded ? 'HIDE' : 'VIEW' }
           </div>
           <div
             className="hoverinfo-text"
@@ -84,6 +91,7 @@ const Event = ({
       </div>
       <div className="event-text" style={{ paddingLeft: data.paddingLeft }}>
         {data.desc_short}
+        {extraText}
       </div>
     </div>
   );
@@ -108,10 +116,22 @@ const mapDispatchToProps = dispatch => ({
     dispatch(addExpanded(dat));
   },
   addToPinned: (dat) => {
-    dispatch(addPinned(dat));
+    const newDat = {
+      uid: dat.uid,
+      class: dat.class,
+      subcat: dat.subcat === undefined ? '' : dat.subcat,
+      i: dat.i
+    };
+    dispatch(addPinned(newDat));
   },
   removeFromPinned: (dat) => {
-    dispatch(removePinned(dat));
+    const newDat = {
+      uid: dat.uid,
+      class: dat.class,
+      subcat: dat.subcat === undefined ? '' : dat.subcat,
+      i: dat.i
+    };
+    dispatch(removePinned(newDat));
   }
 });
 

@@ -82,6 +82,11 @@ export const clearPinned = val => ({
   data: { val, what: 'clear' }
 });
 
+export const setAllPinned = val => ({
+  type: SET_PINNED,
+  data: { val, what: 'set-all' }
+});
+
 export const windowResize = dims => ({
   type: WINDOW_RESIZE,
   dims
@@ -130,6 +135,8 @@ export const fetchData = url => (dispatch) => {
       const dt = dat.ogm.data[ky];
       for (let i = 0; i < dt.length; i += 1) {
         dt[i].textWidth = ctx.measureText(dt[i].desc_short).width;
+        dt[i].class = 'ogm';
+        dt[i].i = i;
       }
     });
 
@@ -138,6 +145,8 @@ export const fetchData = url => (dispatch) => {
       const dt = dat.nd.data[ky];
       for (let i = 0; i < dt.length; i += 1) {
         dt[i].textWidth = ctx.measureText(dt[i].desc_short).width;
+        dt[i].class = 'nd';
+        dt[i].i = i;
       }
     });
 
@@ -162,10 +171,11 @@ export const fetchNetworkData = url => (dispatch) => {
     const kys = Object.keys(dat.nodes);
     kys.forEach((ky) => {
       const dt = dat.nodes[ky].data;
-      dt.forEach((d) => {
+      dt.forEach((d, i) => {
         d.desc_short = d.name; // eslint-disable-line no-param-reassign
         d.textWidth = ctx.measureText(d.desc_short).width; // eslint-disable-line no-param-reassign
         d.uid = d.id; // eslint-disable-line no-param-reassign
+        d.i = i; // eslint-disable-line no-param-reassign
       });
     });
     dispatch(receiveNetworkData(dat));
