@@ -63,6 +63,7 @@ const EventsList = ({
       let foundSpot = false;
       const newDat = Object.assign(d, {
         xStart,
+        extraWidth,
         eventWidth,
         eventPeakStart,
         eventPeakWidth,

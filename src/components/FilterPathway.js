@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
-import FilterPathwaySelect from './FilterPathwaySelect';
+import SearchBox from './SearchBox';
 import { setFilters, setSelectedORFI } from '../actions';
+import { escapeRegexCharacters } from '../utils/regex';
 // import { ui } from '../constants';
 
 const FilterPathway = ({
   // windowSize,
-  selected, data, removePathway
+  selected, data, removePathway, addPathway
 }) => {
   const emptyText = [
     'Pneumonia, Measles, Type 1 Diabetes, etc.',
@@ -55,7 +56,20 @@ const FilterPathway = ({
   return (
     <div className="pathway-container" style={{ }}>
       <div className="pathway-header">
-        <FilterPathwaySelect items={items} />
+        <SearchBox
+          items={items}
+          handler={addPathway}
+          initialText="What are you interested in?"
+          checkSuggestion={(item, value) => {
+            const escapedValue = escapeRegexCharacters(value.trim());
+            const regex = new RegExp(`${escapedValue}`, 'i');
+            const isSelected1 = selected.ho.indexOf(item.id) > -1;
+            const isSelected2 = selected.rf.indexOf(item.id) > -1;
+            const isSelected3 = selected.int.indexOf(item.id) > -1;
+            return regex.test(item.name) && !(isSelected1 || isSelected2 || isSelected3);
+          }}
+          handleEscape={() => {}}
+        />
       </div>
       {/* <div className="filter-column-orfi-text">
       Disease Pathology consists of four main categories: Health Outcomes, Pathogenesis,
@@ -96,7 +110,8 @@ FilterPathway.propTypes = {
   // windowSize: PropTypes.object.isRequired,
   selected: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
-  removePathway: PropTypes.func.isRequired
+  removePathway: PropTypes.func.isRequired,
+  addPathway: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -112,8 +127,10 @@ const mapDispatchToProps = dispatch => ({
   },
   removePathway: (val, group) => {
     dispatch(setSelectedORFI({ val, group, type: 'remove' }));
+  },
+  addPathway: (obj) => {
+    dispatch(setSelectedORFI({ val: obj.id, group: obj.class, type: 'add' }));
   }
-
 });
 
 export default connect(

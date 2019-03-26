@@ -1,14 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import Downshift from 'downshift';
 import parse from 'autosuggest-highlight/parse';
-import { setSelectedORFI } from '../actions';
-
-const specialCharsRegex = /[.*+?^${}()|[\]\\]/g;
-const whitespacesRegex = /\s+/;
-
-const escapeRegexCharacters = str => str.replace(specialCharsRegex, '\\$&');
+import { whitespacesRegex, escapeRegexCharacters } from '../utils/regex';
 
 const match = (text, query) => (
   query
@@ -31,9 +25,9 @@ const match = (text, query) => (
     .sort((match1, match2) => match1[0] - match2[0])
 );
 
-const FilterPathwaySelect = ({ items, selected, addPathway }) => {
-  const initialText = 'What are you interested in?';
-
+const SearchBox = ({
+  items, handler, checkSuggestion, initialText, handleEscape
+}) => {
   const stateReducer = (state, changes) => {
     switch (changes.type) {
       // case Downshift.stateChangeTypes.blurInput:
@@ -43,9 +37,13 @@ const FilterPathwaySelect = ({ items, selected, addPathway }) => {
       //     isOpen: true
       //   };
       // }
+      case Downshift.stateChangeTypes.keyDownEscape: {
+        handleEscape();
+        return { ...changes };
+      }
       case Downshift.stateChangeTypes.keyDownEnter:
       case Downshift.stateChangeTypes.clickItem: {
-        addPathway(changes.selectedItem.id, changes.selectedItem.class);
+        handler(changes.selectedItem);
         return {
           ...changes,
           inputValue: state.inputValue,
@@ -62,15 +60,6 @@ const FilterPathwaySelect = ({ items, selected, addPathway }) => {
     }
   };
 
-  const checkSuggestion = (item, value) => {
-    const escapedValue = escapeRegexCharacters(value.trim());
-    const regex = new RegExp(`${escapedValue}`, 'i');
-    const isSelected1 = selected.ho.indexOf(item.id) > -1;
-    const isSelected2 = selected.rf.indexOf(item.id) > -1;
-    const isSelected3 = selected.int.indexOf(item.id) > -1;
-    return regex.test(item.name) && !(isSelected1 || isSelected2 || isSelected3);
-  };
-
   const renderSuggestion = (item, value, index, highlightedIndex, getItemProps) => {
     const matches = match(item.name, value);
     const parts = parse(item.name, matches);
@@ -78,7 +67,7 @@ const FilterPathwaySelect = ({ items, selected, addPathway }) => {
     return (
       <div
         {...getItemProps({
-          key: item.name,
+          key: item.uid,
           index,
           item,
           className: `suggestion-container ${index === highlightedIndex ? 'suggestion-container--highlighted' : ''}`
@@ -140,23 +129,12 @@ const FilterPathwaySelect = ({ items, selected, addPathway }) => {
   );
 };
 
-FilterPathwaySelect.propTypes = {
+SearchBox.propTypes = {
   items: PropTypes.array.isRequired,
-  selected: PropTypes.object.isRequired,
-  addPathway: PropTypes.func.isRequired
+  handler: PropTypes.func.isRequired,
+  checkSuggestion: PropTypes.func.isRequired,
+  initialText: PropTypes.string.isRequired,
+  handleEscape: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-  selected: state.selectedORFI
-});
-
-const mapDispatchToProps = dispatch => ({
-  addPathway: (val, group) => {
-    dispatch(setSelectedORFI({ val, group, type: 'add' }));
-  }
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FilterPathwaySelect);
+export default SearchBox;

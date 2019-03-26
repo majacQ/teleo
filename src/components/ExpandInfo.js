@@ -27,7 +27,7 @@ const ExpandInfo = ({
 
   // if this is a regular event, ref indices are stored in the data
   let refs = [];
-  if (data.class === undefined) {
+  if (['nd', 'ogm'].indexOf(data.class) > -1) {
     ({ refs } = data);
   } else {
     let dcheck = ['NA', 'Y', 'N'];

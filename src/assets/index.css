@@ -254,12 +254,14 @@ body {
   right: 20px;
   position: absolute; */
   /* border: 1px solid #3D5052; */
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12), 0 4px 4px 0 rgba(0, 0, 0, 0.24);
+  /* box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12), 0 4px 4px 0 rgba(0, 0, 0, 0.24); */
   color: #FFFFFF;
 }
 .pathways-container {
   box-sizing: border-box;
   padding-bottom: 10px;
+  max-height: 336px;
+  overflow-y: auto;
 }
 
 .pathway-header {
@@ -487,6 +489,12 @@ body {
   cursor: pointer;
 }
 
+.header-search-box {
+  position: fixed;
+  top: 8px;
+  z-index: 99999;
+  color: #ffffff;
+}
 
 .eventgroup-cat {
   padding-left: 10px;
