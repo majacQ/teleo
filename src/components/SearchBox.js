@@ -26,7 +26,7 @@ const match = (text, query) => (
 );
 
 const SearchBox = ({
-  items, handler, checkSuggestion, initialText, menuWidth, handleEscape
+  items, handler, checkSuggestion, initialText, menuWidth, autofocus, handleEscape
 }) => {
   const stateReducer = (state, changes) => {
     switch (changes.type) {
@@ -37,6 +37,10 @@ const SearchBox = ({
       //     isOpen: true
       //   };
       // }
+      case Downshift.stateChangeTypes.blurInput: {
+        handleEscape();
+        return { ...changes };
+      }
       case Downshift.stateChangeTypes.keyDownEscape: {
         handleEscape();
         return { ...changes };
@@ -115,6 +119,8 @@ const SearchBox = ({
           <div className="react-autosuggest__container">
             <input
               {...getInputProps({
+                onBlur: handleEscape,
+                autoFocus: autofocus,
                 className: 'react-autosuggest__input',
                 placeholder: initialText
               })}
@@ -138,6 +144,7 @@ SearchBox.propTypes = {
   checkSuggestion: PropTypes.func.isRequired,
   initialText: PropTypes.string.isRequired,
   menuWidth: PropTypes.number.isRequired,
+  autofocus: PropTypes.bool.isRequired,
   handleEscape: PropTypes.func.isRequired
 };
 

@@ -14,7 +14,7 @@ const FilterPathway = ({
 }) => {
   const emptyText = [
     'Pneumonia, Measles, Type 1 Diabetes, etc.',
-    'Malnutrition, Maternal Drug Use, Hypoxia, etc.',
+    'Malnutrition, Maternal Infection, Hypoxia, etc.',
     'Immunization, Exclusive Breastfeeding, Chemotherapy, etc.'
   ];
 
@@ -69,6 +69,7 @@ const FilterPathway = ({
             return regex.test(item.name) && !(isSelected1 || isSelected2 || isSelected3);
           }}
           menuWidth={320}
+          autofocus={false}
           handleEscape={() => {}}
         />
       </div>

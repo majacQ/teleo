@@ -36,7 +36,7 @@ const EventsGroup = ({
         </div>
         <div className="eventgroup-header-icons">
           <span className="eventgroup-header-info">
-            {`${rangeStats.in} events during this period${inText} ${beforeText} ${afterText}`}
+            {`${rangeStats.in} event${rangeStats.in === 1 ? '' : 's'} during this period${inText} ${beforeText} ${afterText}`}
           </span>
           {draggable && (<span className="icon-drag_handle eventgroup-header-icon" style={{ color: 'lightgray' }} />) }
           <span

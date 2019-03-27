@@ -31,7 +31,7 @@ const Header = ({
           <SearchBox
             items={allItems}
             handler={addToPinned}
-            initialText="Search all events and select to pin."
+            initialText={`Search all ${Number(allItems.length).toLocaleString()} events and select to pin.`}
             checkSuggestion={(item, value) => {
               const escapedValue = escapeRegexCharacters(value.trim());
               const regex = new RegExp(`${escapedValue}`, 'i');
@@ -39,6 +39,7 @@ const Header = ({
               return regex.test(item.name) && !isSelected;
             }}
             menuWidth={windowSize.appLeft + 365 - 50}
+            autofocus
             handleEscape={() => setSearchOpen(false)}
           />
         </div>
