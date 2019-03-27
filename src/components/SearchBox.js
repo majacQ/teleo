@@ -26,7 +26,7 @@ const match = (text, query) => (
 );
 
 const SearchBox = ({
-  items, handler, checkSuggestion, initialText, handleEscape
+  items, handler, checkSuggestion, initialText, menuWidth, handleEscape
 }) => {
   const stateReducer = (state, changes) => {
     switch (changes.type) {
@@ -73,7 +73,7 @@ const SearchBox = ({
           className: `suggestion-container ${index === highlightedIndex ? 'suggestion-container--highlighted' : ''}`
         })}
       >
-        <div className={`suggestion-text suggestion-text-${item.class}`}>
+        <div className="suggestion-text">
           {parts.map((part, idx) => {
             const className = part.highlight ? 'react-autosuggest__suggestion-match' : null;
             return (
@@ -119,7 +119,10 @@ const SearchBox = ({
                 placeholder: initialText
               })}
             />
-            <div {...getMenuProps({ className: `react-autosuggest__suggestions-container ${isOpen && suggestions.length > 0 ? 'react-autosuggest__suggestions-container--open' : ''}` })}>
+            <div
+              {...getMenuProps({ className: `react-autosuggest__suggestions-container ${isOpen && suggestions.length > 0 ? 'react-autosuggest__suggestions-container--open' : ''}` })}
+              style={{ width: menuWidth }}
+            >
               {isOpen ? suggestions : null }
             </div>
           </div>
@@ -134,6 +137,7 @@ SearchBox.propTypes = {
   handler: PropTypes.func.isRequired,
   checkSuggestion: PropTypes.func.isRequired,
   initialText: PropTypes.string.isRequired,
+  menuWidth: PropTypes.number.isRequired,
   handleEscape: PropTypes.func.isRequired
 };
 

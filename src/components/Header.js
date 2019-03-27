@@ -9,6 +9,7 @@ import {
   setFilterOpen, setAgeRangeOpen, setReviewRefsOpen, addPinned
 } from '../actions';
 import { escapeRegexCharacters } from '../utils/regex';
+import { classLookup } from '../utils/pinnedText';
 
 const Header = ({
   windowSize, ageRangeOpen, filterOpen, reviewRefsOpen, pinned, allItems,
@@ -37,6 +38,7 @@ const Header = ({
               const isSelected = pinnedIds.indexOf(item.uid) > -1;
               return regex.test(item.name) && !isSelected;
             }}
+            menuWidth={windowSize.appLeft + 365 - 50}
             handleEscape={() => setSearchOpen(false)}
           />
         </div>
@@ -143,7 +145,7 @@ const allItemsSelector = createSelector(
           items.push({
             name: d.desc_short,
             uid: d.uid,
-            type: d.class,
+            type: classLookup[d.class],
             class: d.class,
             subcat: undefined,
             i: d.i

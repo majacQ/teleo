@@ -68,6 +68,7 @@ const FilterPathway = ({
             const isSelected3 = selected.int.indexOf(item.id) > -1;
             return regex.test(item.name) && !(isSelected1 || isSelected2 || isSelected3);
           }}
+          menuWidth={320}
           handleEscape={() => {}}
         />
       </div>

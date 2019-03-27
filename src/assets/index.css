@@ -803,7 +803,6 @@ body {
   display: block;
   position: absolute;
   top: 51px;
-  width: 320px;
   border: 1px solid #6B6B6D;
   background-color: rgba(32, 42, 43, 0.9);
   /* background-color: #202A2B; */
@@ -834,8 +833,11 @@ body {
 
 .suggestion-container {
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   cursor: pointer;
   padding-left: 10px;
+  padding-right: 10px;
 }
 
 .suggestion-container--highlighted {
@@ -843,9 +845,11 @@ body {
 }
 
 .suggestion-text {
+  flex: 1 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 0;
 }
 
 /* 
@@ -856,21 +860,11 @@ rf: 64
 int: 68
 */
 
-.suggestion-text-ho {
-  max-width: 209px;
-}
-
-.suggestion-text-rf {
-  max-width: 236px;
-}
-
-.suggestion-text-int {
-  max-width: 232px;
-}
-
 .suggestion-class {
+  flex: 0 auto;
   padding-left: 5px;
   color: #939598;
   font-family: Roboto;
   font-size: 12px;
+  white-space: nowrap;
 }
