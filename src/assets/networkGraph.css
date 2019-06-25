@@ -66,6 +66,10 @@
   line-height: normal;
 }
 
+.risk-div {
+  position: absolute;
+}
+
 .nw-node-div-hl {
   color: red !important;
 }
@@ -74,7 +78,7 @@
   background: #3A4445; /* lightened 10% */
 }
 
-.nw-links {
+.nw-link {
   fill: none;
   stroke: #CCCCCC;
   stroke-opacity: 0.2

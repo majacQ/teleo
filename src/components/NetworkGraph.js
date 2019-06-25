@@ -10,6 +10,7 @@ class NetworkGraph extends Component {
     super(props);
     this.createNetworkGraph = this.createNetworkGraph.bind(this);
     this.state = { direct: false };
+    this.riskPad = 50;
   }
 
   componentDidMount() {
@@ -33,13 +34,13 @@ class NetworkGraph extends Component {
     const { direct } = this.state;
 
     const div = select(node);
-    makeGraph(div, data.uid, data.class, direct, networkData.data);
+    makeGraph(div, data.uid, data.class, direct, networkData.data, this.riskPad);
   }
 
   render() {
     const { windowSize } = this.props;
     const nodeWidth = 130;
-    const linkWidth = (windowSize.appWidth - 20 - (4 * nodeWidth)) / 3;
+    const linkWidth = (windowSize.appWidth - 20 - this.riskPad - (4 * nodeWidth)) / 3;
     const { direct } = this.state;
     return (
       <div>
@@ -65,9 +66,9 @@ class NetworkGraph extends Component {
         </div>
         <div id="nw-headers">
           <div className="nw-header-text" style={{ left: 5 }}>Health Outcome</div>
-          <div className="nw-header-text" style={{ left: 5 + nodeWidth + linkWidth }}>Pathogenesis</div>
-          <div className="nw-header-text" style={{ left: 5 + 2 * (nodeWidth + linkWidth) }}>Risk Factor</div>
-          <div className="nw-header-text" style={{ left: 5 + 3 * (nodeWidth + linkWidth) }}>Intervention</div>
+          <div className="nw-header-text" style={{ left: 5 + this.riskPad + nodeWidth + linkWidth }}>Pathogenesis</div>
+          <div className="nw-header-text" style={{ left: 5 + this.riskPad + 2 * (nodeWidth + linkWidth) }}>Risk Factor</div>
+          <div className="nw-header-text" style={{ left: 5 + this.riskPad + 3 * (nodeWidth + linkWidth) }}>Intervention</div>
         </div>
         <div id="nw-bounding" ref={(node) => { this.node = node; }}>
           <div id="nw-bounding-inner" style={{ width: windowSize.appWidth - 20 }}>

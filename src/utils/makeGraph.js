@@ -1,9 +1,27 @@
 // import { select, selectAll } from 'd3-selection';
 import { sankey, sankeyLinkHorizontal } from 'd3-sankey';
+import { scaleLinear } from 'd3-scale';
 
 const unique = a => a.filter((item, i, ar) => ar.indexOf(item) === i);
 
-const makeGraph = (div, nodeId, category, direct, orfee) => {
+const riskColors = {
+  '100,000 children': '#4798F2',
+  '100,000 children years': '#AC61F7',
+  '100,000 live births': '#E14DA0'
+};
+
+const makeGraph = (div, nodeId, category, direct, orfee, riskPad) => {
+  const riskScales = {};
+  riskScales['100,000 children'] = scaleLinear()
+    .domain([Math.log10(1370), Math.log10(11000)])
+    .range([0, riskPad - 5]);
+  riskScales['100,000 children years'] = scaleLinear()
+    .domain([Math.log10(3), Math.log10(230000)])
+    .range([0, riskPad - 5]);
+  riskScales['100,000 live births'] = scaleLinear()
+    .domain([Math.log10(7), Math.log10(10000)])
+    .range([0, riskPad - 5]);
+
   div.select('svg').selectAll('*').remove();
   div.select('#nw-bounding-inner').selectAll('div').remove();
 
@@ -32,6 +50,11 @@ const makeGraph = (div, nodeId, category, direct, orfee) => {
   let nodeIds = [];
   lnks.forEach((d) => {
     if (d[cls] === selectedNode.id && dcheck.indexOf(d.direct) > -1) {
+      // // below makes the order: int -> rf -> path -> ho
+      // data.links.push({ source: d.path, target: d.ho, value: 1 });
+      // data.links.push({ source: d.rf, target: d.path, value: 1 });
+      // data.links.push({ source: d.int, target: d.rf, value: 1 });
+      // below makes the order: ho -> path -> rf -> int
       data.links.push({ source: d.ho, target: d.path, value: 1 });
       data.links.push({ source: d.path, target: d.rf, value: 1 });
       data.links.push({ source: d.rf, target: d.int, value: 1 });
@@ -88,7 +111,8 @@ const makeGraph = (div, nodeId, category, direct, orfee) => {
     .nodeWidth(nodeWidth)
     .nodePadding(0)
     .nodeId(d => d.id)
-    .extent([[1, 1], [width - 1, height - 6]]);
+    .extent([[1, 1], [width - riskPad, height - 6]]);
+    // width - riskPad allows space for risk indicators
 
   sankeyObj(data);
 
@@ -118,12 +142,18 @@ const makeGraph = (div, nodeId, category, direct, orfee) => {
   div.style('height', `${maxHeight}px`);
   svg.attr('height', maxHeight);
 
+  // manually set the y-axis location of nodes and links
+  // and shift x-axis to make room for risk data vis
   data.nodes.forEach((d) => {
+    d.x0 = d.x0 + riskPad; // eslint-disable-line no-param-reassign,operator-assignment
+    d.x1 = d.x1 + riskPad; // eslint-disable-line no-param-reassign,operator-assignment
     d.y0 = yLookup[d.index][0] + 0; // eslint-disable-line no-param-reassign
     d.y1 = yLookup[d.index][1] + 0; // eslint-disable-line no-param-reassign
   });
 
   data.links.forEach((d) => {
+    d.x0 = d.x0 + riskPad; // eslint-disable-line no-param-reassign,operator-assignment
+    d.x1 = d.x1 + riskPad; // eslint-disable-line no-param-reassign,operator-assignment
     d.y0 = yLookup[d.source.index][0] + linkYOffset; // eslint-disable-line no-param-reassign
     d.y1 = yLookup[d.target.index][0] + linkYOffset; // eslint-disable-line no-param-reassign
   });
@@ -141,9 +171,12 @@ const makeGraph = (div, nodeId, category, direct, orfee) => {
     .attr('stroke-width', 1);
 
   // nodes
-  dv.selectAll('div')
+  const labelDiv = dv.append('div');
+
+  labelDiv.selectAll('div')
     .data(data.nodes)
-    .enter().append('div')
+    .enter()
+    .append('div')
     .attr('class', 'nw-node-div')
     .attr('id', d => `nw-node-${d.index}`)
     .style('left', d => `${d.x0}px`)
@@ -181,6 +214,67 @@ const makeGraph = (div, nodeId, category, direct, orfee) => {
     .attr('r', 1)
     .attr('cx', d => d.target.x0)
     .attr('cy', d => d.target.y0 + linkYOffset);
+
+  const hoNodes = data.nodes.filter(d => d.class === 'ho');
+
+  const riskLineDiv = dv.append('div');
+  riskLineDiv.selectAll('div')
+    .data(hoNodes)
+    .enter()
+    .append('div')
+    .attr('class', 'risk-div')
+    .attr('id', d => `risk-line-${d.index}`)
+    .style('background', d => riskColors[d.abs_risk_units])
+    .style('left', d => `${d.x0 - riskPad}px`)
+    .style('top', d => `${d.y0 + 10}px`)
+    .style('height', '1px')
+    .style('width', `${riskPad - 5}px`);
+
+  const riskDot1Div = dv.append('div');
+  riskDot1Div.selectAll('div')
+    .data(hoNodes)
+    .enter()
+    .append('div')
+    .attr('class', 'risk-div')
+    .attr('id', d => `risk-dot1-${d.index}`)
+    .style('background', d => riskColors[d.abs_risk_units])
+    .style('left', d => `${d.x0 - riskPad}px`)
+    .style('top', d => `${d.y0 + 9}px`)
+    .style('border', '0px')
+    .style('box-sizing', 'border-box')
+    .style('border-radius', '3px')
+    .style('height', '3px')
+    .style('width', '3px');
+
+  const riskDot2Div = dv.append('div');
+  riskDot2Div.selectAll('div')
+    .data(hoNodes)
+    .enter()
+    .append('div')
+    .attr('class', 'risk-div')
+    .attr('id', d => `risk-dot2-${d.index}`)
+    .style('background', d => riskColors[d.abs_risk_units])
+    .style('left', d => `${d.x0 - 5}px`)
+    .style('top', d => `${d.y0 + 9}px`)
+    .style('border', '0px')
+    .style('border-radius', '3px')
+    .style('height', '3px')
+    .style('width', '3px');
+
+  const riskMarkerDiv = dv.append('div');
+  riskMarkerDiv.selectAll('div')
+    .data(hoNodes)
+    .enter()
+    .append('div')
+    .attr('class', 'risk-div')
+    .attr('id', d => `risk-marker-${d.index}`)
+    .style('background', 'black')
+    .style('left', d => `${riskScales[d.abs_risk_units](Math.log10(d.abs_risk))}px`)
+    .style('top', d => `${d.y0 + 6}px`)
+    .style('border', d => `1px solid ${riskColors[d.abs_risk_units]}`)
+    .style('border-radius', '6px')
+    .style('height', '6px')
+    .style('width', '6px');
 
   const getPathway = (d) => {
     const idxs = [d.index];
@@ -225,6 +319,34 @@ const makeGraph = (div, nodeId, category, direct, orfee) => {
             .style('opacity', 0)
             .transition()
             .style('display', 'none');
+          div.select(`#risk-line-${a.index}`)
+            .attr('class', 'risk-line-hidden')
+            .transition()
+            .duration(transVisibleDur)
+            .style('opacity', 0)
+            .transition()
+            .style('display', 'none');
+          div.select(`#risk-dot1-${a.index}`)
+            .attr('class', 'risk-dot-hidden')
+            .transition()
+            .duration(transVisibleDur)
+            .style('opacity', 0)
+            .transition()
+            .style('display', 'none');
+          div.select(`#risk-dot2-${a.index}`)
+            .attr('class', 'risk-dot-hidden')
+            .transition()
+            .duration(transVisibleDur)
+            .style('opacity', 0)
+            .transition()
+            .style('display', 'none');
+          div.select(`#risk-marker-${a.index}`)
+            .attr('class', 'risk-marker-hidden')
+            .transition()
+            .duration(transVisibleDur)
+            .style('opacity', 0)
+            .transition()
+            .style('display', 'none');
         } else {
           div.select(`#nw-node-${a.index}`)
             .attr('class', 'nw-node-div nw-node-showing')
@@ -232,6 +354,30 @@ const makeGraph = (div, nodeId, category, direct, orfee) => {
             .delay(transVisibleDur)
             .duration(transMoveDur)
             .style('top', `${cumHeight}px`);
+          div.select(`#risk-line-${a.index}`)
+            .attr('class', 'risk-div risk-line-showing')
+            .transition()
+            .delay(transVisibleDur)
+            .duration(transMoveDur)
+            .style('top', `${cumHeight + 10}px`);
+          div.select(`#risk-dot1-${a.index}`)
+            .attr('class', 'risk-div risk-dot-showing')
+            .transition()
+            .delay(transVisibleDur)
+            .duration(transMoveDur)
+            .style('top', `${cumHeight + 9}px`);
+          div.select(`#risk-dot2-${a.index}`)
+            .attr('class', 'risk-div risk-dot-showing')
+            .transition()
+            .delay(transVisibleDur)
+            .duration(transMoveDur)
+            .style('top', `${cumHeight + 9}px`);
+          div.select(`#risk-marker-${a.index}`)
+            .attr('class', 'risk-div risk-marker-showing')
+            .transition()
+            .delay(transVisibleDur)
+            .duration(transMoveDur)
+            .style('top', `${cumHeight + 6}px`);
           curHeights[a.index] = cumHeight;
           cumHeight = cumHeight + a.height + 5;
           curMaxHeight = Math.max(cumHeight, curMaxHeight);
@@ -308,6 +454,21 @@ const makeGraph = (div, nodeId, category, direct, orfee) => {
       .duration(transMoveDur)
       .attr('class', 'nw-node-div')
       .style('top', a => `${a.y0}px`);
+    div.selectAll('.risk-line-showing')
+      .transition()
+      .duration(transMoveDur)
+      .attr('class', 'risk-div')
+      .style('top', a => `${a.y0 + 10}px`);
+    div.selectAll('.risk-dot-showing')
+      .transition()
+      .duration(transMoveDur)
+      .attr('class', 'risk-div')
+      .style('top', a => `${a.y0 + 9}px`);
+    div.selectAll('.risk-marker-showing')
+      .transition()
+      .duration(transMoveDur)
+      .attr('class', 'risk-div')
+      .style('top', a => `${a.y0 + 6}px`);
 
     // restore visibility of hidden nodes
     div.selectAll('.nw-node-hidden')
@@ -316,6 +477,30 @@ const makeGraph = (div, nodeId, category, direct, orfee) => {
       .delay(transMoveDur)
       .duration(transVisibleDur)
       .attr('class', 'nw-node-div')
+      .style('opacity', 1)
+      .transition();
+    div.selectAll('.risk-line-hidden')
+      .style('display', '')
+      .transition()
+      .delay(transMoveDur)
+      .duration(transVisibleDur)
+      .attr('class', 'risk-div')
+      .style('opacity', 1)
+      .transition();
+    div.selectAll('.risk-dot-hidden')
+      .style('display', '')
+      .transition()
+      .delay(transMoveDur)
+      .duration(transVisibleDur)
+      .attr('class', 'risk-div')
+      .style('opacity', 1)
+      .transition();
+    div.selectAll('.risk-marker-hidden')
+      .style('display', '')
+      .transition()
+      .delay(transMoveDur)
+      .duration(transVisibleDur)
+      .attr('class', 'risk-div')
       .style('opacity', 1)
       .transition();
 
