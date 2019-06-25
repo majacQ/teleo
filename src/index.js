@@ -5,6 +5,8 @@ import { createStore, compose, applyMiddleware } from 'redux';
 // import createActionBuffer from 'redux-action-buffer';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
+import { Router, Route, Switch } from 'react-router';
+import { createBrowserHistory } from 'history';
 import { throttle } from 'throttle-debounce';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 // import 'typeface-roboto';
@@ -23,6 +25,8 @@ import App from './App';
 import reducers from './reducers';
 // import registerServiceWorker from './registerServiceWorker';
 import * as serviceWorker from './serviceWorker';
+
+const history = createBrowserHistory();
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -80,7 +84,18 @@ const theme = createMuiTheme({
 ReactDOM.render(
   <Provider store={store}>
     <MuiThemeProvider theme={theme}>
-      <App />
+      <Router history={history}>
+        <>
+          <Switch>
+            <Route exact path="/" render={() => (<div>hi</div>)} />
+            <Route
+              exact
+              path="/app"
+              render={() => (<App />)}
+            />
+          </Switch>
+        </>
+      </Router>
     </MuiThemeProvider>
   </Provider>,
   document.getElementById('root'));
