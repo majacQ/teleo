@@ -151,7 +151,7 @@ body {
   height: 112px;
   color: #202A2B;
   /* font-family: "Crimson Text"; */
-  font-family: "Minion Pro";
+  font-family: "Minion Pro", "Crimson Text";
   font-size: 20px;
   line-height: 28px;
 }
@@ -166,7 +166,7 @@ body {
 
 .home-buildvis-text {
   color: #202A2B;
-  font-family: "DIN OT";
+  font-family: "DIN OT", "Barlow";
   font-weight: bold;
   /* font-family: "Barlow";
   font-weight: 500; */
@@ -239,7 +239,7 @@ body {
 .home-instructions-text {
   color: #202A2B;
   /* font-family: "Crimson Text"; */
-  font-family: "Minion Pro";
+  font-family: "Minion Pro", "Crimson Text";
   font-size: 20px;
   line-height: 28px;
 }
@@ -274,7 +274,7 @@ body {
 
 .home-methodology-text {
   color: #FFFFFF;
-  font-family: "DIN OT";
+  font-family: "DIN OT", "Barlow";
   font-weight: bold;
   /* font-family: "Barlow";
   font-weight: 500; */
