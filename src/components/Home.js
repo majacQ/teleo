@@ -147,7 +147,7 @@ const Home = ({
             <ArrowForwardIcon />
           </IconButton>
         </div>
-        <Box>
+        {/* <Box>
           <div className="home-info-header">Supported By</div>
         </Box>
         <Box
@@ -232,7 +232,7 @@ const Home = ({
           <Box className="home-footer-text">
             Contact Us
           </Box>
-        </Box>
+        </Box> */}
       </div>
     </div>
     <div
