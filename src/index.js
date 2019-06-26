@@ -6,11 +6,13 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { Router, Route, Switch } from 'react-router';
-import { createBrowserHistory } from 'history';
 import { throttle } from 'throttle-debounce';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-// import 'typeface-roboto';
-// import 'typeface-roboto-condensed';
+import 'typeface-roboto';
+import 'typeface-roboto-condensed';
+import 'typeface-barlow';
+import history from './history';
+import Home from './components/Home';
 import {
   fetchData, fetchRefsData, fetchNetworkData, windowResize
 } from './actions';
@@ -25,8 +27,6 @@ import App from './App';
 import reducers from './reducers';
 // import registerServiceWorker from './registerServiceWorker';
 import * as serviceWorker from './serviceWorker';
-
-const history = createBrowserHistory();
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -87,7 +87,7 @@ ReactDOM.render(
       <Router history={history}>
         <>
           <Switch>
-            <Route exact path="/" render={() => (<div>hi</div>)} />
+            <Route exact path="/" render={() => (<Home />)} />
             <Route
               exact
               path="/app"
@@ -105,7 +105,18 @@ if (module.hot) {
     ReactDOM.render(
       <Provider store={store}>
         <MuiThemeProvider theme={theme}>
-          <App />
+          <Router history={history}>
+            <>
+              <Switch>
+                <Route exact path="/" render={() => (<Home />)} />
+                <Route
+                  exact
+                  path="/app"
+                  render={() => (<App />)}
+                />
+              </Switch>
+            </>
+          </Router>
         </MuiThemeProvider>
       </Provider>,
       document.getElementById('root'));

@@ -30,7 +30,13 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
-    "throttle-debounce": "^2.1.0"
+    "throttle-debounce": "^2.1.0",
+    "typeface-barlow": "^0.0.71",
+    "typeface-barlow-condensed": "^0.0.71",
+    "typeface-barlow-semi-condensed": "^0.0.71",
+    "typeface-crimson-text": "^0.0.72",
+    "typeface-roboto": "^0.0.54",
+    "typeface-roboto-condensed": "^0.0.54"
   },
   "scripts": {
     "start": "react-scripts start",
