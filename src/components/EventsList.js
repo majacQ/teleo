@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import posed, { PoseGroup } from 'react-pose';
 import Event from './Event';
 import ExpandInfo from './ExpandInfo';
 import { pinnedLabWidths, getPinnedTextFromData } from '../utils/pinnedText';
@@ -23,6 +24,11 @@ const EventsList = ({
   let beforeRange = 0;
   let inRange = 0;
   let afterRange = 0;
+
+  const PosedDiv = posed.div({
+    enter: { opacity: 1, transition: { duration: 500 } },
+    exit: { opacity: 0, transition: { duration: 500 } }
+  });
 
   data.forEach((d) => {
     let extraWidth = 0; // for pinned items
@@ -121,9 +127,15 @@ const EventsList = ({
                   }
                 </div>
               </div>
-              { idx > -1 && (
-                <ExpandInfo data={expanded[idx]} />
-              )}
+              {
+                <PoseGroup>
+                  { idx > -1 && (
+                    <PosedDiv key={1}>
+                      <ExpandInfo data={expanded[idx]} />
+                    </PosedDiv>
+                  )}
+                </PoseGroup>
+              }
             </div>
           );
         })
