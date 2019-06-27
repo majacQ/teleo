@@ -45,6 +45,7 @@ body {
   line-height: 64px;
   padding-left: 15px;
   display: inline-block;
+  cursor: pointer;
 }
 
 .header-filters {

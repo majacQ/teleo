@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import { createSelector } from 'reselect';
+import history from '../history';
 import SearchBox from './SearchBox';
 import { ui } from '../constants';
 import {
@@ -46,7 +47,12 @@ const Header = ({
       )}
       <div className="header-wrapper" style={{ height: ui.header.height, width: windowSize.width }}>
         <div className="header" style={{ height: ui.header.height, width: windowSize.appWidth, left: windowSize.appLeft }}>
-          <div className="header-text">
+          <div
+            className="header-text"
+            onClick={() => history.replace('')
+          }
+            role="presentation"
+          >
             Seminal Events Timeline
           </div>
           <div className="header-icons">
