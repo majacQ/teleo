@@ -22,9 +22,9 @@ const LinkDialog = ({
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        Sharable link:
+        Use the link below to share this visualization with others:
       </DialogTitle>
-      <DialogContent>
+      <DialogContent className="link-text">
         <DialogContentText>
           {`${window.location.href}#${hashFromState(state)}`}
         </DialogContentText>

@@ -343,6 +343,10 @@ body {
   padding-left: 25px;
 }
 
+.link-text {
+  word-wrap: break-word;
+}
+
 .agerange-container {
   top: 0px;
   position: fixed;
