@@ -81,11 +81,16 @@ const Home = ({
           <Box flexGrow={1} className="home-instructions-image" />
           <Box flexGrow={1} className="home-instructions-desc">
             <div className="home-instructions-number">1</div>
-            <div className="home-instructions-header">Select Age range</div>
+            <div className="home-instructions-header">Add Variables and Search Causal Pathways</div>
             <div className="home-instructions-text">
-              See specific periods of development by narrowing the time period of development
-              from conception to age 13 years. Adjust by dragging sliders on the timeline
-              or selecting a pre-specified range.
+              <p>
+                Add categories of events from development across organogenesis,
+                growth and maturation, and neurodevelopment.
+              </p>
+              <p>
+                Search for specific health outcomes, risk factors, and interventions
+                and see causal pathways of how a particular event is related to others.
+              </p>
             </div>
           </Box>
         </Box>
@@ -97,10 +102,11 @@ const Home = ({
           <Box flexGrow={1} className="home-instructions-image" />
           <Box flexGrow={1} className="home-instructions-desc">
             <div className="home-instructions-number">2</div>
-            <div className="home-instructions-header">Add Variables</div>
+            <div className="home-instructions-header">Select Age range</div>
             <div className="home-instructions-text">
-              Add categories of events from development across organogenesis,
-              growth and maturation, and neurodevelopment.
+              See specific periods of development by narrowing the time period of development
+              from conception to age 13 years. Adjust by dragging sliders on the timeline
+              or selecting a pre-specified range.
             </div>
           </Box>
         </Box>
@@ -112,21 +118,6 @@ const Home = ({
           <Box flexGrow={1} className="home-instructions-image" />
           <Box flexGrow={1} className="home-instructions-desc">
             <div className="home-instructions-number">3</div>
-            <div className="home-instructions-header">Search Causal Pathways</div>
-            <div className="home-instructions-text">
-              Search for specific health outcomes, risk factors, and interventions
-              and see causal pathways of how a particular event is related to others.
-            </div>
-          </Box>
-        </Box>
-        <Box
-          display="flex"
-          flexWrap="nowrap"
-          bgcolor="#FFFFFF"
-        >
-          <Box flexGrow={1} className="home-instructions-image" />
-          <Box flexGrow={1} className="home-instructions-desc">
-            <div className="home-instructions-number">4</div>
             <div className="home-instructions-header">View Details</div>
             <div className="home-instructions-text">
               Expand events to view detailed descriptions, peak ages, detailed references,

@@ -29,11 +29,11 @@
 }
 
 .nw-alldirect > span:hover {
-  color: red;
+  color: #73B6BB;
 }
 
 .nw-alldirect > span.active {
-  color: red;
+  color: #73B6BB;
 }
 
 #nw-bounding {
@@ -71,7 +71,7 @@
 }
 
 .nw-node-div-hl {
-  color: red !important;
+  color: #73B6BB !important;
 }
 
 .nw-active-node {
@@ -85,7 +85,7 @@
 }
 
 .nw-link-hl {
-  stroke: red;
+  stroke: #73B6BB;
   stroke-width: 2;
   stroke-opacity: 0.6;
 }
