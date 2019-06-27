@@ -11,7 +11,7 @@ const ExpandInfo = ({
 }) => {
   const [refExpanded, setRefExpand] = useState(false);
 
-  const [expand] = useState(true);
+  // const [expand] = useState(true);
   // // useEffect causes the component to render over and over and over
   // const [expand, setExpand] = useState(true);
   // useEffect(() => {

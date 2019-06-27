@@ -1,23 +1,7 @@
-import {
-  SET_AGE_RANGE,
-  // SET_EXPANDED,
-  SET_PINNED,
-  SET_FILTERS,
-  SET_COLLAPSED_GROUP,
-  SET_SELECTED_ORFI
-  // SET_AGERANGE_OPEN,
-  // SET_REVIEWREFS_OPEN
-} from '../constants';
-
+import { SET_AGE_RANGE } from '../constants';
 import {
   setFilters, setSelectedORFI, setCollapsedGroup, setAllPinned
 } from '../actions';
-
-// this updates the window hash whenever the state changes
-// expanded: Array(1)
-//   0: {uid: "GM078", section: "Growth & Maturation", subcat: "Gastrointestinal", ...
-// pinned: Array(1)
-//   0: {uid: "GM078", section: "Growth & Maturation", subcat: "Gastrointestinal", ...
 
 const subcatLookup = {
   Cognitive: 'co',
@@ -168,17 +152,4 @@ export const setStateFromHash = (store, hash) => {
     });
     store.dispatch(setAllPinned(pinned));
   }
-};
-
-export const hashMiddleware = store => next => (action) => {
-  const types = [SET_AGE_RANGE, SET_FILTERS, SET_SELECTED_ORFI, SET_COLLAPSED_GROUP, SET_PINNED];
-  const result = next(action);
-  if (types.indexOf(action.type) > -1) {
-    const hash = hashFromState(store.getState());
-    if (window.location.hash !== hash) {
-      window.history.pushState(hash, undefined, `#${hash}`);
-      // window.history.pushState(hash, undefined, '');
-    }
-  }
-  return result;
 };

@@ -4,7 +4,8 @@ import {
   SET_AGE_RANGE, SET_FOCUS_SCALE, REQUEST_DATA, RECEIVE_DATA, SET_COLLAPSED_GROUP,
   REQUEST_NETWORK_DATA, RECEIVE_NETWORK_DATA, SET_SELECTED_ORFI, SET_PATHWAY_OPEN,
   SET_FILTERS, SET_FILTER_OPEN, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED,
-  SET_AGERANGE_OPEN, REQUEST_REFS_DATA, RECEIVE_REFS_DATA, SET_REVIEWREFS_OPEN, ui
+  SET_AGERANGE_OPEN, REQUEST_REFS_DATA, RECEIVE_REFS_DATA, SET_REVIEWREFS_OPEN,
+  SET_LINKDIALOG_OPEN, ui
 } from '../constants';
 
 const ageRange = (state = [279.9 / 7, 1010 / 7], action) => {
@@ -25,7 +26,8 @@ const timelineFocusScale = (state = () => {}, action) => {
   return state;
 };
 
-const filters = (state = { ogm: ['Gastrointestinal', 'Genitourinary'], nd: [] }, action) => {
+// const filters = (state = { ogm: ['Gastrointestinal', 'Genitourinary'], nd: [] }, action) => {
+const filters = (state = { ogm: [], nd: [] }, action) => {
   switch (action.type) {
     case SET_FILTERS: {
       let newState = Object.assign({}, state);
@@ -96,7 +98,7 @@ const ageRangeOpen = (state = false, action) => {
   return state;
 };
 
-const filterOpen = (state = false, action) => {
+const filterOpen = (state = true, action) => {
   switch (action.type) {
     case SET_FILTER_OPEN:
       return action.val;
@@ -117,6 +119,15 @@ const pathwayOpen = (state = false, action) => {
 const reviewRefsOpen = (state = false, action) => {
   switch (action.type) {
     case SET_REVIEWREFS_OPEN:
+      return action.val;
+    default:
+  }
+  return state;
+};
+
+const linkDialogOpen = (state = false, action) => {
+  switch (action.type) {
+    case SET_LINKDIALOG_OPEN:
       return action.val;
     default:
   }
@@ -309,6 +320,7 @@ const reducers = combineReducers({
   filterOpen,
   pathwayOpen,
   reviewRefsOpen,
+  linkDialogOpen,
   expanded,
   pinned,
   collapsedGroups,

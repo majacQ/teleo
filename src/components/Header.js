@@ -6,14 +6,14 @@ import { createSelector } from 'reselect';
 import SearchBox from './SearchBox';
 import { ui } from '../constants';
 import {
-  setFilterOpen, setAgeRangeOpen, setReviewRefsOpen, addPinned
+  setFilterOpen, setAgeRangeOpen, setReviewRefsOpen, addPinned, setLinkDialogOpen
 } from '../actions';
 import { escapeRegexCharacters } from '../utils/regex';
 import { classLookup } from '../utils/pinnedText';
 
 const Header = ({
   windowSize, ageRangeOpen, filterOpen, reviewRefsOpen, pinned, allItems,
-  toggleFilterOpen, toggleAgeRangeOpen, addToPinned
+  toggleFilterOpen, toggleAgeRangeOpen, addToPinned, openLinkDialog
 }) => {
   const [searchOpen, setSearchOpen] = useState(false);
 
@@ -55,7 +55,11 @@ const Header = ({
               onClick={() => setSearchOpen(!searchOpen)}
               role="presentation"
             />
-            {/* <span className="header-icon icon-link" /> */}
+            <span
+              className="header-icon icon-link"
+              onClick={() => openLinkDialog()}
+              role="presentation"
+            />
             {/* <span className="header-icon icon-download" /> */}
           </div>
           { !searchOpen && (
@@ -113,6 +117,7 @@ Header.propTypes = {
   allItems: PropTypes.array.isRequired,
   toggleFilterOpen: PropTypes.func.isRequired,
   toggleAgeRangeOpen: PropTypes.func.isRequired,
+  openLinkDialog: PropTypes.func.isRequired,
   addToPinned: PropTypes.func.isRequired
   // toggleReviewRefsOpen: PropTypes.func.isRequired
 };
@@ -194,6 +199,9 @@ const mapDispatchToProps = dispatch => ({
       i: dat.i
     };
     dispatch(addPinned(newDat));
+  },
+  openLinkDialog: () => {
+    dispatch(setLinkDialogOpen(true));
   }
   // toggleReviewRefsOpen: (val, filterOpen, ageRangeOpen) => {
   //   dispatch(setReviewRefsOpen(val));

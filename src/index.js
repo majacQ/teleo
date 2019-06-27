@@ -5,7 +5,9 @@ import { createStore, compose, applyMiddleware } from 'redux';
 // import createActionBuffer from 'redux-action-buffer';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
-import { Router, Route, Switch } from 'react-router';
+import {
+  Router, Route, Switch, Redirect
+} from 'react-router-dom';
 import { throttle } from 'throttle-debounce';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import 'typeface-roboto';
@@ -14,9 +16,9 @@ import 'typeface-barlow';
 import history from './history';
 import Home from './components/Home';
 import {
-  fetchData, fetchRefsData, fetchNetworkData, windowResize
+  fetchData, fetchRefsData, fetchNetworkData, windowResize, setFilterOpen
 } from './actions';
-import { setStateFromHash, hashMiddleware } from './utils/hash';
+import { setStateFromHash } from './utils/hash';
 import { ui } from './constants';
 
 import './assets/index.css';
@@ -36,7 +38,7 @@ if (process.env.NODE_ENV !== 'production') {
   store = createStore(
     reducers,
     // { initial state... },
-    composeEnhancer(applyMiddleware(thunkMiddleware, hashMiddleware, createLogger()))
+    composeEnhancer(applyMiddleware(thunkMiddleware, createLogger()))
   );
   if (module.hot) {
     module.hot.accept('./reducers', () => {
@@ -47,7 +49,7 @@ if (process.env.NODE_ENV !== 'production') {
   store = createStore(
     reducers,
     // { initial state... },
-    composeEnhancer(applyMiddleware(thunkMiddleware, hashMiddleware))
+    composeEnhancer(applyMiddleware(thunkMiddleware))
   );
 }
 
@@ -56,19 +58,19 @@ if (process.env.NODE_ENV !== 'production') {
 //   setStateFromHash(store);
 // }, false);
 
-window.onpopstate = (event) => {
-  setStateFromHash(store, event.state);
-};
+// window.onpopstate = (event) => {
+//   setStateFromHash(store, event.state);
+// };
 
-window.onpushstate = (event) => {
-  setStateFromHash(store, event.state);
-};
+// window.onpushstate = (event) => {
+//   setStateFromHash(store, event.state);
+// };
 
 // #from=280&to=1010&nd=&ogm=CNS&ho=&int=int_105,int_111,int_61&rf=rf_135,rf_71&cgs=ogm_CNS
 
-if (window.location.hash !== '' || window.location.hash !== '#') {
-  setStateFromHash(store, window.location.hash);
-}
+// if (window.location.hash !== '' || window.location.hash !== '#') {
+//   setStateFromHash(store, window.location.hash);
+// }
 
 const theme = createMuiTheme({
   palette: {
@@ -81,6 +83,8 @@ const theme = createMuiTheme({
   }
 });
 
+// #from=280&to=1010&nd=&ogm=Genitourinary&ho=&int=&rf=&cgs=&pnd=
+
 ReactDOM.render(
   <Provider store={store}>
     <MuiThemeProvider theme={theme}>
@@ -91,7 +95,15 @@ ReactDOM.render(
             <Route
               exact
               path="/app"
-              render={() => (<App />)}
+              render={(props) => {
+                const { hash } = props.location;
+                if (hash === '' || hash === '#') {
+                  return (<App />);
+                }
+                store.dispatch(setFilterOpen(false));
+                setStateFromHash(store, hash);
+                return (<Redirect to="/app" />);
+              }}
             />
           </Switch>
         </>
@@ -112,7 +124,14 @@ if (module.hot) {
                 <Route
                   exact
                   path="/app"
-                  render={() => (<App />)}
+                  render={(props) => {
+                    const { hash } = props.location;
+                    if (hash === '' || hash === '#') {
+                      return (<App />);
+                    }
+                    setStateFromHash(store, hash);
+                    return (<Redirect to="/app" />);
+                  }}
                 />
               </Switch>
             </>

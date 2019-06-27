@@ -4,7 +4,8 @@ import {
   SET_FILTERS, SET_FILTER_OPEN, WINDOW_RESIZE, SET_EXPANDED, SET_PINNED,
   SET_COLLAPSED_GROUP, REQUEST_NETWORK_DATA, RECEIVE_NETWORK_DATA,
   SET_SELECTED_ORFI, SET_PATHWAY_OPEN, SET_AGERANGE_OPEN,
-  REQUEST_REFS_DATA, RECEIVE_REFS_DATA, SET_REVIEWREFS_OPEN
+  REQUEST_REFS_DATA, RECEIVE_REFS_DATA, SET_REVIEWREFS_OPEN,
+  SET_LINKDIALOG_OPEN
 } from '../constants';
 
 export const setAgeRange = val => ({
@@ -29,6 +30,11 @@ export const setAgeRangeOpen = val => ({
 
 export const setFilterOpen = val => ({
   type: SET_FILTER_OPEN,
+  val
+});
+
+export const setLinkDialogOpen = val => ({
+  type: SET_LINKDIALOG_OPEN,
   val
 });
 

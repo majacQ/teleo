@@ -4,6 +4,7 @@ import Body from './components/Body';
 import FilterVariable from './components/FilterVariable';
 import AgeRange from './components/AgeRange';
 import ReviewReferences from './components/ReviewReferences';
+import LinkDialog from './components/LinkDialog';
 
 const App = () => (
   <div className="root">
@@ -12,6 +13,7 @@ const App = () => (
     <FilterVariable />
     <AgeRange />
     <ReviewReferences />
+    <LinkDialog />
   </div>
 );
 
