@@ -117,7 +117,8 @@ body {
 
 .home-image {
   width: 100%;
-  background: lightgray;
+  background-image: url("/images/main.jpg");
+  /* background: lightgray; */
 }
 
 .home-image-text {
@@ -176,12 +177,13 @@ body {
   font-size: 24px;
   line-height: 31px;
   padding-left: 43px;
-  padding-right: 5px;
+  padding-right: 10px;
 }
 
 .home-buildvis-button {
   height: 48px;
   width: 48px;
+  color: #FFFFFF !important;
 }
 
 /* button: 33x33 */
@@ -202,6 +204,28 @@ body {
   margin-top: 60px;
   margin-bottom: 60px;
   max-width: 414px;
+}
+
+.home-instructions-image1 {
+  background-image: url("/images/step1.png");
+  background-size: cover;
+  background-position: left;
+}
+
+.home-instructions-image2 {
+  background-image: url("/images/step1.png");
+  background-size: cover;
+  background-position: right;
+}
+
+.home-instructions-image3 {
+  background-image: url("/images/step3.png");
+  background-size: cover;
+}
+
+.home-instructions-image4 {
+  background-image: url("/images/step4.png");
+  background-size: cover;
 }
 
 .home-instructions-desc {
@@ -252,6 +276,7 @@ body {
   height: 600px;
   width: 100%;
   background-color: #202A2B;
+  position: relative;
 }
 
 .home-carousel-header {
@@ -266,7 +291,65 @@ body {
   padding-top: 75px;
 }
 
+.home-carousel-box {
+  height: 410px;
+  padding-top: 22px;
+  overflow-x: hidden;
+  position: relative;
+}
 
+.home-carousel-button {
+  height: 48px;
+  width: 48px;
+  color: #FFFFFF !important;
+}
+
+.home-carousel-button-root {
+  background-color: #4EB8C1 !important;
+}
+
+.home-carousel-button-left {
+  position: absolute;
+  top: 290px;
+  left: 40px;
+}
+
+.home-carousel-button-right {
+  position: absolute;
+  top: 290px;
+  right: 40px;
+}
+
+.home-carousel-item {
+  height: 416px;
+  width: 780px;
+  background-color: #F1F2F2;
+  position: absolute;
+  top: 10px;
+}
+
+.home-carousel-item-title {
+  color: #202A2B;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.9px;
+  line-height: 24px;
+  text-transform: uppercase;
+  padding-top: 157px;
+  padding-left: 80px;
+}
+
+.home-carousel-item-desc {
+  color: #202A2B;
+  font-family: "Roboto Condensed";
+  font-size: 20px;
+  line-height: 28px;
+  width: 380px;
+  padding-left: 80px;
+  /* font-weight: 300; */
+  padding-top: 5px;
+}
 
 .home-methodology {
   height: 120px;
@@ -293,7 +376,6 @@ body {
   height: 48px;
   width: 48px;
   color: #FFFFFF !important;
-  background-color: red;
 }
 
 .home-info-header {
