@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import posed from 'react-pose';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -26,6 +27,15 @@ const crslItems = [
     index: 3
   }
 ];
+
+const PosedDiv = posed.div({
+  state1: { left: 122 + 800 * -2 },
+  state2: { left: 122 + 800 * -1 },
+  state3: { left: 122 + 800 * -0 },
+  state4: { left: 122 + 800 * 1 },
+  state5: { left: 122 + 800 * 2 }
+  // visible: { left: prps => 122 + (800 * (prps.i - curCrsl)) }
+});
 
 const Home = ({
   windowSize
@@ -160,22 +170,18 @@ const Home = ({
           <div className="home-carousel-container">
             <div className="home-carousel-header">Get started with an example visualization</div>
             <div className="home-carousel-box" style={{ width: windowSize.appWidth }}>
-              {
-                crslItems.map((d, i) => (
-                  <div
-                    className="home-carousel-item"
-                    style={{ left: 122 + (800 * (i - curCrsl)) }}
-                    key={d.index}
-                  >
-                    <div className="home-carousel-item-title">
-                      {d.title}
-                    </div>
-                    <div className="home-carousel-item-desc">
-                      {d.desc}
-                    </div>
-                  </div>
-                ))
-              }
+              <PosedDiv pose={`state${3 - curCrsl}`} className="home-carousel-item">
+                <div className="home-carousel-item-title">{crslItems[0].title}</div>
+                <div className="home-carousel-item-desc">{crslItems[0].desc}</div>
+              </PosedDiv>
+              <PosedDiv pose={`state${4 - curCrsl}`} className="home-carousel-item">
+                <div className="home-carousel-item-title">{crslItems[1].title}</div>
+                <div className="home-carousel-item-desc">{crslItems[1].desc}</div>
+              </PosedDiv>
+              <PosedDiv pose={`state${5 - curCrsl}`} className="home-carousel-item">
+                <div className="home-carousel-item-title">{crslItems[2].title}</div>
+                <div className="home-carousel-item-desc">{crslItems[2].desc}</div>
+              </PosedDiv>
             </div>
             { curCrsl > 0 && (
               <div className="home-carousel-button-left">
