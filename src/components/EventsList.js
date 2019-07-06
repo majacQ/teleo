@@ -25,10 +25,10 @@ const PosedDiv = posed.div({
   }
 });
 
-// const PosedEvent = posed.div({
-//   enter: { opacity: 1, transition: { duration: 500 } },
-//   exit: { opacity: 0, transition: { duration: 500 } }
-// });
+const PosedRow = posed.div({
+  enter: { opacity: 1, transition: { duration: 5000 } },
+  exit: { opacity: 0, transition: { duration: 5000 } }
+});
 
 const EventsList = ({
   data, gid, pinned, collapsed, setRangeStats, xScaleFoc, windowSize, expanded
@@ -126,13 +126,13 @@ const EventsList = ({
   }
 
   return (
-    <div>
+    <PoseGroup flipMove={false}>
       {
         rows.map((rowdat, i) => {
           const rowId = `${gid}-${i}`;
           const idx = expandedRows.indexOf(rowId);
           return (
-            <div key={rowId}>
+            <PosedRow key={rowId} style={{ overflowY: 'hidden' }}>
               <div className="event-row">
                 <div className="event-row-abs">
                   {
@@ -156,11 +156,11 @@ const EventsList = ({
                   )}
                 </PoseGroup>
               }
-            </div>
+            </PosedRow>
           );
         })
       }
-    </div>
+    </PoseGroup>
   );
 };
 

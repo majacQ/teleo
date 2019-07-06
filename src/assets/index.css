@@ -160,9 +160,12 @@ body {
 }
 
 .home-buildvis {
-  height: 120px;
   width: 100%;
   background: #fff;
+}
+
+.home-buildvis-inner {
+  height: 120px;
   display: flex;
   align-items: center;
 }
@@ -274,7 +277,6 @@ body {
 
 .home-carousel-container {
   height: 600px;
-  width: 100%;
   background-color: #202A2B;
   position: relative;
 }
@@ -310,13 +312,13 @@ body {
 
 .home-carousel-button-left {
   position: absolute;
-  top: 290px;
+  top: 190px;
   left: 40px;
 }
 
 .home-carousel-button-right {
   position: absolute;
-  top: 290px;
+  top: 190px;
   right: 40px;
 }
 
@@ -353,7 +355,6 @@ body {
 
 .home-methodology {
   height: 120px;
-  width: 100%;
 	background-color: #4EB8C1;
   display: flex;
   align-items: center;
