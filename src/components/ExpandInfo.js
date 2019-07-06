@@ -11,6 +11,10 @@ const ExpandInfo = ({
 }) => {
   const [refExpanded, setRefExpand] = useState(false);
 
+  if (data.uid === -1) {
+    return '';
+  }
+
   // const [expand] = useState(true);
   // // useEffect causes the component to render over and over and over
   // const [expand, setExpand] = useState(true);
@@ -40,9 +44,10 @@ const ExpandInfo = ({
       }
     });
     refs = refs.filter((item, i, ar) => ar.indexOf(item) === i);
+    // only include references that we have data for
+    refs = refs.filter(item => refsData.data[item] !== undefined);
   }
   // if it's a "pathway" event, we need to get the reference indices from the graph
-
 
   return (
     <div className="expand-info-wrapper" style={{ width: windowSize.width }}>

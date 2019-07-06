@@ -6,6 +6,26 @@ import Event from './Event';
 import ExpandInfo from './ExpandInfo';
 import { pinnedLabWidths, getPinnedTextFromData } from '../utils/pinnedText';
 
+const PosedDiv = posed.div({
+  enter: {
+    height: 'auto',
+    transition: {
+      height: { duration: 200 }
+    }
+  },
+  exit: {
+    height: 0,
+    transition: {
+      height: { duration: 200 }
+    }
+  }
+});
+
+// const PosedEvent = posed.div({
+//   enter: { opacity: 1, transition: { duration: 500 } },
+//   exit: { opacity: 0, transition: { duration: 500 } }
+// });
+
 const EventsList = ({
   data, gid, pinned, collapsed, setRangeStats, xScaleFoc, windowSize, expanded
 }) => {
@@ -25,11 +45,6 @@ const EventsList = ({
   let inRange = 0;
   let afterRange = 0;
 
-  const PosedDiv = posed.div({
-    enter: { opacity: 1, transition: { duration: 500 } },
-    exit: { opacity: 0, transition: { duration: 500 } }
-  });
-
   data.forEach((d) => {
     let extraWidth = 0; // for pinned items
     if (pinned) {
@@ -40,7 +55,8 @@ const EventsList = ({
     }
     const xStart = xScaleFoc(d.age_start / 7);
     const xEnd = xScaleFoc(d.age_end / 7);
-    const eventWidth = Math.max(xEnd - xStart, 5);
+    const eventWidth = Math.max(xEnd - xStart, 20);
+    // const eventWidth = Math.max(xEnd - xStart, 5); // when using svg
     let eventPeakWidth = eventWidth;
     let eventPeakStart = xStart;
     if (d.age_start_peak && d.age_end_peak) {
@@ -128,9 +144,9 @@ const EventsList = ({
                 </div>
               </div>
               {
-                <PoseGroup>
+                <PoseGroup flipMove={false}>
                   { idx > -1 && (
-                    <PosedDiv key={1}>
+                    <PosedDiv key={idx} style={{ overflowY: 'hidden' }} withParent={false}>
                       <ExpandInfo data={expanded[idx]} />
                     </PosedDiv>
                   )}

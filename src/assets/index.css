@@ -891,7 +891,8 @@ body {
 
 .event-peak {
   height: 26px;
-  margin-left: 14px;
+  /* margin-left: 14px; */
+  border-radius: 14px;
   position: relative;
   background-color: white;
   border-bottom: 0.5px solid lightgray;

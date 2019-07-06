@@ -78,10 +78,11 @@ const Event = ({
         className="event-peak"
         style={{ left: data.eventPeakStart - data.xStart, width: data.eventPeakWidth, background: expanded ? '#4eb8c1' : eventColor }}
       >
-        <div className="event-peak-st">
+        {/* <div className="event-peak-st">
           <svg width="19px" height="26px" className="event-peak-shadow">
             <path
-              d="M19,26V0C12,0,10.94,5,7.56,7.88a16.62,16.62,0,0,1-7,3.38C-.09,11.56,0,12,0,13s-.09,1.44.53,1.75a16.62,16.62,0,0,1,7,3.38C10.94,21,12,26,19,26Z"
+              d="M19,26V0C12,0,10.94,5,7.56,7.88a16.62,16.62,0,0,1-7,3.38C-.09,11.56,0,12,0,13s-.09,
+              1.44.53,1.75a16.62,16.62,0,0,1,7,3.38C10.94,21,12,26,19,26Z"
               fill={expanded ? '#4eb8c1' : eventColor}
             />
           </svg>
@@ -89,11 +90,12 @@ const Event = ({
         <div className="event-peak-nd" style={{ left: Math.max(data.eventPeakWidth - 3, 2) }}>
           <svg width="19px" height="26px" className="event-peak-shadow">
             <path
-              d="M0,26L0,0c7,0,8.1,5,11.4,7.9c3.2,2.8,6.5,3.1,7,3.4C19.1,11.6,19,12,19,13s0.1,1.4-0.5,1.8c-0.5,0.3-3.8,0.6-7,3.4C8.1,21,7,26,0,26z"
+              d="M0,26L0,0c7,0,8.1,5,11.4,7.9c3.2,2.8,6.5,3.1,7,3.4C19.1,11.6,19,12,19,13s0.1,
+              1.4-0.5,1.8c-0.5,0.3-3.8,0.6-7,3.4C8.1,21,7,26,0,26z"
               fill={expanded ? '#4eb8c1' : eventColor}
             />
           </svg>
-        </div>
+        </div> */}
       </div>
       <div className="event-text" style={{ paddingLeft: data.paddingLeft }}>
         {data.desc_short}
