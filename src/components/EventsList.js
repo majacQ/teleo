@@ -9,14 +9,18 @@ import { pinnedLabWidths, getPinnedTextFromData } from '../utils/pinnedText';
 const PosedDiv = posed.div({
   enter: {
     height: 'auto',
+    opacity: 1,
     transition: {
-      height: { duration: 200 }
+      height: { duration: 200 },
+      opacity: { duration: 400, delay: 0 }
     }
   },
   exit: {
     height: 0,
+    opacity: 0,
     transition: {
-      height: { duration: 200 }
+      height: { duration: 200, delay: 100 },
+      opacity: { duration: 400 }
     }
   }
 });
