@@ -236,7 +236,7 @@ const Home = ({
             <ArrowForwardIcon />
           </IconButton>
         </div>
-        <Box
+        {/* <Box
           style={{ paddingLeft: windowSize.appLeft, paddingRight: windowSize.appLeft }}        
         >
           <div className="home-info-header">Supported By</div>
@@ -326,7 +326,7 @@ const Home = ({
           <Box className="home-footer-text">
             Contact Us
           </Box>
-        </Box>
+        </Box> */}
       </div>
     </div>
   );
