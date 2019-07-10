@@ -15,12 +15,12 @@ import 'typeface-roboto-condensed';
 import 'typeface-barlow';
 import history from './history';
 import Home from './components/Home';
+import Methodology from './components/Methodology';
 import {
   fetchData, fetchRefsData, fetchNetworkData, windowResize, setFilterOpen
 } from './actions';
 import { setStateFromHash } from './utils/hash';
 import { ui } from './constants';
-
 import './assets/index.css';
 import './assets/ageSlider.css';
 import './assets/networkGraph.css';
@@ -92,6 +92,7 @@ ReactDOM.render(
         <>
           <Switch>
             <Route exact path="/" render={() => (<Home />)} />
+            <Route exact path="/methodology" render={() => (<Methodology />)} />
             <Route
               exact
               path="/app"

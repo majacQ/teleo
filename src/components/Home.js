@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import posed from 'react-pose';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import HeaderNonApp from './HeaderNonApp';
 import history from '../history';
 import { ui } from '../constants';
 
@@ -43,28 +43,7 @@ const Home = ({
   const [curCrsl, setCurCrsl] = useState(0);
   return (
     <div>
-      <div className="header-wrapper" style={{ height: ui.header.height, width: windowSize.width }}>
-        <div className="header" style={{ height: ui.header.height, width: windowSize.appWidth, left: windowSize.appLeft }}>
-          <div className="header-text">
-            Seminal Events Timeline
-          </div>
-          <div className="header-icons">
-            <Button
-              variant="outlined"
-              className="home-header-button"
-              classes={{ label: 'home-header-button', root: 'home-header-button-outline' }}
-              onClick={() => history.replace('/app')}
-            >
-              Build a Visualization
-            </Button>
-            {/* <span
-              className="header-icon icon-search2"
-              onClick={() => setSearchOpen(!searchOpen)}
-              role="presentation"
-            /> */}
-          </div>
-        </div>
-      </div>
+      <HeaderNonApp />
       <div
         className="home-container"
         style={{
@@ -237,7 +216,7 @@ const Home = ({
           </IconButton>
         </div>
         {/* <Box
-          style={{ paddingLeft: windowSize.appLeft, paddingRight: windowSize.appLeft }}        
+          style={{ paddingLeft: windowSize.appLeft, paddingRight: windowSize.appLeft }}
         >
           <div className="home-info-header">Supported By</div>
         </Box>
@@ -245,7 +224,7 @@ const Home = ({
           display="flex"
           flexWrap="nowrap"
           className="home-info"
-          style={{ paddingLeft: windowSize.appLeft, paddingRight: windowSize.appLeft }}        
+          style={{ paddingLeft: windowSize.appLeft, paddingRight: windowSize.appLeft }}
         >
           <Box flexBasis={0} flexGrow={1} className="home-info-column">
             <div className="home-info-logo">

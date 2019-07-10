@@ -414,7 +414,58 @@ body {
   padding-top: 20px;
 }
 
-.home-footer {
+.methodology-container {
+  padding-top: 116px;
+}
+
+.methodology-inner {
+  max-width: 620px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.methodology-title {
+  color: #202A2B;
+  font-family: "Roboto Condensed";
+  font-size: 52px;
+  font-weight: bold;
+  line-height: 52px;
+}
+
+.methodology-subtitle {
+  height: 22px;
+	color: #939598;
+	font-family: Roboto;
+	font-size: 14px;
+	font-style: italic;
+  line-height: 22px;
+}
+
+.methodology-header {
+	height: 33px;
+	color: #202A2B;
+	font-family: "Roboto Condensed";
+	font-size: 18px;
+	font-weight: bold;
+  line-height: 25px;
+  width: 100%;
+  padding-bottom: 3px;
+  border-bottom: 2px dotted #939598;
+  margin-bottom: 12px;
+  margin-top: 40px;
+}
+
+.methodology-text {
+	color: #3D5052;
+	font-family: "Roboto Condensed";
+	font-size: 18px;
+	line-height: 24px;
+	/* font-family: "Minion Pro";
+	font-size: 20px;
+	line-height: 28px; */
+}
+
+.footer {
   border-top: 1px solid #939598;
   margin-left: 42px;
   margin-right: 42px;
@@ -426,7 +477,7 @@ body {
   padding-top: 5px;
 }
 
-.home-footer-text {
+.footer-text {
   padding-left: 25px;
 }
 
