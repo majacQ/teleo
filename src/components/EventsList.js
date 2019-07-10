@@ -132,7 +132,7 @@ const EventsList = ({
           const rowId = `${gid}-${i}`;
           const idx = expandedRows.indexOf(rowId);
           return (
-            <PosedRow key={rowId} style={{ overflowY: 'hidden' }}>
+            <PosedRow key={rowId} style={{ overflow: 'hidden' }}>
               <div className="event-row">
                 <div className="event-row-abs">
                   {
@@ -150,7 +150,7 @@ const EventsList = ({
               {
                 <PoseGroup flipMove={false}>
                   { idx > -1 && (
-                    <PosedDiv key={idx} style={{ overflowY: 'hidden' }} withParent={false}>
+                    <PosedDiv key={idx} style={{ overflow: 'hidden' }} withParent={false}>
                       <ExpandInfo data={expanded[idx]} />
                     </PosedDiv>
                   )}
