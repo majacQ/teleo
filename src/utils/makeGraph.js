@@ -2,7 +2,7 @@
 import { sankey, sankeyLinkHorizontal } from 'd3-sankey';
 import { scaleLinear } from 'd3-scale';
 
-const unique = a => a.filter((item, i, ar) => ar.indexOf(item) === i);
+const unique = (a) => a.filter((item, i, ar) => ar.indexOf(item) === i);
 
 const riskColors = {
   '100,000 children': '#4798F2',
@@ -110,7 +110,7 @@ const makeGraph = (div, nodeId, category, direct, orfee, riskPad) => {
   const sankeyObj = sankey()
     .nodeWidth(nodeWidth)
     .nodePadding(0)
-    .nodeId(d => d.id)
+    .nodeId((d) => d.id)
     .extent([[1, 1], [width - riskPad, height - 6]]);
     // width - riskPad allows space for risk indicators
 
@@ -121,7 +121,7 @@ const makeGraph = (div, nodeId, category, direct, orfee, riskPad) => {
   const yy = {
     ho: [], path: [], rf: [], int: []
   };
-  data.nodes.forEach(d => (yy[d.class].push({
+  data.nodes.forEach((d) => (yy[d.class].push({
     y0: d.y0, index: d.index, name: d.name
   })));
   const yLookup = {};
@@ -167,7 +167,7 @@ const makeGraph = (div, nodeId, category, direct, orfee, riskPad) => {
     .append('path')
     .attr('class', 'nw-link')
     .attr('d', sankeyLinkHorizontal())
-    .attr('id', d => `nw-link-${d.index}`)
+    .attr('id', (d) => `nw-link-${d.index}`)
     .attr('stroke-width', 1);
 
   // nodes
@@ -178,12 +178,12 @@ const makeGraph = (div, nodeId, category, direct, orfee, riskPad) => {
     .enter()
     .append('div')
     .attr('class', 'nw-node-div')
-    .attr('id', d => `nw-node-${d.index}`)
-    .style('left', d => `${d.x0}px`)
-    .style('top', d => `${d.y0}px`)
-    .style('height', d => `${d.y1 - d.y0}px`)
-    .style('width', d => `${d.x1 - d.x0}px`)
-    .html(d => d.name)
+    .attr('id', (d) => `nw-node-${d.index}`)
+    .style('left', (d) => `${d.x0}px`)
+    .style('top', (d) => `${d.y0}px`)
+    .style('height', (d) => `${d.y1 - d.y0}px`)
+    .style('width', (d) => `${d.x1 - d.x0}px`)
+    .html((d) => d.name)
     .on('mouseover', (d) => { highlight(d); })
     .on('mouseout', () => {
       div.selectAll('.nw-node-div').classed('nw-node-div-hl', false);
@@ -198,10 +198,10 @@ const makeGraph = (div, nodeId, category, direct, orfee, riskPad) => {
     .enter()
     .append('circle')
     .attr('class', 'nw-dot1')
-    .attr('id', d => `nw-dot1-${d.index}`)
+    .attr('id', (d) => `nw-dot1-${d.index}`)
     .attr('r', 1)
-    .attr('cx', d => d.source.x1)
-    .attr('cy', d => d.y0);
+    .attr('cx', (d) => d.source.x1)
+    .attr('cy', (d) => d.y0);
 
   svg.append('g')
     .attr('class', 'nw-dots')
@@ -210,12 +210,12 @@ const makeGraph = (div, nodeId, category, direct, orfee, riskPad) => {
     .enter()
     .append('circle')
     .attr('class', 'nw-dot2')
-    .attr('id', d => `nw-dot2-${d.index}`)
+    .attr('id', (d) => `nw-dot2-${d.index}`)
     .attr('r', 1)
-    .attr('cx', d => d.target.x0)
-    .attr('cy', d => d.target.y0 + linkYOffset);
+    .attr('cx', (d) => d.target.x0)
+    .attr('cy', (d) => d.target.y0 + linkYOffset);
 
-  const hoNodes = data.nodes.filter(d => d.class === 'ho');
+  const hoNodes = data.nodes.filter((d) => d.class === 'ho');
 
   const riskLineDiv = dv.append('div');
   riskLineDiv.selectAll('div')
@@ -223,10 +223,10 @@ const makeGraph = (div, nodeId, category, direct, orfee, riskPad) => {
     .enter()
     .append('div')
     .attr('class', 'risk-div')
-    .attr('id', d => `risk-line-${d.index}`)
-    .style('background', d => riskColors[d.abs_risk_units])
-    .style('left', d => `${d.x0 - riskPad}px`)
-    .style('top', d => `${d.y0 + 10}px`)
+    .attr('id', (d) => `risk-line-${d.index}`)
+    .style('background', (d) => riskColors[d.abs_risk_units])
+    .style('left', (d) => `${d.x0 - riskPad}px`)
+    .style('top', (d) => `${d.y0 + 10}px`)
     .style('height', '1px')
     .style('width', `${riskPad - 5}px`);
 
@@ -236,10 +236,10 @@ const makeGraph = (div, nodeId, category, direct, orfee, riskPad) => {
     .enter()
     .append('div')
     .attr('class', 'risk-div')
-    .attr('id', d => `risk-dot1-${d.index}`)
-    .style('background', d => riskColors[d.abs_risk_units])
-    .style('left', d => `${d.x0 - riskPad}px`)
-    .style('top', d => `${d.y0 + 9}px`)
+    .attr('id', (d) => `risk-dot1-${d.index}`)
+    .style('background', (d) => riskColors[d.abs_risk_units])
+    .style('left', (d) => `${d.x0 - riskPad}px`)
+    .style('top', (d) => `${d.y0 + 9}px`)
     .style('border', '0px')
     .style('box-sizing', 'border-box')
     .style('border-radius', '3px')
@@ -252,10 +252,10 @@ const makeGraph = (div, nodeId, category, direct, orfee, riskPad) => {
     .enter()
     .append('div')
     .attr('class', 'risk-div')
-    .attr('id', d => `risk-dot2-${d.index}`)
-    .style('background', d => riskColors[d.abs_risk_units])
-    .style('left', d => `${d.x0 - 5}px`)
-    .style('top', d => `${d.y0 + 9}px`)
+    .attr('id', (d) => `risk-dot2-${d.index}`)
+    .style('background', (d) => riskColors[d.abs_risk_units])
+    .style('left', (d) => `${d.x0 - 5}px`)
+    .style('top', (d) => `${d.y0 + 9}px`)
     .style('border', '0px')
     .style('border-radius', '3px')
     .style('height', '3px')
@@ -267,11 +267,11 @@ const makeGraph = (div, nodeId, category, direct, orfee, riskPad) => {
     .enter()
     .append('div')
     .attr('class', 'risk-div')
-    .attr('id', d => `risk-marker-${d.index}`)
+    .attr('id', (d) => `risk-marker-${d.index}`)
     .style('background', 'black')
-    .style('left', d => `${riskScales[d.abs_risk_units](Math.log10(d.abs_risk))}px`)
-    .style('top', d => `${d.y0 + 6}px`)
-    .style('border', d => `1px solid ${riskColors[d.abs_risk_units]}`)
+    .style('left', (d) => `${riskScales[d.abs_risk_units](Math.log10(d.abs_risk))}px`)
+    .style('top', (d) => `${d.y0 + 6}px`)
+    .style('border', (d) => `1px solid ${riskColors[d.abs_risk_units]}`)
     .style('border-radius', '6px')
     .style('height', '6px')
     .style('width', '6px');
@@ -292,14 +292,14 @@ const makeGraph = (div, nodeId, category, direct, orfee, riskPad) => {
       { a: 'sourceLinks', b: 'target' },
       { a: 'targetLinks', b: 'source' }
     ];
-    vals.forEach(it => traverse(d, it));
+    vals.forEach((it) => traverse(d, it));
     return [idxs, lidxs];
   };
 
   highlight = (d) => {
     const [idxs, lidxs] = getPathway(d);
-    idxs.forEach(id => div.select(`#nw-node-${id}`).classed('nw-node-div-hl', true));
-    lidxs.forEach(id => div.select(`#nw-link-${id}`).classed('nw-link-hl', true));
+    idxs.forEach((id) => div.select(`#nw-node-${id}`).classed('nw-node-div-hl', true));
+    lidxs.forEach((id) => div.select(`#nw-link-${id}`).classed('nw-link-hl', true));
   };
 
   hideOthers = (d) => {
@@ -411,20 +411,20 @@ const makeGraph = (div, nodeId, category, direct, orfee, riskPad) => {
           .delay(transVisibleDur)
           .duration(transMoveDur)
           .attr('d', sankeyLinkHorizontal()
-            .source(a => [a.source.x1, curHeights[a.source.index] + linkYOffset])
-            .target(a => [a.target.x0, curHeights[a.target.index] + linkYOffset]));
+            .source((a) => [a.source.x1, curHeights[a.source.index] + linkYOffset])
+            .target((a) => [a.target.x0, curHeights[a.target.index] + linkYOffset]));
         div.select(`#nw-dot1-${ll.index}`)
           .attr('class', 'nw-dot1 nw-dot1-showing')
           .transition()
           .delay(transVisibleDur)
           .duration(transMoveDur)
-          .attr('cy', a => curHeights[a.source.index] + linkYOffset);
+          .attr('cy', (a) => curHeights[a.source.index] + linkYOffset);
         div.select(`#nw-dot2-${ll.index}`)
           .attr('class', 'nw-dot2 nw-dot2-showing')
           .transition()
           .delay(transVisibleDur)
           .duration(transMoveDur)
-          .attr('cy', a => curHeights[a.target.index] + linkYOffset);
+          .attr('cy', (a) => curHeights[a.target.index] + linkYOffset);
       }
     });
 
@@ -444,7 +444,7 @@ const makeGraph = (div, nodeId, category, direct, orfee, riskPad) => {
 
     div.select(`#nw-node-${d.index}`)
       .classed('nw-active-node', true)
-      .on('click', a => showAll(a));
+      .on('click', (a) => showAll(a));
   };
 
   showAll = (d) => {
@@ -453,22 +453,22 @@ const makeGraph = (div, nodeId, category, direct, orfee, riskPad) => {
       .transition()
       .duration(transMoveDur)
       .attr('class', 'nw-node-div')
-      .style('top', a => `${a.y0}px`);
+      .style('top', (a) => `${a.y0}px`);
     div.selectAll('.risk-line-showing')
       .transition()
       .duration(transMoveDur)
       .attr('class', 'risk-div')
-      .style('top', a => `${a.y0 + 10}px`);
+      .style('top', (a) => `${a.y0 + 10}px`);
     div.selectAll('.risk-dot-showing')
       .transition()
       .duration(transMoveDur)
       .attr('class', 'risk-div')
-      .style('top', a => `${a.y0 + 9}px`);
+      .style('top', (a) => `${a.y0 + 9}px`);
     div.selectAll('.risk-marker-showing')
       .transition()
       .duration(transMoveDur)
       .attr('class', 'risk-div')
-      .style('top', a => `${a.y0 + 6}px`);
+      .style('top', (a) => `${a.y0 + 6}px`);
 
     // restore visibility of hidden nodes
     div.selectAll('.nw-node-hidden')
@@ -524,12 +524,12 @@ const makeGraph = (div, nodeId, category, direct, orfee, riskPad) => {
       .transition()
       .duration(transMoveDur)
       .attr('class', 'nw-dot1')
-      .attr('cy', a => a.y0);
+      .attr('cy', (a) => a.y0);
     div.selectAll('.nw-dot2-showing')
       .transition()
       .duration(transMoveDur)
       .attr('class', 'nw-dot2')
-      .attr('cy', a => a.target.y0 + linkYOffset);
+      .attr('cy', (a) => a.target.y0 + linkYOffset);
 
     // restore visibility of hidden dots
     div.selectAll('.nw-dot1-hidden')

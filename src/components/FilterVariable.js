@@ -22,7 +22,7 @@ const FilterVariable = ({
             <span>Organogenesis, Growth, & Maturation</span>
           </div>
           <div className="filter-column-content">
-            { Object.keys(data.ogm.data).map(d => (
+            { Object.keys(data.ogm.data).map((d) => (
               <div
                 key={d}
                 className={`filter-button ${filters.ogm.indexOf(d) > -1 ? 'selected' : 'unselected'}`}
@@ -41,7 +41,7 @@ const FilterVariable = ({
             <span>Neurodevelopment</span>
           </div>
           <div className="filter-column-content">
-            { Object.keys(data.nd.data).map(d => (
+            { Object.keys(data.nd.data).map((d) => (
               <div
                 key={d}
                 className={`filter-button ${filters.nd.indexOf(d) > -1 ? 'selected' : 'unselected'}`}
@@ -77,14 +77,14 @@ FilterVariable.propTypes = {
   closeFilter: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   windowSize: state.windowSize,
   filters: state.filters,
   filterOpen: state.filterOpen,
   data: state.timelineData.data
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   toggleFilters: (val, group) => {
     dispatch(setFilters({ val, group, type: 'toggle' }));
   },

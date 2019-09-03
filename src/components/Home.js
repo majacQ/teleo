@@ -6,6 +6,7 @@ import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import Footer from './Footer';
 import HeaderNonApp from './HeaderNonApp';
 import history from '../history';
 import { ui } from '../constants';
@@ -215,7 +216,7 @@ const Home = ({
             <ArrowForwardIcon />
           </IconButton>
         </div>
-        {/* <Box
+        <Box
           style={{ paddingLeft: windowSize.appLeft, paddingRight: windowSize.appLeft }}
         >
           <div className="home-info-header">Supported By</div>
@@ -285,27 +286,7 @@ const Home = ({
             </div>
           </Box>
         </Box>
-        <Box
-          display="flex"
-          flexWrap="wrap"
-          className="home-footer"
-        >
-          <Box flexGrow={1}>
-            &copy; 2019 Bill & Melinda Gates Foundation. All Rights Reserved.
-          </Box>
-          <Box className="home-footer-text">
-            Terms of Service
-          </Box>
-          <Box className="home-footer-text">
-            Privacy Policy
-          </Box>
-          <Box className="home-footer-text">
-            Methodology
-          </Box>
-          <Box className="home-footer-text">
-            Contact Us
-          </Box>
-        </Box> */}
+        <Footer />
       </div>
     </div>
   );
@@ -315,7 +296,7 @@ Home.propTypes = {
   windowSize: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   windowSize: state.windowSize
 });
 

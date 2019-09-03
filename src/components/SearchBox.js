@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
@@ -100,7 +101,7 @@ const SearchBox = ({
   return (
     <Downshift
       stateReducer={stateReducer}
-      itemToString={item => (item ? item.name : '')}
+      itemToString={(item) => (item ? item.name : '')}
     >
       {({
         getInputProps,
@@ -112,7 +113,7 @@ const SearchBox = ({
         // selectedItem
       }) => {
         const suggestions = items
-          .filter(item => checkSuggestion(item, inputValue))
+          .filter((item) => checkSuggestion(item, inputValue))
           .map((item, index) => renderSuggestion(
             item, inputValue, index, highlightedIndex, getItemProps));
         return (

@@ -4,7 +4,7 @@ export const classLookup = {
   rf: 'Risk Factor'
 };
 
-export const getPinnedTextFromData = data => (data.subcat === undefined
+export const getPinnedTextFromData = (data) => (data.subcat === undefined
   ? classLookup[data.class] : data.subcat);
 
 const pinnedLabs = [

@@ -8,92 +8,92 @@ import {
   SET_LINKDIALOG_OPEN
 } from '../constants';
 
-export const setAgeRange = val => ({
+export const setAgeRange = (val) => ({
   type: SET_AGE_RANGE,
   val
 });
 
-export const setTimelineFocusScale = val => ({
+export const setTimelineFocusScale = (val) => ({
   type: SET_FOCUS_SCALE,
   val
 });
 
-export const setFilters = data => ({
+export const setFilters = (data) => ({
   type: SET_FILTERS,
   data
 });
 
-export const setAgeRangeOpen = val => ({
+export const setAgeRangeOpen = (val) => ({
   type: SET_AGERANGE_OPEN,
   val
 });
 
-export const setFilterOpen = val => ({
+export const setFilterOpen = (val) => ({
   type: SET_FILTER_OPEN,
   val
 });
 
-export const setLinkDialogOpen = val => ({
+export const setLinkDialogOpen = (val) => ({
   type: SET_LINKDIALOG_OPEN,
   val
 });
 
-export const setPathwayOpen = val => ({
+export const setPathwayOpen = (val) => ({
   type: SET_PATHWAY_OPEN,
   val
 });
 
-export const setReviewRefsOpen = val => ({
+export const setReviewRefsOpen = (val) => ({
   type: SET_REVIEWREFS_OPEN,
   val
 });
 
-export const setSelectedORFI = data => ({
+export const setSelectedORFI = (data) => ({
   type: SET_SELECTED_ORFI,
   data
 });
 
-export const setCollapsedGroup = data => ({
+export const setCollapsedGroup = (data) => ({
   type: SET_COLLAPSED_GROUP,
   data
 });
 
-export const addExpanded = val => ({
+export const addExpanded = (val) => ({
   type: SET_EXPANDED,
   data: { val, what: 'add' }
 });
 
-export const removeExpanded = val => ({
+export const removeExpanded = (val) => ({
   type: SET_EXPANDED,
   data: { val, what: 'remove' }
 });
 
-export const clearExpanded = val => ({
+export const clearExpanded = (val) => ({
   type: SET_EXPANDED,
   data: { val, what: 'clear' }
 });
 
-export const addPinned = val => ({
+export const addPinned = (val) => ({
   type: SET_PINNED,
   data: { val, what: 'add' }
 });
 
-export const removePinned = val => ({
+export const removePinned = (val) => ({
   type: SET_PINNED,
   data: { val, what: 'remove' }
 });
 
-export const clearPinned = val => ({
+export const clearPinned = (val) => ({
   type: SET_PINNED,
   data: { val, what: 'clear' }
 });
 
-export const setAllPinned = val => ({
+export const setAllPinned = (val) => ({
   type: SET_PINNED,
   data: { val, what: 'set-all' }
 });
 
-export const windowResize = dims => ({
+export const windowResize = (dims) => ({
   type: WINDOW_RESIZE,
   dims
 });
@@ -102,7 +102,7 @@ export const requestData = () => ({
   type: REQUEST_DATA
 });
 
-export const receiveData = dat => ({
+export const receiveData = (dat) => ({
   type: RECEIVE_DATA,
   data: dat,
   receivedAt: Date.now()
@@ -112,7 +112,7 @@ export const requestRefsData = () => ({
   type: REQUEST_REFS_DATA
 });
 
-export const receiveRefsData = dat => ({
+export const receiveRefsData = (dat) => ({
   type: RECEIVE_REFS_DATA,
   data: dat,
   receivedAt: Date.now()
@@ -122,13 +122,13 @@ export const requestNetworkData = () => ({
   type: REQUEST_NETWORK_DATA
 });
 
-export const receiveNetworkData = dat => ({
+export const receiveNetworkData = (dat) => ({
   type: RECEIVE_NETWORK_DATA,
   data: dat,
   receivedAt: Date.now()
 });
 
-export const fetchData = url => (dispatch) => {
+export const fetchData = (url) => (dispatch) => {
   dispatch(requestData());
   json(url, (dat) => {
     // compute the text width so we can compute layout when displaying events
@@ -160,14 +160,14 @@ export const fetchData = url => (dispatch) => {
   });
 };
 
-export const fetchRefsData = url => (dispatch) => {
+export const fetchRefsData = (url) => (dispatch) => {
   dispatch(requestRefsData());
   json(url, (dat) => {
     dispatch(receiveRefsData(dat));
   });
 };
 
-export const fetchNetworkData = url => (dispatch) => {
+export const fetchNetworkData = (url) => (dispatch) => {
   dispatch(requestNetworkData());
   json(url, (dat) => {
     const tmpEl = document.createElement('canvas');

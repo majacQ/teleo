@@ -23,7 +23,7 @@ const Header = ({
   // name: "Accidental injury or trauma"
   // type: "Health Outcome"
 
-  const pinnedIds = pinned.map(d => d.uid);
+  const pinnedIds = pinned.map((d) => d.uid);
 
   return (
     <div>
@@ -49,8 +49,7 @@ const Header = ({
         <div className="header" style={{ height: ui.header.height, width: windowSize.appWidth, left: windowSize.appLeft }}>
           <div
             className="header-text"
-            onClick={() => history.replace('')
-          }
+            onClick={() => history.replace('')}
             role="presentation"
           >
             Seminal Events Timeline
@@ -128,8 +127,8 @@ Header.propTypes = {
   // toggleReviewRefsOpen: PropTypes.func.isRequired
 };
 
-const timelineDataSelector = state => state.timelineData;
-const networkDataSelector = state => state.networkData;
+const timelineDataSelector = (state) => state.timelineData;
+const networkDataSelector = (state) => state.networkData;
 
 const allItemsSelector = createSelector(
   timelineDataSelector,
@@ -169,7 +168,7 @@ const allItemsSelector = createSelector(
   }
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   windowSize: state.windowSize,
   ageRangeOpen: state.ageRangeOpen,
   filterOpen: state.filterOpen,
@@ -178,7 +177,7 @@ const mapStateToProps = state => ({
   allItems: allItemsSelector(state)
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   toggleFilterOpen: (val, ageRangeOpen, reviewRefsOpen) => {
     dispatch(setFilterOpen(val));
     if (ageRangeOpen) {

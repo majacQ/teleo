@@ -47,12 +47,12 @@ LinkDialog.propTypes = {
   handleClose: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   linkDialogOpen: state.linkDialogOpen,
   state
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   handleClose: () => {
     dispatch(setLinkDialogOpen(false));
   }

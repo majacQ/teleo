@@ -115,11 +115,11 @@ Event.propTypes = {
   removeFromPinned: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   windowSize: state.windowSize
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   addToExpanded: (dat) => {
     dispatch(addExpanded(dat));
   },

@@ -8,7 +8,7 @@ const RefsList = ({
     return '';
   }
 
-  const refDat = indices.map(k => data.data[k]);
+  const refDat = indices.map((k) => data.data[k]);
   refDat.sort((a, b) => {
     const textA = a.author === null || a.author === undefined ? 'ZZZZZZZ' : a.author.toUpperCase();
     const textB = b.author === null || b.author === undefined ? 'ZZZZZZZ' : b.author.toUpperCase();

@@ -55,7 +55,7 @@ class AgeSlider extends Component {
     // Infant to toddler: 0 to 36 months (40 to 196 weeks)
     // Childhood to adolescence: 3 to 13 years (196 to 716)
     const xLengths = [10, 6, 5]; // number of ticks in each interval
-    const xProps = xLengths.map(x => x / 21);
+    const xProps = xLengths.map((x) => x / 21);
 
     const xTicks = [
       0, 4, 8, 12, 16, 20, 24, 28, 32, 36,
@@ -326,13 +326,13 @@ class AgeSlider extends Component {
         newRange.push(0 + wleft, width + wleft);
       } else if ((idx2 - idx1) === 1) {
         const newLengths = [
-          xLengths[idx1] * (xDomainFoc[idx1 + 1] - curDom2[0])
-            / (xDomainFoc[idx1 + 1] - xDomainFoc[idx1]),
-          xLengths[idx2] * (curDom2[1] - xDomainFoc[idx2])
-            / (xDomainFoc[idx2 + 1] - xDomainFoc[idx2])
+          xLengths[idx1] * ((xDomainFoc[idx1 + 1] - curDom2[0])
+            / (xDomainFoc[idx1 + 1] - xDomainFoc[idx1])),
+          xLengths[idx2] * ((curDom2[1] - xDomainFoc[idx2])
+            / (xDomainFoc[idx2 + 1] - xDomainFoc[idx2]))
         ];
         const denom = newLengths[0] + newLengths[1];
-        const newProps = newLengths.map(d => d / denom);
+        const newProps = newLengths.map((d) => d / denom);
         newDomain.push(
           curDom2[0],
           xDomainFoc[idx1 + 1],
@@ -345,14 +345,14 @@ class AgeSlider extends Component {
         );
       } else if ((idx2 - idx1) === 2) {
         const newLengths = [
-          xLengths[idx1] * (xDomainFoc[idx1 + 1] - curDom2[0])
-            / (xDomainFoc[idx1 + 1] - xDomainFoc[idx1]),
+          xLengths[idx1] * ((xDomainFoc[idx1 + 1] - curDom2[0])
+            / (xDomainFoc[idx1 + 1] - xDomainFoc[idx1])),
           xLengths[idx1 + 1],
-          xLengths[idx2] * (curDom2[1] - xDomainFoc[idx2])
-            / (xDomainFoc[idx2 + 1] - xDomainFoc[idx2])
+          xLengths[idx2] * ((curDom2[1] - xDomainFoc[idx2])
+            / (xDomainFoc[idx2 + 1] - xDomainFoc[idx2]))
         ];
         const denom = newLengths[0] + newLengths[1] + newLengths[2];
-        const newProps = newLengths.map(d => d / denom);
+        const newProps = newLengths.map((d) => d / denom);
         newDomain.push(
           curDom2[0],
           xDomainFoc[idx1 + 1],
@@ -390,7 +390,7 @@ class AgeSlider extends Component {
 
       // highlight selected axis ticks
       svg.selectAll('.context .axis--x text')
-        .attr('fill', d => (
+        .attr('fill', (d) => (
           (d >= curDom[0] && d <= curDom[1]) ? ui.slider.selectColor : ui.slider.unselectColor
         ));
 
@@ -414,7 +414,7 @@ class AgeSlider extends Component {
 
       // highlight selected major axis tick lines
       svg.selectAll('.context .axis line')
-        .attr('stroke', d => (
+        .attr('stroke', (d) => (
           (d >= curDom[0] && d <= curDom[1]) ? ui.slider.selectColor : ui.slider.unselectColor
         ));
     }
@@ -492,12 +492,12 @@ AgeSlider.propTypes = {
   ageRange: PropTypes.array.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ageRange: state.ageRange,
   windowSize: state.windowSize
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   setRange: (range) => {
     dispatch(setAgeRange(range));
     // clear expanded items in case events move to a different row

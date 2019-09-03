@@ -26,7 +26,7 @@ const Body = ({
       <span
         className="action-item"
         onClick={() => {
-          const res = [...filters.ogm.map(d => `ogm_${d}`), ...filters.nd.map(d => `nd_${d}`)];
+          const res = [...filters.ogm.map((d) => `ogm_${d}`), ...filters.nd.map((d) => `nd_${d}`)];
           const keys = Object.keys(orfi);
           keys.forEach((d) => { if (orfi[d].length > 0) { res.push(d); } });
           collapseAll(res);
@@ -72,7 +72,7 @@ const Body = ({
           Open the &quot;variables&quot; filtering in the header to add events to the timeline.
         </div>
       )}
-      {data.ogm && filters.ogm.length > 0 && filters.ogm.map(d => (
+      {data.ogm && filters.ogm.length > 0 && filters.ogm.map((d) => (
         <EventsGroup
           key={d}
           data={data.ogm.data[d]}
@@ -82,7 +82,7 @@ const Body = ({
           group="ogm"
         />
       ))}
-      {data.nd && filters.nd.length > 0 && filters.nd.map(d => (
+      {data.nd && filters.nd.length > 0 && filters.nd.map((d) => (
         <EventsGroup
           key={d}
           data={data.nd.data[d]}
@@ -95,11 +95,11 @@ const Body = ({
       {ndata.isLoaded && Object.keys(orfi).map((k) => {
         if (orfi[k].length > 0) {
           const curDat = ndata.data.nodes[k];
-          curDat.data.filter(d => orfi[k].indexOf(d.uid) > -1);
+          curDat.data.filter((d) => orfi[k].indexOf(d.uid) > -1);
           return (
             <EventsGroup
               key={k}
-              data={curDat.data.filter(d => orfi[k].indexOf(d.uid) > -1)}
+              data={curDat.data.filter((d) => orfi[k].indexOf(d.uid) > -1)}
               gid={k}
               category=""
               subcategory={curDat.name}
@@ -160,7 +160,7 @@ Body.propTypes = {
   clearFilters: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   filters: state.filters,
   orfi: state.selectedORFI,
   data: state.timelineData.data,
@@ -168,7 +168,7 @@ const mapStateToProps = state => ({
   windowSize: state.windowSize
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   expandAll: () => {
     dispatch(setCollapsedGroup({ type: 'clear-all' }));
   },

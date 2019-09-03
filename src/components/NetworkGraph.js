@@ -86,7 +86,7 @@ NetworkGraph.propTypes = {
   data: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   windowSize: state.windowSize,
   networkData: state.networkData
 });

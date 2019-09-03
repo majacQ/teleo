@@ -108,7 +108,7 @@ const AgeRange = ({
               )}
             >
               {
-                ranges.map(d => (
+                ranges.map((d) => (
                   <MenuItem value={d.id} key={d.id} disabled={d.id === 0}>{d.label}</MenuItem>
                 ))
               }
@@ -128,13 +128,13 @@ AgeRange.propTypes = {
   closeAgeRange: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   windowSize: state.windowSize,
   ageRange: state.ageRange,
   ageRangeOpen: state.ageRangeOpen
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   updateAgeRange: (val) => {
     dispatch(setAgeRange(val));
   },

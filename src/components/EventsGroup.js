@@ -78,14 +78,14 @@ EventsGroup.propTypes = {
   group: PropTypes.string.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   windowSize: state.windowSize,
   collapsedGroups: state.collapsedGroups,
   filters: state.filters,
   selectedORFI: state.selectedORFI
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   toggleCollapse: (val) => {
     dispatch(setCollapsedGroup({ val, type: 'toggle' }));
   },

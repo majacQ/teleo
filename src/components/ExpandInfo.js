@@ -45,7 +45,7 @@ const ExpandInfo = ({
     });
     refs = refs.filter((item, i, ar) => ar.indexOf(item) === i);
     // only include references that we have data for
-    refs = refs.filter(item => refsData.data[item] !== undefined);
+    refs = refs.filter((item) => refsData.data[item] !== undefined);
   }
   // if it's a "pathway" event, we need to get the reference indices from the graph
 
@@ -117,7 +117,7 @@ ExpandInfo.propTypes = {
   windowSize: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   windowSize: state.windowSize,
   networkData: state.networkData,
   refsData: state.refsData

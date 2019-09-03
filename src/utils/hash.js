@@ -65,7 +65,7 @@ export const hashFromState = (state) => {
   // collapsed groups
   const cgs = state.collapsedGroups.join(',');
   // pinned
-  const pnd = state.pinned.map(d => `${d.uid};${d.class};${subcat2code(d.subcat)};${d.i}`).join(',');
+  const pnd = state.pinned.map((d) => `${d.uid};${d.class};${subcat2code(d.subcat)};${d.i}`).join(',');
 
   const hash = `from=${from}&to=${to}&nd=${nd}&ogm=${ogm}&ho=${ho}&int=${int}&rf=${rf}&cgs=${cgs}&pnd=${pnd}`;
   return hash;
@@ -77,7 +77,7 @@ export const setStateFromHash = (store, hash) => {
   const { nd, ogm } = state.filters;
   const { ho, int, rf } = state.selectedORFI;
   const cgs = state.collapsedGroups;
-  const pnd = state.pinned.map(d => `${d.class};${subcat2code(d.subcat)};${d.i}`).join(',');
+  const pnd = state.pinned.map((d) => `${d.class};${subcat2code(d.subcat)};${d.i}`).join(',');
 
   const hashItems = {};
   hash.replace('#', '').split('&').forEach((d) => {

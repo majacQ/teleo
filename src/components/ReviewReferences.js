@@ -21,11 +21,12 @@ const ReviewReferences = ({
   }
 
   const keys = Object.keys(data);
-  const refs = keys.map(k => ({
+  const refs = keys.map((k) => ({
     author: data[k].author,
     cat: data[k].chapter_article_title,
     jbwt: data[k].journal_book_website_title,
     year: data[k].year,
+    // eslint-disable-next-line jsx-a11y/control-has-associated-label
     url: (<a href={data[k].url} target="_blank" rel="noopener noreferrer"><Launch /></a>)
   }));
 
@@ -79,14 +80,14 @@ ReviewReferences.propTypes = {
   closeReviewRefs: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   windowSize: state.windowSize,
   filters: state.filters,
   reviewRefsOpen: state.reviewRefsOpen,
   data: state.refsData.data
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   closeReviewRefs: () => {
     dispatch(setReviewRefsOpen(false));
   }

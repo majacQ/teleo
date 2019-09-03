@@ -54,7 +54,7 @@ PinnedGroup.propTypes = {
   networkData: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   data: state.pinned,
   windowSize: state.windowSize,
   timelineData: state.timelineData,

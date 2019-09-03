@@ -26,8 +26,8 @@ const PosedDiv = posed.div({
 });
 
 const PosedRow = posed.div({
-  enter: { opacity: 1, transition: { duration: 5000 } },
-  exit: { opacity: 0, transition: { duration: 5000 } }
+  enter: { opacity: 1, transition: { duration: 1000 } },
+  exit: { opacity: 0, transition: { duration: 1000 } }
 });
 
 const EventsList = ({
@@ -39,7 +39,7 @@ const EventsList = ({
   const rowPad = 22;
   const focWidth = windowSize.appWidth;
   // compute data structure containing layout information
-  const expandedRows = expanded.map(d => d.row);
+  const expandedRows = expanded.map((d) => d.row);
 
   if (data.length === 0) {
     return (<div />);
@@ -136,7 +136,7 @@ const EventsList = ({
               <div className="event-row">
                 <div className="event-row-abs">
                   {
-                    rowdat.map(d => (
+                    rowdat.map((d) => (
                       <Event
                         data={{ ...d, row: rowId }}
                         expanded={idx > -1 && d.uid === expanded[idx].uid}
@@ -175,7 +175,7 @@ EventsList.propTypes = {
   expanded: PropTypes.array.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   xScaleFoc: state.timelineFocusScale,
   windowSize: state.windowSize,
   expanded: state.expanded

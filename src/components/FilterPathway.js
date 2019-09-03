@@ -20,7 +20,7 @@ const FilterPathway = ({
 
   const keys = ['ho', 'rf', 'int'];
   const lookup = {};
-  keys.forEach((ky) => { lookup[ky] = data.nodes[ky].data.map(d => d.id); });
+  keys.forEach((ky) => { lookup[ky] = data.nodes[ky].data.map((d) => d.id); });
 
   const content = keys.map((ky, i) => {
     const ids = selected[ky];
@@ -49,7 +49,7 @@ const FilterPathway = ({
 
   const cls = ['ho', 'rf', 'int'];
   const items = [];
-  cls.forEach(d => data.nodes[d].data.forEach(a => items.push({
+  cls.forEach((d) => data.nodes[d].data.forEach((a) => items.push({
     id: a.id, name: a.name, type: data.nodes[d].name, class: a.class
   })));
 
@@ -116,14 +116,14 @@ FilterPathway.propTypes = {
   addPathway: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   // windowSize: state.windowSize,
   selected: state.selectedORFI,
   pathwayOpen: state.pathwayOpen,
   data: state.networkData.data
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   toggleFilters: (val, group) => {
     dispatch(setFilters({ val, group, type: 'toggle' }));
   },

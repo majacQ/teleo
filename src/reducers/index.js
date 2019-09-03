@@ -30,7 +30,7 @@ const timelineFocusScale = (state = () => {}, action) => {
 const filters = (state = { ogm: [], nd: [] }, action) => {
   switch (action.type) {
     case SET_FILTERS: {
-      let newState = Object.assign({}, state);
+      let newState = { ...state };
       const { val, group, type } = action.data;
       if (type === 'toggle') {
         const idx = newState[group].indexOf(val);
@@ -61,7 +61,7 @@ const selectedORFI = (state = {
 }, action) => {
   switch (action.type) {
     case SET_SELECTED_ORFI: {
-      let newState = Object.assign({}, state);
+      let newState = { ...state };
       const { val, group, type } = action.data;
       if (type === 'add') {
         const idx = newState[group].indexOf(val);
@@ -169,8 +169,8 @@ const expanded = (state = [], action) => {
     case SET_EXPANDED: {
       let newState = Object.assign([], state);
       if (action.data.what === 'add') {
-        const ids = newState.map(d => d.uid);
-        const rows = newState.map(d => d.row);
+        const ids = newState.map((d) => d.uid);
+        const rows = newState.map((d) => d.row);
         if (ids.indexOf(action.data.val.uid) < 0) {
           newState.push(action.data.val);
         }
@@ -195,7 +195,7 @@ const pinned = (state = [], action) => {
       let newState;
       if (action.data.what === 'add') {
         newState = Object.assign([], state);
-        const ids = newState.map(d => d.uid);
+        const ids = newState.map((d) => d.uid);
         if (ids.indexOf(action.data.val.uid) < 0) {
           // action.data.val.row = action.data.val.row.replace(/[a-zA-z]+-/, 'pinned-');
           newState.push(action.data.val);
@@ -203,7 +203,7 @@ const pinned = (state = [], action) => {
       }
       if (action.data.what === 'remove') {
         newState = Object.assign([], state);
-        const ids = newState.map(d => d.uid);
+        const ids = newState.map((d) => d.uid);
         const idx = ids.indexOf(action.data.val.uid);
         if (idx > -1) {
           newState.splice(idx, 1);
@@ -227,7 +227,7 @@ const windowSize = (state = {
 }, action) => {
   switch (action.type) {
     case WINDOW_RESIZE:
-      return Object.assign({}, state, action.dims);
+      return { ...state, ...action.dims };
     default:
   }
   return state;
@@ -241,19 +241,21 @@ const timelineData = (state = {
 }, action) => {
   switch (action.type) {
     case REQUEST_DATA:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: true,
         isLoaded: false,
         didInvalidate: false
-      });
+      };
     case RECEIVE_DATA:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
         didInvalidate: false,
         isLoaded: true,
         data: action.data,
         lastUpdated: action.receivedAt
-      });
+      };
     default:
       return state;
   }
@@ -267,19 +269,21 @@ const refsData = (state = {
 }, action) => {
   switch (action.type) {
     case REQUEST_REFS_DATA:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: true,
         isLoaded: false,
         didInvalidate: false
-      });
+      };
     case RECEIVE_REFS_DATA:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
         didInvalidate: false,
         isLoaded: true,
         data: action.data,
         lastUpdated: action.receivedAt
-      });
+      };
     default:
       return state;
   }
@@ -293,19 +297,21 @@ const networkData = (state = {
 }, action) => {
   switch (action.type) {
     case REQUEST_NETWORK_DATA:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: true,
         isLoaded: false,
         didInvalidate: false
-      });
+      };
     case RECEIVE_NETWORK_DATA:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
         didInvalidate: false,
         isLoaded: true,
         data: action.data,
         lastUpdated: action.receivedAt
-      });
+      };
     default:
       return state;
   }

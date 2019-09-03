@@ -36,7 +36,7 @@ HeaderNonApp.propTypes = {
   windowSize: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   windowSize: state.windowSize
 });
 
