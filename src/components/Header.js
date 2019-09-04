@@ -49,7 +49,7 @@ const Header = ({
         <div className="header" style={{ height: ui.header.height, width: windowSize.appWidth, left: windowSize.appLeft }}>
           <div
             className="header-text"
-            onClick={() => history.replace('')}
+            onClick={() => history.replace('home')}
             role="presentation"
           >
             Seminal Events Timeline

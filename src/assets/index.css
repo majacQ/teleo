@@ -483,6 +483,45 @@ body {
 	line-height: 28px; */
 }
 
+.notfound-container {
+  padding-top: 116px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.notfound-header {
+	height: 52px;
+	color: #202A2B;
+	font-family: "Roboto Condensed";
+	font-size: 52px;
+	font-weight: bold;
+  line-height: 52px;
+  padding-bottom: 55px;
+}
+
+.notfound-text {
+  height: 33px;
+  color: #202A2B;
+  font-family: "Roboto Condensed";
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 25px;
+  border-bottom: 2px dotted #939598;
+  margin-bottom: 15px;
+}
+
+.notfound-text2 {
+	color: #3D5052;
+	font-family: "Roboto Condensed";
+	font-size: 20px;
+	line-height: 28px;
+}
+
+.notfound-button {
+  padding-top: 10px;
+}
+
 .footer {
   border-top: 1px solid #939598;
   margin-left: 42px;

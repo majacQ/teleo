@@ -95,7 +95,7 @@ const Home = ({
               classes={{ root: 'home-carousel-button-root' }}
               className="home-buildvis-button"
               aria-label="build"
-              onClick={() => history.replace('/app')}
+              onClick={() => history.replace('app')}
             >
               <ArrowForwardIcon />
             </IconButton>
@@ -239,7 +239,7 @@ const Home = ({
           <IconButton
             className="home-methodology-button"
             aria-label="build"
-            // onClick={() => history.replace('/methodology')}
+            onClick={() => history.replace('methodology')}
           >
             <ArrowForwardIcon />
           </IconButton>

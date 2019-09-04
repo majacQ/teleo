@@ -10,7 +10,11 @@ const HeaderNonApp = ({
 }) => (
   <div className="header-wrapper" style={{ height: ui.header.height, width: windowSize.width }}>
     <div className="header" style={{ height: ui.header.height, width: windowSize.appWidth, left: windowSize.appLeft }}>
-      <div className="header-text">
+      <div
+        className="header-text"
+        onClick={() => history.replace('home')}
+        role="presentation"
+      >
         Seminal Events Timeline
       </div>
       <div className="header-icons">
@@ -18,7 +22,7 @@ const HeaderNonApp = ({
           variant="outlined"
           className="home-header-button"
           classes={{ label: 'home-header-button', root: 'home-header-button-outline' }}
-          onClick={() => history.replace('/app')}
+          onClick={() => history.replace('app')}
         >
           Build a Visualization
         </Button>

@@ -16,6 +16,7 @@ import 'typeface-barlow';
 import history from './history';
 import Home from './components/Home';
 import Methodology from './components/Methodology';
+import NotFound from './components/404';
 import {
   fetchData, fetchRefsData, fetchNetworkData, windowResize, setFilterOpen
 } from './actions';
@@ -107,6 +108,7 @@ ReactDOM.render(
                 return (<Redirect to="/app" />);
               }}
             />
+            <Route render={() => (<NotFound />)} />
           </Switch>
         </>
       </Router>
