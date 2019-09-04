@@ -291,7 +291,7 @@ body {
   letter-spacing: 0.9px;
   line-height: 24px;
   text-transform: uppercase;
-  padding-left: 120px;
+  /* padding-left: 120px; */
   padding-top: 75px;
 }
 
@@ -315,7 +315,7 @@ body {
 .home-carousel-button-left {
   position: absolute;
   top: 190px;
-  left: 40px;
+  /* left: 40px; */
 }
 
 .home-carousel-button-right {
@@ -326,7 +326,7 @@ body {
 
 .home-carousel-item {
   height: 416px;
-  width: 780px;
+  width: 770px;
   background-color: #F1F2F2;
   position: absolute;
   top: 10px;
@@ -353,6 +353,22 @@ body {
   padding-left: 80px;
   /* font-weight: 300; */
   padding-top: 5px;
+}
+
+.carousel-button {
+  padding-top: 20px;
+  padding-left: 80px;
+}
+
+.carousel-button-root {
+  background-color: #4EB8C1 !important;
+  border-radius: 20px !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+.carousel-button-label {
+  color: #FFFFFF;
 }
 
 .home-methodology {

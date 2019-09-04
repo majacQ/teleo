@@ -91,7 +91,8 @@ ReactDOM.render(
       <Router history={history}>
         <>
           <Switch>
-            <Route exact path="/" render={() => (<Home />)} />
+            <Route exact path="/" render={() => (<Redirect push to="/home" />)} />
+            <Route exact path="/home" render={() => (<Home />)} />
             <Route exact path="/methodology" render={() => (<Methodology />)} />
             <Route
               exact

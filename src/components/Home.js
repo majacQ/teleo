@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import posed from 'react-pose';
+import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -15,33 +16,37 @@ const crslItems = [
   {
     title: 'Contextualize the role of immunization',
     desc: 'Explore the extended network of risk factors associated with measles infection in children by contextualizing immunization alongside other potential interventions.',
+    link: 'app#from=280&to=5017&nd=&ogm=&ho=ho_15&int=&rf=rf_163,rf_81,rf_19,rf_82,rf_59&cgs=&pnd=',
     index: 1
   },
   {
-    title: 'Example 2',
-    desc: '(description for example 2)',
+    title: 'Malnutrition and Cognitive Development',
+    desc: 'Explore biological mechanisms linking malnutrition to impaired cognitive development.',
+    link: 'app#from=279&to=832&nd=Cognitive&ogm=CNS&ho=&int=&rf=rf_82,rf_151&cgs=&pnd=OG034;ogm;cn;33,OG035;ogm;cn;34,OG036;ogm;cn;35,OG037;ogm;cn;36,GM007;ogm;cn;43,DD304;nd;co;1,DD314;nd;co;11,DD320;nd;co;17,DD325;nd;co;22,rf_151;rf;;58,rf_82;rf;;146,DD338;nd;co;35',
     index: 2
   },
   {
-    title: 'Example 3',
-    desc: '(description for example 3)',
+    title: 'Breastfeeding Intervention',
+    desc: 'Explore metrics to evaluate a breastfeeding promotion intervention.',
+    link: 'app#from=280&to=460&nd=&ogm=Gastrointestinal&ho=ho_2,ho_7,ho_10,ho_18,ho_21,ho_24,ho_26,ho_29&int=int_61&rf=rf_82,rf_1,rf_49,rf_71&cgs=ogm_Gastrointestinal&pnd=GM073;ogm;gi;75,GM081;ogm;gi;83,GM082;ogm;gi;84',
     index: 3
   }
 ];
 
 const PosedDiv = posed.div({
-  state1: { left: 122 + 800 * -2 },
-  state2: { left: 122 + 800 * -1 },
-  state3: { left: 122 + 800 * -0 },
-  state4: { left: 122 + 800 * 1 },
-  state5: { left: 122 + 800 * 2 }
-  // visible: { left: prps => 122 + (800 * (prps.i - curCrsl)) }
+  state1: { left: 800 * -2 },
+  state2: { left: 800 * -1 },
+  state3: { left: 800 * -0 },
+  state4: { left: 800 * 1 },
+  state5: { left: 800 * 2 }
+  // visible: { left: prps => (800 * (prps.i - curCrsl)) }
 });
 
 const Home = ({
   windowSize
 }) => {
   const [curCrsl, setCurCrsl] = useState(0);
+
   return (
     <div>
       <HeaderNonApp />
@@ -164,30 +169,44 @@ const Home = ({
         <div
           className="home-carousel-container"
           style={{
-            paddingLeft: windowSize.appLeft,
-            paddingRight: windowSize.appLeft,
-            width: windowSize.appWidth
+            // paddingLeft: windowSize.appLeft,
+            // paddingRight: windowSize.appLeft,
+            width: '100%'
           }}
         >
-          <div className="home-carousel-header">Get started with an example visualization</div>
+          <div
+            className="home-carousel-header"
+            style={{ paddingLeft: windowSize.appLeft + 50 }}
+          >
+            Get started with an example visualization
+          </div>
           <div
             className="home-carousel-box"
-            style={{ width: windowSize.appWidth }}
+            style={{ width: '100%' }}
           >
-            <PosedDiv pose={`state${3 - curCrsl}`} className="home-carousel-item">
-              <div className="home-carousel-item-title">{crslItems[0].title}</div>
-              <div className="home-carousel-item-desc">{crslItems[0].desc}</div>
-            </PosedDiv>
-            <PosedDiv pose={`state${4 - curCrsl}`} className="home-carousel-item">
-              <div className="home-carousel-item-title">{crslItems[1].title}</div>
-              <div className="home-carousel-item-desc">{crslItems[1].desc}</div>
-            </PosedDiv>
-            <PosedDiv pose={`state${5 - curCrsl}`} className="home-carousel-item">
-              <div className="home-carousel-item-title">{crslItems[2].title}</div>
-              <div className="home-carousel-item-desc">{crslItems[2].desc}</div>
-            </PosedDiv>
+            {
+              crslItems.map((crsl, i) => (
+                <PosedDiv
+                  pose={`state${i + 3 - curCrsl}`}
+                  className="home-carousel-item"
+                  key={crsl.title}
+                  style={{ marginLeft: windowSize.appLeft + 50 }}
+                >
+                  <div className="home-carousel-item-title">{crsl.title}</div>
+                  <div className="home-carousel-item-desc">{crsl.desc}</div>
+                  <div className="carousel-button">
+                    <Button
+                      classes={{ label: 'carousel-button-label', root: 'carousel-button-root' }}
+                      onClick={() => history.replace(crsl.link)}
+                    >
+                      Start with visualization
+                    </Button>
+                  </div>
+                </PosedDiv>
+              ))
+            }
             { curCrsl > 0 && (
-              <div className="home-carousel-button-left">
+              <div className="home-carousel-button-left" style={{ left: windowSize.appLeft + 10 }}>
                 <IconButton
                   className="home-carousel-button"
                   aria-label="carousel-left"
@@ -199,7 +218,7 @@ const Home = ({
               </div>
             )}
             { curCrsl < crslItems.length - 1 && (
-              <div className="home-carousel-button-right">
+              <div className="home-carousel-button-right" style={{ left: windowSize.appLeft + 811 }}>
                 <IconButton
                   className="home-carousel-button"
                   aria-label="carousel-right"

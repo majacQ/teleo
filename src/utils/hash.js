@@ -66,7 +66,6 @@ export const hashFromState = (state) => {
   const cgs = state.collapsedGroups.join(',');
   // pinned
   const pnd = state.pinned.map((d) => `${d.uid};${d.class};${subcat2code(d.subcat)};${d.i}`).join(',');
-
   const hash = `from=${from}&to=${to}&nd=${nd}&ogm=${ogm}&ho=${ho}&int=${int}&rf=${rf}&cgs=${cgs}&pnd=${pnd}`;
   return hash;
 };

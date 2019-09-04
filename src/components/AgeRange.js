@@ -48,28 +48,29 @@ const ranges = [
   }
 ];
 
+const getCurVal = (ageRange) => {
+  let curVal = 0;
+  const curStart = Math.round(ageRange[0] * 7 * 10) / 10;
+  const curEnd = Math.round(ageRange[1] * 7 * 10) / 10;
+  for (let i = 0; i < ranges.length; i += 1) {
+    const start = Math.round(ranges[i].start * 7 * 10) / 10;
+    const end = Math.round(ranges[i].end * 7 * 10) / 10;
+    if (curStart === start && curEnd === end) {
+      curVal = ranges[i].id;
+      break;
+    }
+  }
+  return curVal;
+};
+
 const AgeRange = ({
   windowSize, ageRange, ageRangeOpen, updateAgeRange, closeAgeRange
 }) => {
-  const getCurVal = () => {
-    let curVal = 0;
-    const curStart = Math.round(ageRange[0] * 7 * 10) / 10;
-    const curEnd = Math.round(ageRange[1] * 7 * 10) / 10;
-    for (let i = 0; i < ranges.length; i += 1) {
-      const start = Math.round(ranges[i].start * 7 * 10) / 10;
-      const end = Math.round(ranges[i].end * 7 * 10) / 10;
-      if (curStart === start && curEnd === end) {
-        curVal = ranges[i].id;
-        break;
-      }
-    }
-    return curVal;
-  };
-  const curVal = getCurVal();
+  const curVal = getCurVal(ageRange);
 
   const [selectedRange, setSelectedRange] = useState(curVal);
 
-  useEffect(() => setSelectedRange(getCurVal()), [ageRange]);
+  useEffect(() => setSelectedRange(getCurVal(ageRange)), [ageRange]);
 
   if (ageRangeOpen === false) {
     return '';
