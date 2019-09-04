@@ -57,20 +57,29 @@ const Home = ({
           className="home-image"
           style={{
             height: 420,
-            marginLeft: windowSize.appLeft,
-            width: windowSize.appWidth
+            // marginLeft: windowSize.appLeft,
+            width: '100%'
           }}
         >
-          <div className="home-image-text">
-            <div className="home-image-text-welcome">
-              Welcome to the
-            </div>
-            <div className="home-image-text-set">
-              Seminal Events Timeline
-            </div>
-            <div className="home-image-text-desc">
-              Explore the biological mechanisms of global health problems through seminal events
-              of human development from conception to thirteen years of age.
+          <div
+            className="home-image-inner"
+            style={{
+              height: 420,
+              marginLeft: windowSize.appLeft,
+              width: windowSize.appWidth
+            }}
+          >
+            <div className="home-image-text">
+              <div className="home-image-text-welcome">
+                Welcome to the
+              </div>
+              <div className="home-image-text-set">
+                Seminal Events Timeline
+              </div>
+              <div className="home-image-text-desc">
+                Explore the biological mechanisms of global health problems through seminal events
+                of human development from conception to thirteen years of age.
+              </div>
             </div>
           </div>
         </div>
