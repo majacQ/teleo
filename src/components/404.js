@@ -33,7 +33,7 @@ const NotFound = ({
         <div className="notfound-redirects">
           <div className="notfound-button">
             <Button
-              classes={{ label: 'carousel-button-label', root: 'carousel-button-root' }}
+              classes={{ label: 'notfound-button-label', root: 'notfound-button-root' }}
               onClick={() => history.replace('home')}
             >
               Home Page
@@ -41,7 +41,7 @@ const NotFound = ({
           </div>
           <div className="notfound-button">
             <Button
-              classes={{ label: 'carousel-button-label', root: 'carousel-button-root' }}
+              classes={{ label: 'notfound-button-label', root: 'notfound-button-root' }}
               onClick={() => history.replace('app')}
             >
               Build a visualization
@@ -49,7 +49,7 @@ const NotFound = ({
           </div>
           <div className="notfound-button">
             <Button
-              classes={{ label: 'carousel-button-label', root: 'carousel-button-root' }}
+              classes={{ label: 'notfound-button-label', root: 'notfound-button-root' }}
               onClick={() => history.replace('methodology')}
             >
               Methodology

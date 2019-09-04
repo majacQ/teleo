@@ -522,6 +522,17 @@ body {
   padding-top: 10px;
 }
 
+.notfound-button-root {
+  background-color: #4EB8C1 !important;
+  border-radius: 20px !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+.notfound-button-label {
+  color: #FFFFFF;
+}
+
 .footer {
   border-top: 1px solid #939598;
   margin-left: 42px;
