@@ -70,7 +70,6 @@ const mapStateToProps = (state) => ({
   windowSize: state.windowSize
 });
 
-
 // const mapDispatchToProps = dispatch => ({
 // });
 
