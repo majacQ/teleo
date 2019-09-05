@@ -16,6 +16,7 @@ import 'typeface-barlow';
 import history from './history';
 import Home from './components/Home';
 import Methodology from './components/Methodology';
+import Contact from './components/Contact';
 import NotFound from './components/404';
 import {
   fetchData, fetchRefsData, fetchNetworkData, windowResize, setFilterOpen
@@ -95,6 +96,7 @@ ReactDOM.render(
             <Route exact path="/" render={() => (<Redirect push to="/home" />)} />
             <Route exact path="/home" render={() => (<Home />)} />
             <Route exact path="/methodology" render={() => (<Methodology />)} />
+            <Route exact path="/contact" render={() => (<Contact />)} />
             <Route
               exact
               path="/app"

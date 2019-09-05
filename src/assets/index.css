@@ -533,6 +533,74 @@ body {
   color: #FFFFFF;
 }
 
+.contact-header-shadow {
+  position: fixed;
+  top: 0px;
+  height: 64px;
+  width: 100%;
+	/* background-color: #202A2B; */
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.3);
+}
+
+.contact-outer {
+  background-color: #202A2B;
+}
+
+.contact-container {
+  padding-top: 116px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.content-title {
+	height: 52px;
+	color: #FFFFFF;
+	font-family: "Roboto Condensed";
+	font-size: 52px;
+	font-weight: bold;
+  line-height: 52px;
+  padding-bottom: 24px;
+  border-bottom: 2px dotted #939598;
+}
+
+.contact-content {
+  padding-top: 24px;
+}
+
+.contact-entry {
+  padding-bottom: 51px;
+}
+
+.contact-entry-title {
+  height: 28px;
+  color: #FFFFFF;
+  font-family: Roboto;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 28px;
+}
+
+.contact-button {
+  height: 33px;
+  width: 33px;
+  color: #FFFFFF !important;
+}
+
+.contact-button-root {
+  padding: 5px !important;
+  background-color: #4EB8C1 !important;
+}
+
+.content-entry-subtitle {
+  padding-top: 2px;
+  height: 20px;
+  color: #6B6B6D;
+  font-family: Roboto;
+  font-size: 14px;
+  line-height: 20px;
+}
+
 .footer {
   border-top: 1px solid #939598;
   margin-left: 42px;
