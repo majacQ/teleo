@@ -12,19 +12,21 @@ const Footer = () => (
     className="footer"
   >
     <Box flexGrow={1}>
-      &copy; 2019 Bill & Melinda Gates Foundation. All Rights Reserved.
+      &copy; 2019&nbsp;
+      <a href="https://www.gatesfoundation.org/">Bill & Melinda Gates Foundation.</a>
+      &nbsp;All Rights Reserved.
     </Box>
     <Box className="footer-text">
-      Terms of Service
+      <a href="https://www.gatesfoundation.org/Terms-of-Use">Terms of Use</a>
     </Box>
     <Box className="footer-text">
-      Privacy Policy
+      <a href="https://www.gatesfoundation.org/Privacy-and-Cookies-Notice">Privacy Policy</a>
     </Box>
     <Box className="footer-text">
-      Methodology
+      <a href="methodology">Methodology</a>
     </Box>
     <Box className="footer-text">
-      Contact Us
+      <a href="contact">Contact Us</a>
     </Box>
   </Box>
 );

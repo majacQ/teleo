@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import AgeSlider from './AgeSlider';
 import EventsGroup from './EventsGroup';
 import PinnedGroup from './PinnedGroup';
+import Footer from './Footer';
 import { ui } from '../constants';
 import { setCollapsedGroup, setFilters, setSelectedORFI } from '../actions';
 
@@ -63,52 +64,63 @@ const Body = ({
         height: windowSize.height - ui.header.height - ui.slider.height - 20
       }}
     >
-      <PinnedGroup />
-      {filters.ogm.length === 0 && filters.nd.length === 0 && (
-        <div
-          className="events-empty"
-          style={{ marginLeft: windowSize.appLeft + 15 }}
-        >
-          Open the &quot;variables&quot; filtering in the header to add events to the timeline.
-        </div>
-      )}
-      {data.ogm && filters.ogm.length > 0 && filters.ogm.map((d) => (
-        <EventsGroup
-          key={d}
-          data={data.ogm.data[d]}
-          gid={`ogm_${d}`}
-          category="Organogenesis, Growth, & Maturation"
-          subcategory={d}
-          group="ogm"
-        />
-      ))}
-      {data.nd && filters.nd.length > 0 && filters.nd.map((d) => (
-        <EventsGroup
-          key={d}
-          data={data.nd.data[d]}
-          gid={`nd_${d}`}
-          category="Neurodevelopment"
-          subcategory={d}
-          group="nd"
-        />
-      ))}
-      {ndata.isLoaded && Object.keys(orfi).map((k) => {
-        if (orfi[k].length > 0) {
-          const curDat = ndata.data.nodes[k];
-          curDat.data.filter((d) => orfi[k].indexOf(d.uid) > -1);
-          return (
-            <EventsGroup
-              key={k}
-              data={curDat.data.filter((d) => orfi[k].indexOf(d.uid) > -1)}
-              gid={k}
-              category=""
-              subcategory={curDat.name}
-              group="orfi"
-            />
-          );
-        }
-        return '';
-      })}
+      <div style={{ minHeight: windowSize.height - ui.header.height - ui.slider.height - 20 }}>
+        <PinnedGroup />
+        {filters.ogm.length === 0 && filters.nd.length === 0 && (
+          <div
+            className="events-empty"
+            style={{ marginLeft: windowSize.appLeft + 15 }}
+          >
+            Open the &quot;variables&quot; filtering in the header to add events to the timeline.
+          </div>
+        )}
+        {data.ogm && filters.ogm.length > 0 && filters.ogm.map((d) => (
+          <EventsGroup
+            key={d}
+            data={data.ogm.data[d]}
+            gid={`ogm_${d}`}
+            category="Organogenesis, Growth, & Maturation"
+            subcategory={d}
+            group="ogm"
+          />
+        ))}
+        {data.nd && filters.nd.length > 0 && filters.nd.map((d) => (
+          <EventsGroup
+            key={d}
+            data={data.nd.data[d]}
+            gid={`nd_${d}`}
+            category="Neurodevelopment"
+            subcategory={d}
+            group="nd"
+          />
+        ))}
+        {ndata.isLoaded && Object.keys(orfi).map((k) => {
+          if (orfi[k].length > 0) {
+            const curDat = ndata.data.nodes[k];
+            curDat.data.filter((d) => orfi[k].indexOf(d.uid) > -1);
+            return (
+              <EventsGroup
+                key={k}
+                data={curDat.data.filter((d) => orfi[k].indexOf(d.uid) > -1)}
+                gid={k}
+                category=""
+                subcategory={curDat.name}
+                group="orfi"
+              />
+            );
+          }
+          return '';
+        })}
+      </div>
+      <div
+        style={{
+          paddingLeft: windowSize.appLeft,
+          width: windowSize.appWidth,
+          paddingTop: 60
+        }}
+      >
+        <Footer />
+      </div>
     </div>
     <div
       className="cover1"
