@@ -553,7 +553,7 @@ body {
   margin-right: auto;
 }
 
-.content-title {
+.contact-title {
 	height: 52px;
 	color: #FFFFFF;
 	font-family: "Roboto Condensed";
@@ -562,6 +562,7 @@ body {
   line-height: 52px;
   padding-bottom: 24px;
   border-bottom: 2px dotted #939598;
+  position: relative;
 }
 
 .contact-content {
@@ -599,6 +600,23 @@ body {
   font-family: Roboto;
   font-size: 14px;
   line-height: 20px;
+}
+
+.contact-back {
+	height: 24px;
+	color: #4EB8C1;
+	font-family: Roboto;
+	font-size: 14px;
+	font-weight: bold;
+  line-height: 24px;
+  position: absolute;
+  left: -67px;
+  top: 0px;
+  cursor: pointer;
+}
+
+.contact-chevron {
+  font-size: 14px !important;
 }
 
 .contact-detail-header {
@@ -640,6 +658,7 @@ body {
 }
 
 .contact-detail-textfield-root {
+  margin-top: 10px;
   width: 460px;
   padding: 12px !important;
 }
@@ -649,7 +668,8 @@ body {
 }
 
 .contact-detail-textfield-text {
-  color: #6B6B6D !important;
+  color: #FFFFFF !important;
+  /* color: #6B6B6D !important; */
   font-family: Roboto !important;
   font-size: 16px !important;
   line-height: 24px !important;
@@ -658,6 +678,10 @@ body {
 .contact-detail-textfield {
   border-radius: 0px !important;
   border: 1px solid #939598 !important;
+}
+
+.contact-detail-spacer {
+  height: 10px;
 }
 
 .footer {

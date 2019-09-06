@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import HeaderNonApp from './HeaderNonApp';
 import Footer from './Footer';
 import { ui } from '../constants';
@@ -34,7 +35,6 @@ const Contact = ({
   return (
     <div>
       <div className="contact-header-shadow" />
-      <HeaderNonApp />
       <div className="contact-outer">
         <div
           className="contact-container"
@@ -42,37 +42,53 @@ const Contact = ({
             minHeight: windowSize.height - ui.header.height - 100
           }}
         >
-          <div className="content-title">
+          <div className="contact-title">
             Contact us
+            {
+              contactBox === '' ? '' : (
+                <div
+                  className="contact-back"
+                  onClick={() => setContactBox('')}
+                >
+                  <ChevronLeft classes={{ root: 'contact-chevron' }} />
+                  Back
+                </div>
+              )
+            }
           </div>
           <div className="contact-content">
             {
-              contactItems.map((d) => (
-                <div className="contact-entry">
-                  <div style={{ float: 'left', paddingRight: 15 }}>
-                    <div className="contact-entry-title">
-                      {d.title}
+              contactBox === '' ? (
+                contactItems.map((d) => (
+                  <div className="contact-entry">
+                    <div style={{ float: 'left', paddingRight: 15 }}>
+                      <div className="contact-entry-title">
+                        {d.title}
+                      </div>
+                      <div className="content-entry-subtitle">
+                        {d.subtitle}
+                      </div>
                     </div>
-                    <div className="content-entry-subtitle">
-                      {d.subtitle}
-                    </div>
+                    <IconButton
+                      classes={{ root: 'contact-button-root' }}
+                      className="contact-button"
+                      aria-label="build"
+                      onClick={() => setContactBox(d.id)}
+                    >
+                      <ArrowForwardIcon />
+                    </IconButton>
                   </div>
-                  <IconButton
-                    classes={{ root: 'contact-button-root' }}
-                    className="contact-button"
-                    aria-label="build"
-                    onClick={() => setContactBox(d.id)}
-                  >
-                    <ArrowForwardIcon />
-                  </IconButton>
-                </div>
-              ))
+                ))
+              ) : ''
             }
-            <ContactCorrection />
+            {
+              contactBox === 'correction' ? (<ContactCorrection />) : ''
+            }
           </div>
         </div>
         <Footer />
       </div>
+      <HeaderNonApp />
     </div>
   );
 };

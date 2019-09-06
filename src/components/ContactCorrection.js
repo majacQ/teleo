@@ -7,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
 
 const catItems = [
   {
@@ -128,7 +129,7 @@ const ContactCorrection = ({
           placeholder="Explain the innaccuracy in enough detail so we can locate it and conduct research to validate the update."
         />
       </FormControl>
-      <div />
+      <div className="contact-detail-spacer" />
       <FormControl>
         <TextField
           // label="Name"
@@ -144,7 +145,7 @@ const ContactCorrection = ({
           }}
         />
       </FormControl>
-      <div />
+      <div className="contact-detail-spacer" />
       <FormControl>
         <TextField
           // label="Email"
@@ -161,6 +162,20 @@ const ContactCorrection = ({
           }}
         />
       </FormControl>
+      <div className="contact-detail-label">
+        We&apos;ll reach out to you if we have any questions, or to keep you updated on this inquiry.
+      </div>
+      <div className="contact-detail-spacer" />
+      <Button
+        classes={{ label: 'notfound-button-label', root: 'notfound-button-root' }}
+        // onClick={() => {}}
+      >
+        Send
+      </Button>
+      <div className="contact-detail-spacer" />
+      <div className="contact-detail-spacer" />
+      <div className="contact-detail-spacer" />
+      <div className="contact-detail-spacer" />
     </div>
   );
 };
