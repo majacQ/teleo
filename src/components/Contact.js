@@ -6,6 +6,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import HeaderNonApp from './HeaderNonApp';
 import Footer from './Footer';
 import { ui } from '../constants';
+import ContactCorrection from './ContactCorrection';
 
 const contactItems = [
   {
@@ -29,7 +30,6 @@ const Contact = ({
   windowSize
 }) => {
   const [contactBox, setContactBox] = useState('');
-  console.log(contactBox);
 
   return (
     <div>
@@ -68,6 +68,7 @@ const Contact = ({
                 </div>
               ))
             }
+            <ContactCorrection />
           </div>
         </div>
         <Footer />
