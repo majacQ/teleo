@@ -617,6 +617,26 @@ body {
 
 .contact-chevron {
   font-size: 14px !important;
+  margin-bottom: -2px;
+}
+
+.contact-button-root {
+  background-color: #4EB8C1 !important;
+  border-radius: 20px !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+.contact-button-root:disabled {
+  background-color: #aaaaaa !important;
+}
+
+.contact-button-root:disabled > .contact-button-label {
+  color: #cccccc !important;
+}
+
+.contact-button-label {
+  color: #FFFFFF;
 }
 
 .contact-detail-header {
@@ -682,6 +702,10 @@ body {
 
 .contact-detail-spacer {
   height: 10px;
+}
+
+.contact-detail-spacer2 {
+  height: 60px;
 }
 
 .footer {

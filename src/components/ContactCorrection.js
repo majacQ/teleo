@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-// import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
-// import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -51,15 +47,12 @@ const subcatItems = {
   ]
 };
 
-const ContactCorrection = ({
-  timelineData, networkData
-}) => {
+const ContactCorrection = () => {
   const [selectedCat, setSelectedCat] = useState('ogm');
   const [selectedSubcat, setSelectedSubcat] = useState('');
-
-  if (timelineData.ogm === undefined) {
-    return '';
-  }
+  const [expln, setExpln] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
 
   return (
     <div className="contact-correction">
@@ -124,6 +117,8 @@ const ContactCorrection = ({
               notchedOutline: 'contact-detail-textfield'
             }
           }}
+          value={expln}
+          onChange={(event) => setExpln(event.target.value)}
           margin="normal"
           variant="outlined"
           placeholder="Explain the innaccuracy in enough detail so we can locate it and conduct research to validate the update."
@@ -143,6 +138,8 @@ const ContactCorrection = ({
               notchedOutline: 'contact-detail-textfield'
             }
           }}
+          value={name}
+          onChange={(event) => setName(event.target.value)}
         />
       </FormControl>
       <div className="contact-detail-spacer" />
@@ -160,36 +157,27 @@ const ContactCorrection = ({
               notchedOutline: 'contact-detail-textfield'
             }
           }}
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
         />
       </FormControl>
       <div className="contact-detail-label">
-        We&apos;ll reach out to you if we have any questions, or to keep you updated on this inquiry.
+        We&apos;ll reach out to you if we have any questions,
+        or to keep you updated on this inquiry.
       </div>
       <div className="contact-detail-spacer" />
       <Button
-        classes={{ label: 'notfound-button-label', root: 'notfound-button-root' }}
+        classes={{ label: 'contact-button-label', root: 'contact-button-root' }}
+        disabled={
+          selectedSubcat === '' || expln.length === 0 || name.length === 0 || email.length === 0
+        }
         // onClick={() => {}}
       >
         Send
       </Button>
-      <div className="contact-detail-spacer" />
-      <div className="contact-detail-spacer" />
-      <div className="contact-detail-spacer" />
-      <div className="contact-detail-spacer" />
+      <div className="contact-detail-spacer2" />
     </div>
   );
 };
 
-ContactCorrection.propTypes = {
-  timelineData: PropTypes.object.isRequired,
-  networkData: PropTypes.object.isRequired
-};
-
-const mapStateToProps = (state) => ({
-  timelineData: state.timelineData.data,
-  networkData: state.networkData.data
-});
-
-export default connect(
-  mapStateToProps,
-)(ContactCorrection);
+export default ContactCorrection;

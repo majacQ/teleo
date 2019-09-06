@@ -8,6 +8,8 @@ import HeaderNonApp from './HeaderNonApp';
 import Footer from './Footer';
 import { ui } from '../constants';
 import ContactCorrection from './ContactCorrection';
+import ContactBroken from './ContactBroken';
+import ContactFeedback from './ContactFeedback';
 
 const contactItems = [
   {
@@ -49,6 +51,7 @@ const Contact = ({
                 <div
                   className="contact-back"
                   onClick={() => setContactBox('')}
+                  role="presentation"
                 >
                   <ChevronLeft classes={{ root: 'contact-chevron' }} />
                   Back
@@ -83,6 +86,12 @@ const Contact = ({
             }
             {
               contactBox === 'correction' ? (<ContactCorrection />) : ''
+            }
+            {
+              contactBox === 'broken' ? (<ContactBroken />) : ''
+            }
+            {
+              contactBox === 'feedback' ? (<ContactFeedback />) : ''
             }
           </div>
         </div>
