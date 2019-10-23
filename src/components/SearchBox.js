@@ -72,7 +72,7 @@ const SearchBox = ({
     return (
       <div
         {...getItemProps({
-          key: item.uid,
+          key: item.id,
           index,
           item,
           className: `suggestion-container ${index === highlightedIndex ? 'suggestion-container--highlighted' : ''}`
