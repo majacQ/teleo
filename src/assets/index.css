@@ -499,6 +499,16 @@ body {
 	line-height: 28px; */
 }
 
+.methodology-list {
+  list-style-type: none;
+}
+
+.methodology-list > li:before {
+  content: '\2014'; /* em dash */
+  position: absolute;
+  margin-left: -1.1em; 
+}
+
 .notfound-container {
   padding-top: 116px;
   max-width: 800px;

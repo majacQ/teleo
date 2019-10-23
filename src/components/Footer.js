@@ -16,6 +16,7 @@ const Footer = () => (
       &copy; 2019&nbsp;
       <a href="https://www.gatesfoundation.org/">Bill & Melinda Gates Foundation.</a>
       &nbsp;All Rights Reserved.
+      {` v${process.env.REACT_APP_VERSION}`}
     </Box>
     <Box className="footer-text">
       <a href="https://www.gatesfoundation.org/Terms-of-Use">Terms of Use</a>

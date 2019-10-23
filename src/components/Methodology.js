@@ -98,7 +98,7 @@ const Methodology = ({
           <br />
           Key definitions. To ensure consistency of data categorization and classification,
           the following terms were defined:
-          <ul>
+          <ul className="methodology-list">
             <li>
               Normal pregnancies were defined as full term births ending at 40 weeks&apos;
               gestation.
