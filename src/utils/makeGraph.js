@@ -114,7 +114,9 @@ const makeGraph = (div, nodeId, category, direct, orfee, riskPad) => {
     .extent([[1, 1], [width - riskPad, height - 6]]);
     // width - riskPad allows space for risk indicators
 
-  sankeyObj(data);
+  if (data.nodes.length > 0) {
+    sankeyObj(data);
+  }
 
   // create new y values to align to the top
   // and have height set to be the vertical size of the text

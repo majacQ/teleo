@@ -12,6 +12,10 @@ const FilterPathway = ({
   // windowSize,
   selected, data, removePathway, addPathway
 }) => {
+  if (!data.nodes) {
+    return '';
+  }
+
   const emptyText = [
     'Pneumonia, Measles, Type 1 Diabetes, etc.',
     'Malnutrition, Maternal Infection, Hypoxia, etc.',
