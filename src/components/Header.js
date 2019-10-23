@@ -28,7 +28,7 @@ const Header = ({
   return (
     <div>
       { searchOpen && (
-        <div className="header-search-box" style={{ right: windowSize.appLeft + 65 }}>
+        <div className="header-search-box" style={{ right: windowSize.appLeft + 85 }}>
           <SearchBox
             items={allItems}
             handler={addToPinned}
