@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 import HeaderNonApp from './HeaderNonApp';
 import Footer from './Footer';
-import history from '../history';
 import { ui } from '../constants';
 
 const NotFound = ({
@@ -34,25 +34,22 @@ const NotFound = ({
           <div className="notfound-button">
             <Button
               classes={{ label: 'notfound-button-label', root: 'notfound-button-root' }}
-              onClick={() => history.replace('home')}
             >
-              Home Page
+              <Link className="notfound-button-label" to="home">Home Page</Link>
             </Button>
           </div>
           <div className="notfound-button">
             <Button
               classes={{ label: 'notfound-button-label', root: 'notfound-button-root' }}
-              onClick={() => history.replace('app')}
             >
-              Build a visualization
+              <Link className="notfound-button-label" to="app">Build a visualization</Link>
             </Button>
           </div>
           <div className="notfound-button">
             <Button
               classes={{ label: 'notfound-button-label', root: 'notfound-button-root' }}
-              onClick={() => history.replace('methodology')}
             >
-              Methodology
+              <Link className="notfound-button-label" to="methodology">Methodology</Link>
             </Button>
           </div>
         </div>

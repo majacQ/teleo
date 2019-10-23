@@ -2,6 +2,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 // import { connect } from 'react-redux';
 import Box from '@material-ui/core/Box';
+import { Link } from 'react-router-dom';
 // import history from '../history';
 // import { ui } from '../constants';
 
@@ -23,10 +24,10 @@ const Footer = () => (
       <a href="https://www.gatesfoundation.org/Privacy-and-Cookies-Notice">Privacy Policy</a>
     </Box>
     <Box className="footer-text">
-      <a href="methodology">Methodology</a>
+      <Link to="methodology">Methodology</Link>
     </Box>
     <Box className="footer-text">
-      <a href="contact">Contact Us</a>
+      <Link to="contact">Contact Us</Link>
     </Box>
   </Box>
 );

@@ -7,9 +7,9 @@ import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import { Link } from 'react-router-dom';
 import Footer from './Footer';
 import HeaderNonApp from './HeaderNonApp';
-import history from '../history';
 import { ui } from '../constants';
 
 const crslItems = [
@@ -90,14 +90,17 @@ const Home = ({
         </div>
         <div className="home-buildvis">
           <div className="home-buildvis-inner" style={{ paddingLeft: windowSize.appLeft }}>
-            <div className="home-buildvis-text">Build a visualization</div>
+            <div className="home-buildvis-text">
+              <Link className="home-buildvis-link" to="app">Build a Visualization</Link>
+            </div>
             <IconButton
               classes={{ root: 'home-carousel-button-root' }}
               className="home-buildvis-button"
               aria-label="build"
-              onClick={() => history.replace('app')}
             >
-              <ArrowForwardIcon />
+              <Link className="home-buildvis-button-text" style={{ color: 'white' }} to="app">
+                <ArrowForwardIcon />
+              </Link>
             </IconButton>
           </div>
         </div>
@@ -197,9 +200,10 @@ const Home = ({
                   <div className="carousel-button">
                     <Button
                       classes={{ label: 'carousel-button-label', root: 'carousel-button-root' }}
-                      onClick={() => history.replace(crsl.link)}
                     >
-                      Start with visualization
+                      <Link className="carousel-button-label" to={crsl.link}>
+                        Start with visualization
+                      </Link>
                     </Button>
                   </div>
                 </PosedDiv>
@@ -235,13 +239,16 @@ const Home = ({
           className="home-methodology"
           style={{ paddingLeft: windowSize.appLeft, paddingRight: windowSize.appLeft }}
         >
-          <div className="home-methodology-text">Read about the methodology</div>
+          <div className="home-methodology-text">
+            <Link className="home-methodology-text-link" to="methodology">Read about the methodology</Link>
+          </div>
           <IconButton
             className="home-methodology-button"
             aria-label="build"
-            onClick={() => history.replace('methodology')}
           >
-            <ArrowForwardIcon />
+            <Link className="home-methodology-text-link" to="methodology">
+              <ArrowForwardIcon />
+            </Link>
           </IconButton>
         </div>
         <Box

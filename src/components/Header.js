@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 import { createSelector } from 'reselect';
-import history from '../history';
 import SearchBox from './SearchBox';
 import { ui } from '../constants';
 import {
@@ -48,11 +48,9 @@ const Header = ({
       <div className="header-wrapper" style={{ height: ui.header.height, width: windowSize.width }}>
         <div className="header" style={{ height: ui.header.height, width: windowSize.appWidth, left: windowSize.appLeft }}>
           <div
-            className="header-text"
-            onClick={() => history.replace('home')}
             role="presentation"
           >
-            Seminal Events Timeline
+            <Link className="header-text" to="home">Seminal Events Timeline</Link>
           </div>
           <div className="header-icons">
             <span

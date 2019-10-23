@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
-import history from '../history';
+import { Link } from 'react-router-dom';
 import { ui } from '../constants';
 
 const HeaderNonApp = ({
@@ -11,20 +11,16 @@ const HeaderNonApp = ({
   <div className="header-wrapper" style={{ height: ui.header.height, width: windowSize.width }}>
     <div className="header" style={{ height: ui.header.height, width: windowSize.appWidth, left: windowSize.appLeft }}>
       <div
-        className="header-text"
-        onClick={() => history.replace('home')}
         role="presentation"
       >
-        Seminal Events Timeline
+        <Link className="header-text" to="home">Seminal Events Timeline</Link>
       </div>
       <div className="header-icons">
         <Button
           variant="outlined"
-          className="home-header-button"
           classes={{ label: 'home-header-button', root: 'home-header-button-outline' }}
-          onClick={() => history.replace('app')}
         >
-          Build a Visualization
+          <Link className="home-header-button-link" to="app">Build a Visualization</Link>
         </Button>
         {/* <span
           className="header-icon icon-search2"

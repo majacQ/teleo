@@ -46,6 +46,7 @@ body {
   padding-left: 15px;
   display: inline-block;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .header-filters {
@@ -101,8 +102,9 @@ body {
   background: #F1F2F2;
 }
 
-.home-header-button {
+.home-header-button-link {
   color: #4EB8C1;
+  text-decoration: none;
 }
 
 .home-header-button-outline {
@@ -173,7 +175,6 @@ body {
 }
 
 .home-buildvis-text {
-  color: #202A2B;
   font-family: "Roboto Condensed";
   /* font-family: "DIN OT", "Barlow"; */
   /* font-weight: bold; */
@@ -185,9 +186,18 @@ body {
   padding-right: 10px;
 }
 
+.home-buildvis-link {
+  color: #202A2B;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .home-buildvis-button {
   height: 48px;
   width: 48px;
+}
+
+.home-buildvis-button-text {
   color: #FFFFFF !important;
 }
 
@@ -369,6 +379,7 @@ body {
 
 .carousel-button-label {
   color: #FFFFFF;
+  text-decoration: none;
 }
 
 .home-methodology {
@@ -389,6 +400,11 @@ body {
   line-height: 31px;
   padding-left: 43px;
   padding-right: 5px;
+}
+
+.home-methodology-text-link {
+  color: #FFFFFF;
+  text-decoration: none;
 }
 
 .home-methodology-button {
@@ -531,6 +547,7 @@ body {
 
 .notfound-button-label {
   color: #FFFFFF;
+  text-decoration: none;
 }
 
 .contact-header-shadow {

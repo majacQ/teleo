@@ -147,15 +147,13 @@ const EventsList = ({
                   }
                 </div>
               </div>
-              {
-                <PoseGroup flipMove={false}>
-                  { idx > -1 && (
-                    <PosedDiv key={idx} style={{ overflow: 'hidden' }} withParent={false}>
-                      <ExpandInfo data={expanded[idx]} />
-                    </PosedDiv>
-                  )}
-                </PoseGroup>
-              }
+              <PoseGroup flipMove={false}>
+                { idx > -1 && (
+                  <PosedDiv key={idx} style={{ overflow: 'hidden' }} withParent={false}>
+                    <ExpandInfo data={expanded[idx]} />
+                  </PosedDiv>
+                )}
+              </PoseGroup>
             </PosedRow>
           );
         })
