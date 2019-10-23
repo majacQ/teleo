@@ -126,7 +126,7 @@ const Methodology = ({
         <div className="methodology-text">
           Drawing from 859 references identified in the literature review, the dataset used
           to generate the SET digitization includes:
-          <ul>
+          <ul className="methodology-list">
             <li>
               543 Organogenesis events
             </li>
