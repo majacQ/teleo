@@ -814,10 +814,7 @@ body {
 
 .filters-container {
   top: 0px;
-  display: flex;
   position: fixed;
-  margin-left: auto;
-  margin-right: auto;
   border: 1px solid #3D5052;
   background-color: #202A2B;
   box-sizing: border-box;
@@ -827,6 +824,25 @@ body {
   padding-top: 10px;
   padding-bottom: 10px;
   color: #FFFFFF;
+}
+
+.filters-header {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 40px;
+  padding-top: 15px;
+  padding-bottom: 20px;
+  color: #FFFFFF;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.9px;
+}
+
+.filters-inner {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
 }
 
 .filter-column {

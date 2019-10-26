@@ -16,51 +16,56 @@ const FilterVariable = ({
 
   return (
     <Dialog open={filterOpen} onClose={closeFilter}>
-      <div className="filters-container" style={{ width: windowSize.appWidth, marginTop: ui.header.height, left: windowSize.appLeft }}>
-        <div className="filter-column">
-          <div className="filter-column-header">
-            <span>Organogenesis, Growth, & Maturation</span>
-          </div>
-          <div className="filter-column-content">
-            { Object.keys(data.ogm.data).map((d) => (
-              <div
-                key={d}
-                className={`filter-button ${filters.ogm.indexOf(d) > -1 ? 'selected' : 'unselected'}`}
-                onClick={() => { toggleFilters(d, 'ogm'); }}
-                onKeyPress={() => {}}
-                role="button"
-                tabIndex="-10"
-              >
-                {d}
-              </div>
-            )) }
-          </div>
+      <div className="filters-container" style={{ width: windowSize.width, marginTop: ui.header.height, left: 0 }}>
+        <div className="filters-header" style={{ width: windowSize.appWidth, left: windowSize.appLeft }}>
+          EDIT VARIABLES
         </div>
-        <div className="filter-column">
-          <div className="filter-column-header">
-            <span>Neurodevelopment</span>
+        <div className="filters-inner" style={{ width: windowSize.appWidth, left: windowSize.appLeft }}>
+          <div className="filter-column">
+            <div className="filter-column-header">
+              <span>Organogenesis, Growth, & Maturation</span>
+            </div>
+            <div className="filter-column-content">
+              { Object.keys(data.ogm.data).map((d) => (
+                <div
+                  key={d}
+                  className={`filter-button ${filters.ogm.indexOf(d) > -1 ? 'selected' : 'unselected'}`}
+                  onClick={() => { toggleFilters(d, 'ogm'); }}
+                  onKeyPress={() => {}}
+                  role="button"
+                  tabIndex="-10"
+                >
+                  {d}
+                </div>
+              )) }
+            </div>
           </div>
-          <div className="filter-column-content">
-            { Object.keys(data.nd.data).map((d) => (
-              <div
-                key={d}
-                className={`filter-button ${filters.nd.indexOf(d) > -1 ? 'selected' : 'unselected'}`}
-                onClick={() => { toggleFilters(d, 'nd'); }}
-                onKeyPress={() => {}}
-                role="button"
-                tabIndex="-10"
-              >
-                {d}
-              </div>
-            )) }
+          <div className="filter-column">
+            <div className="filter-column-header">
+              <span>Neurodevelopment</span>
+            </div>
+            <div className="filter-column-content">
+              { Object.keys(data.nd.data).map((d) => (
+                <div
+                  key={d}
+                  className={`filter-button ${filters.nd.indexOf(d) > -1 ? 'selected' : 'unselected'}`}
+                  onClick={() => { toggleFilters(d, 'nd'); }}
+                  onKeyPress={() => {}}
+                  role="button"
+                  tabIndex="-10"
+                >
+                  {d}
+                </div>
+              )) }
+            </div>
           </div>
-        </div>
-        <div className="filter-column">
-          <div className="filter-column-header">
-            <span>Outcomes, Risk Factors, & Interventions</span>
-          </div>
-          <div className="filter-column-content">
-            <FilterPathway />
+          <div className="filter-column">
+            <div className="filter-column-header">
+              <span>Outcomes, Risk Factors, & Interventions</span>
+            </div>
+            <div className="filter-column-content">
+              <FilterPathway />
+            </div>
           </div>
         </div>
       </div>
