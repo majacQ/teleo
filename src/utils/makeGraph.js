@@ -10,6 +10,12 @@ const riskColors = {
   '100,000 live births': '#E14DA0'
 };
 
+const riskClasses = {
+  '100,000 children': 'children',
+  '100,000 children years': 'children-years',
+  '100,000 live births': 'live-births'
+};
+
 const makeGraph = (div, nodeId, category, direct, orfee, riskPad) => {
   const riskScales = {};
   riskScales['100,000 children'] = scaleLinear()
@@ -172,6 +178,17 @@ const makeGraph = (div, nodeId, category, direct, orfee, riskPad) => {
     .attr('id', (d) => `nw-link-${d.index}`)
     .attr('stroke-width', 1);
 
+  const tooltip = dv.append('div')
+    .attr('class', 'nw-tooltip')
+    .attr('class', 'nw-tooltip-hidden');
+
+  const tooltipText = tooltip.append('div')
+    .attr('class', 'nw-tooltip-text')
+    .html('ABSOLUTE RISK UNIT');
+
+  const tooltipUnits = tooltip.append('div')
+    .attr('class', 'nw-tooltip-units');
+
   // nodes
   const labelDiv = dv.append('div');
 
@@ -277,6 +294,31 @@ const makeGraph = (div, nodeId, category, direct, orfee, riskPad) => {
     .style('border-radius', '6px')
     .style('height', '6px')
     .style('width', '6px');
+
+  const riskHoverBox = dv.append('div');
+  riskHoverBox.selectAll('div')
+    .data(hoNodes)
+    .enter()
+    .append('div')
+    .attr('class', 'nw-tooltip-hover-box')
+    .style('left', (d) => `${d.x0 - riskPad - 3}px`)
+    .style('top', (d) => `${d.y0 + 2}px`)
+    // .style('background', 'rgba(255,0,0,0.5)')
+    .style('width', '56px')
+    .style('height', '18px')
+    .on('mouseover', (d) => {
+      tooltip.style('left', `${d.x0 + 10}px`)
+        .style('top', `${d.y0 - 5}px`)
+        .attr('class', `nw-tooltip nw-tooltip-${riskClasses[d.abs_risk_units]}`);
+
+      tooltipText.style('color', riskColors[d.abs_risk_units]);
+
+      tooltipUnits.style('color', riskColors[d.abs_risk_units])
+        .html(d.abs_risk_units);
+    })
+    .on('mouseout', () => {
+      tooltip.attr('class', 'nw-tooltip-hidden');
+    });
 
   const getPathway = (d) => {
     const idxs = [d.index];
