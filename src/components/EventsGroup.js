@@ -1,11 +1,42 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import posed from 'react-pose';
 import EventsList from './EventsList';
 import { setFilters, setSelectedORFI, setCollapsedGroup } from '../actions';
 
+const Collapse = posed.div({
+  open: {
+    height: 'auto',
+    transition: { duration: 500 },
+    applyAtEnd: {
+      overflow: 'initial'
+    }
+  },
+  close: {
+    height: 0,
+    transition: { duration: 300 },
+    applyAtStart: {
+      overflow: 'hidden'
+    }
+  }
+});
+
+const CollapseIcon = posed.div({
+  open: {
+    transform: 'scale(1, 1)',
+    transition: { duration: 200 }
+  },
+  close: {
+    transform: 'scale(1, -1)',
+    transition: { duration: 200 }
+  }
+});
+
 const EventsGroup = ({
-  windowSize, collapsedGroups, filters, selectedORFI, removeGroup,
+  windowSize, collapsedGroups,
+  // filters, selectedORFI,
+  removeGroup,
   toggleCollapse, data, subcategory, category, gid, group
 }) => {
   const [rangeStats, setRangeStats] = useState({ before: 0, in: 0, after: 0 });
@@ -13,12 +44,12 @@ const EventsGroup = ({
   const focWidth = windowSize.appWidth;
   const isCollapsed = collapsedGroups.indexOf(gid) > -1;
 
-  // all groups must be collapsed to be draggable
-  const nGroups = filters.ogm.length + filters.nd.length
-    + (selectedORFI.ho.length > 0 ? 1 : 0)
-    + (selectedORFI.rf.length > 0 ? 1 : 0)
-    + (selectedORFI.int.length > 0 ? 1 : 0);
-  const draggable = nGroups === collapsedGroups.length;
+  // // all groups must be collapsed to be draggable
+  // const nGroups = filters.ogm.length + filters.nd.length
+  //   + (selectedORFI.ho.length > 0 ? 1 : 0)
+  //   + (selectedORFI.rf.length > 0 ? 1 : 0)
+  //   + (selectedORFI.int.length > 0 ? 1 : 0);
+  // const draggable = nGroups === collapsedGroups.length;
 
   const inText = isCollapsed ? ' (expand to view).' : '.';
   const beforeText = rangeStats.before === 0 ? '' : `${rangeStats.before} events before.`;
@@ -38,13 +69,23 @@ const EventsGroup = ({
           <span className="eventgroup-header-info">
             {`${rangeStats.in} event${rangeStats.in === 1 ? '' : 's'} during this period${inText} ${beforeText} ${afterText}`}
           </span>
-          {draggable && (<span className="icon-drag_handle eventgroup-header-icon" style={{ color: 'lightgray' }} />) }
-          <span
-            className={`icon-chevron-${isCollapsed ? 'up' : 'down'} eventgroup-header-icon`}
-            onClick={() => { toggleCollapse(gid); }}
-            onKeyPress={() => {}}
-            role="presentation"
-          />
+          {/* {
+            draggable
+            && (
+              <span
+                className="icon-drag_handle eventgroup-header-icon"
+                style={{ color: 'lightgray' }}
+              />
+            )
+          } */}
+          <CollapseIcon pose={isCollapsed ? 'close' : 'open'} style={{ display: 'inline-block' }}>
+            <span
+              className="icon-chevron-down eventgroup-header-icon"
+              onClick={() => { toggleCollapse(gid); }}
+              onKeyPress={() => {}}
+              role="presentation"
+            />
+          </CollapseIcon>
           <span
             className="icon-x eventgroup-header-icon"
             onClick={() => { removeGroup(subcategory, group, gid); }}
@@ -53,13 +94,18 @@ const EventsGroup = ({
           />
         </div>
       </div>
-      <EventsList
-        data={data}
-        gid={gid}
-        pinned={false}
-        collapsed={isCollapsed}
-        setRangeStats={setRangeStats}
-      />
+      <Collapse
+        pose={isCollapsed ? 'close' : 'open'}
+        style={{ overflow: 'hidden' }}
+      >
+        <EventsList
+          data={data}
+          gid={gid}
+          pinned={false}
+          // collapsed={isCollapsed}
+          setRangeStats={setRangeStats}
+        />
+      </Collapse>
     </div>
   );
 };
@@ -67,8 +113,8 @@ const EventsGroup = ({
 EventsGroup.propTypes = {
   windowSize: PropTypes.object.isRequired,
   collapsedGroups: PropTypes.array.isRequired,
-  filters: PropTypes.object.isRequired,
-  selectedORFI: PropTypes.object.isRequired,
+  // filters: PropTypes.object.isRequired,
+  // selectedORFI: PropTypes.object.isRequired,
   removeGroup: PropTypes.func.isRequired,
   toggleCollapse: PropTypes.func.isRequired,
   data: PropTypes.array.isRequired,
@@ -80,9 +126,9 @@ EventsGroup.propTypes = {
 
 const mapStateToProps = (state) => ({
   windowSize: state.windowSize,
-  collapsedGroups: state.collapsedGroups,
-  filters: state.filters,
-  selectedORFI: state.selectedORFI
+  collapsedGroups: state.collapsedGroups
+  // filters: state.filters,
+  // selectedORFI: state.selectedORFI
 });
 
 const mapDispatchToProps = (dispatch) => ({
