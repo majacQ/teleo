@@ -2,9 +2,27 @@ import React, { useState } from 'react';
 // import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import posed from 'react-pose';
 import { niceAge } from '../utils/ageCalc';
 import NetworkGraph from './NetworkGraph';
 import RefsList from './RefsList';
+
+const Collapse = posed.div({
+  open: {
+    height: 'auto',
+    transition: { duration: 300 },
+    applyAtEnd: {
+      overflow: 'initial'
+    }
+  },
+  close: {
+    height: 0,
+    transition: { duration: 300 },
+    applyAtStart: {
+      overflow: 'hidden'
+    }
+  }
+});
 
 const ExpandInfo = ({
   data, refsData, networkData, windowSize
@@ -104,7 +122,12 @@ const ExpandInfo = ({
             />
           </span>
         </div>
-        {refExpanded ? <RefsList data={refsData} indices={refs} nCol={Math.ceil(windowSize.appWidth / 350)} /> : '' }
+        <Collapse
+          pose={refExpanded ? 'open' : 'close'}
+          style={{ overflow: 'hidden' }}
+        >
+          <RefsList data={refsData} indices={refs} nCol={Math.ceil(windowSize.appWidth / 350)} />
+        </Collapse>
       </div>
     </div>
   );
