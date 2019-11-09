@@ -13,6 +13,18 @@ import {
   y2w, w2y, m2w, w2m
 } from '../utils/ageCalc';
 
+const findIndex = (x, arr) => {
+  for (let ii = 0; ii < arr.length; ii += 1) {
+    if (x === arr[ii] && ii > 0) {
+      return ii - 1;
+    }
+    if (x <= arr[ii]) {
+      return Math.max(0, ii - 1);
+    }
+  }
+  return 0;
+};
+
 class AgeSlider extends Component {
   constructor(props) {
     super(props);
@@ -56,24 +68,6 @@ class AgeSlider extends Component {
     // Childhood to adolescence: 3 to 13 years (196 to 716)
     const xLengths = [10, 6, 5]; // number of ticks in each interval
     const xProps = xLengths.map((x) => x / 21);
-
-    const xTicks = [
-      0, 4, 8, 12, 16, 20, 24, 28, 32, 36,
-      m2w(0), m2w(6), m2w(12), m2w(18), m2w(24), m2w(30),
-      y2w(3), y2w(5), y2w(7), y2w(9), y2w(11)
-    ];
-
-    // minor ticks
-    const xTicks2 = [
-      2, 6, 10, 14, 18, 22, 26, 30, 34, 38,
-      m2w(3), m2w(9), m2w(15), m2w(21), m2w(27), m2w(33),
-      y2w(4), y2w(6), y2w(8), y2w(10), y2w(12)
-    ];
-
-    // major ticks
-    const xTicks3 = [
-      0, m2w(0), y2w(3), y2w(13)
-    ];
 
     const svg = select(node);
     const marginFoc = {
@@ -119,7 +113,7 @@ class AgeSlider extends Component {
       .range(xRange)
       .domain(xDomain);
 
-    const xFocTicks = [
+    const xFocLabelTicks = [
       0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
       21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
       m2w(0), m2w(1), m2w(2), m2w(3), m2w(4), m2w(5), m2w(6), m2w(7), m2w(8), m2w(9),
@@ -129,9 +123,65 @@ class AgeSlider extends Component {
       y2w(3), y2w(4), y2w(5), y2w(6), y2w(7), y2w(8), y2w(9), y2w(10), y2w(11), y2w(12)
     ];
 
+    // change the ticks for the focused view based on how large of a region is selected
+    const propSelected = (xScaleCtx(ageRange[1]) - xScaleCtx(ageRange[0])) / width;
+    let xFocTicks = [];
+    if (propSelected > 0.4) {
+      xFocTicks = [
+        0, 8, 16, 24, 32,
+        m2w(0), m2w(12), m2w(24),
+        y2w(3), y2w(7), y2w(11)
+      ];
+    } else if (propSelected > 0.15) {
+      xFocTicks = [
+        0, 4, 8, 12, 16, 20, 24, 28, 32, 36,
+        m2w(0), m2w(6), m2w(12), m2w(18), m2w(24), m2w(30),
+        y2w(3), y2w(5), y2w(7), y2w(9), y2w(11)
+      ];
+    } else if (propSelected > 0.05) {
+      xFocTicks = [
+        0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20,
+        22, 24, 26, 28, 30, 32, 34, 36, 38,
+        m2w(0), m2w(2), m2w(4), m2w(6), m2w(8),
+        m2w(10), m2w(12), m2w(14), m2w(16), m2w(18),
+        m2w(20), m2w(22), m2w(24), m2w(26), m2w(28),
+        m2w(30), m2w(32), m2w(34),
+        y2w(3), y2w(5), y2w(7), y2w(9), y2w(11)
+      ];
+    } else {
+      xFocTicks = [
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+        21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
+        m2w(0), m2w(1), m2w(2), m2w(3), m2w(4), m2w(5), m2w(6), m2w(7), m2w(8), m2w(9),
+        m2w(10), m2w(11), m2w(12), m2w(13), m2w(14), m2w(15), m2w(16), m2w(17), m2w(18),
+        m2w(19), m2w(20), m2w(21), m2w(22), m2w(23), m2w(24), m2w(25), m2w(26), m2w(27),
+        m2w(28), m2w(29), m2w(30), m2w(31), m2w(32), m2w(33), m2w(34), m2w(35),
+        y2w(3), y2w(4), y2w(5), y2w(6), y2w(7), y2w(8), y2w(9), y2w(10), y2w(11), y2w(12)
+      ];
+    }
+
+    // context ticks
+    const xTicks = [
+      0, 4, 8, 12, 16, 20, 24, 28, 32, 36,
+      m2w(0), m2w(6), m2w(12), m2w(18), m2w(24), m2w(30),
+      y2w(3), y2w(5), y2w(7), y2w(9), y2w(11)
+    ];
+
+    // context minor ticks
+    const xTicks2 = [
+      2, 6, 10, 14, 18, 22, 26, 30, 34, 38,
+      m2w(3), m2w(9), m2w(15), m2w(21), m2w(27), m2w(33),
+      y2w(4), y2w(6), y2w(8), y2w(10), y2w(12)
+    ];
+
+    // context major ticks
+    const xTicks3 = [
+      0, m2w(0), y2w(3), y2w(13)
+    ];
+
     // focus view ticks
     const xAxisFoc2 = axisBottom(xScaleFoc)
-      .tickValues(xTicks)
+      .tickValues(xFocTicks)
       .tickSize(windowSize.height - ui.header.height)
       .tickFormat(() => null);
 
@@ -140,16 +190,16 @@ class AgeSlider extends Component {
       .tickValues(xFocTicks)
       .tickSize(0)
       .tickFormat((d) => {
-        if (d <= 39 && (Math.round(d) % 4) === 0) {
+        if (d <= 39) {
           return `${d}WK`;
         }
         if (d === 40) {
           return 'BIRTH';
         }
-        if (d > 39 && d < 196 && (Math.round(w2m(d)) % 6) === 0) {
+        if (d > 39 && d < 196) {
           return `${Math.round(w2m(d))}MO`;
         }
-        if (d > 196 && ((Math.round(w2y(d)) + 1) % 2) === 0) {
+        if (d > 196) {
           return `${Math.round(w2y(d))}YR`;
         }
         return null;
@@ -298,18 +348,6 @@ class AgeSlider extends Component {
       .attr('width', 0)
       .attr('height', 1)
       .attr('stroke', ui.slider.selectColor);
-
-    function findIndex(x, arr) {
-      for (let ii = 0; ii < arr.length; ii += 1) {
-        if (x === arr[ii] && ii > 0) {
-          return ii - 1;
-        }
-        if (x <= arr[ii]) {
-          return Math.max(0, ii - 1);
-        }
-      }
-      return 0;
-    }
 
     function updateXDomainRange(curDom) {
       // const xd = [];
