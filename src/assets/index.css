@@ -931,6 +931,10 @@ body {
   outline: 0;
 }
 
+.filter-button:hover {
+  background-color: #13191A;
+}
+
 .pathway-container {
   /* top: 70px;
   right: 20px;
