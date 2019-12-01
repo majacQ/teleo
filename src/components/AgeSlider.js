@@ -113,15 +113,15 @@ class AgeSlider extends Component {
       .range(xRange)
       .domain(xDomain);
 
-    const xFocLabelTicks = [
-      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-      21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
-      m2w(0), m2w(1), m2w(2), m2w(3), m2w(4), m2w(5), m2w(6), m2w(7), m2w(8), m2w(9),
-      m2w(10), m2w(11), m2w(12), m2w(13), m2w(14), m2w(15), m2w(16), m2w(17), m2w(18),
-      m2w(19), m2w(20), m2w(21), m2w(22), m2w(23), m2w(24), m2w(25), m2w(26), m2w(27),
-      m2w(28), m2w(29), m2w(30), m2w(31), m2w(32), m2w(33), m2w(34), m2w(35),
-      y2w(3), y2w(4), y2w(5), y2w(6), y2w(7), y2w(8), y2w(9), y2w(10), y2w(11), y2w(12)
-    ];
+    // const xFocLabelTicks = [
+    //   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+    //   21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
+    //   m2w(0), m2w(1), m2w(2), m2w(3), m2w(4), m2w(5), m2w(6), m2w(7), m2w(8), m2w(9),
+    //   m2w(10), m2w(11), m2w(12), m2w(13), m2w(14), m2w(15), m2w(16), m2w(17), m2w(18),
+    //   m2w(19), m2w(20), m2w(21), m2w(22), m2w(23), m2w(24), m2w(25), m2w(26), m2w(27),
+    //   m2w(28), m2w(29), m2w(30), m2w(31), m2w(32), m2w(33), m2w(34), m2w(35),
+    //   y2w(3), y2w(4), y2w(5), y2w(6), y2w(7), y2w(8), y2w(9), y2w(10), y2w(11), y2w(12)
+    // ];
 
     // change the ticks for the focused view based on how large of a region is selected
     const propSelected = (xScaleCtx(ageRange[1]) - xScaleCtx(ageRange[0])) / width;
@@ -492,7 +492,7 @@ class AgeSlider extends Component {
 
       // update the ticks in the focused timeline view
       focus.select('.axis--x4')
-        .transition()
+        // .transition() // TODO: fix this
         .call(xAxisFoc)
         .selectAll('text')
         .attr('y', 2)

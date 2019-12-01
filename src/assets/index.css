@@ -128,7 +128,7 @@ body {
 .home-image-text {
   padding-left: 43px;
   padding-top: 80px;
-  max-width: 380px;
+  /* max-width: 380px; */
 }
 
 .home-image-text-welcome {
@@ -150,6 +150,7 @@ body {
   font-size: 52px;
   font-weight: bold;
   line-height: 52px;
+  max-width: 520px;
 }
 
 .home-image-text-desc {
@@ -161,6 +162,7 @@ body {
   /* font-family: "Minion Pro", "Crimson Text"; */
   font-size: 20px;
   line-height: 28px;
+  max-width: 380px;
 }
 
 .home-buildvis {
