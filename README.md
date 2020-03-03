@@ -1,4 +1,4 @@
-Timeline of Early Life Events and Outcomes
+Seminal Events Timeline
 =======================
 
 ## Available Scripts

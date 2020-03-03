@@ -79,7 +79,7 @@ const Home = ({
                 Welcome to the
               </div>
               <div className="home-image-text-set">
-                Timeline of Early Life Events and Outcomes
+                Seminal Events Timeline
               </div>
               <div className="home-image-text-desc">
                 Explore the biological mechanisms of global health problems through seminal events

@@ -50,7 +50,7 @@ const Header = ({
           <div
             role="presentation"
           >
-            <Link className="header-text" to="home">Timeline of Early Life Events and Outcomes</Link>
+            <Link className="header-text" to="home">Seminal Events Timeline</Link>
           </div>
           <div className="header-icons">
             <span

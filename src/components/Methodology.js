@@ -22,17 +22,17 @@ const Methodology = ({
         <div className="methodology-title">Methods</div>
         <div className="methodology-subtitle">Last updated September 28, 2017</div>
         <div className="methodology-header">
-          Background and purpose of HBGDki Timeline of Early Life Events and Outcomes
+          Background and purpose of HBGDki Seminal Events Timeline
         </div>
         <div className="methodology-text">
-          This visualization tool, the Timeline of Early Life Events and Outcomes (TELEO),
+          This visualization tool, the Seminal Events Timeline (SET),
           stems from the Healthy
           Birth, Growth, and Development knowledge integration (HBGDki) initiative of the
-          Bill & Melinda Gates Foundation. In developing TELEO, the overarching goal was
+          Bill & Melinda Gates Foundation. In developing SET, the overarching goal was
           to create a detailed map linking key events in normal organogenesis, growth and
           maturation; cognitive, language, emotional, and motor development; health
           conditions that may interrupt normal growth; and interventions that could improve
-          outcomes. TELEO was built to facilitate cross-disciplinary collaboration,
+          outcomes. SET was built to facilitate cross-disciplinary collaboration,
           hypothesis development, and predictive modeling to improve our understanding of
           child growth and development. In collaboration with Cognition Studio, this tool is
           prototyped as an interactive, online digital resource, oriented toward the needs
@@ -51,7 +51,7 @@ const Methodology = ({
           information about specific interests of the HBGDki team. Interventions were
           included based on empirical evidence of efficacy in peer-reviewed studies.
           Implementation feasibility was a key consideration for inclusion of interventions
-          in TELEO. Interventions deemed impractical in low- and middle-income countries,
+          in SET. Interventions deemed impractical in low- and middle-income countries,
           such as some types of cancer chemotherapy or expensive diagnostics, were excluded.
         </div>
         <div className="methodology-header">
@@ -60,8 +60,8 @@ const Methodology = ({
         <div className="methodology-text">
           A literature review was performed by the University of Washington’s (UW’s) START
           Center in the Department of Global Health, in collaboration with the HBGDki
-          initiative. Development of TELEO began in September 2015 and has continued to
-          the present. To develop TELEO, a review was conducted by researchers in
+          initiative. Development of SET began in September 2015 and has continued to
+          the present. To develop SET, a review was conducted by researchers in
           epidemiology and clinical practitioners.  Specific resources searched by the team
           included medical textbooks, online resources, and peer-reviewed articles about
           human growth and development, focusing on major events and processes related to
@@ -74,13 +74,13 @@ const Methodology = ({
           synthesize these data. First, the UW team created a preliminary proposal of data
           collection procedures, organizational structure and data categories. This
           proposal was then reviewed and refined by UW and HBGDki leadership. Second, the
-          UW team collected detailed content for inclusion in TELEO. These data were
+          UW team collected detailed content for inclusion in SET. These data were
           iteratively reviewed by the team for accuracy and completeness. Final decisions
           about retention versus exclusion of specific content were reached by consensus
           between the UW researchers and HBGDki leaders.
         </div>
         <div className="methodology-header">
-          Organization of the Timeline of Early Life Events and Outcomes
+          Organization of the Seminal Events Timeline
         </div>
         <div className="methodology-text">
           Time period. The integrated timeline spans the developmental period from
@@ -113,8 +113,8 @@ const Methodology = ({
             <li>
               Interventions were divided into two groups: 1) Interventions that were
               expected to have a direct impact on risk factors that were included in
-              TELEO; 2) Interventions that that were not considered to directly impact risk
-              factors in TELEO. These risk factors could have a direct or indirect impact
+              SET; 2) Interventions that that were not considered to directly impact risk
+              factors in SET. These risk factors could have a direct or indirect impact
               on a health outcome. For example, pneumococcal conjugate vaccine (PCV) is
               noted to have an indirect impact on pneumococcal pneumonia via the pathway
               mediated by adult smoking.
@@ -122,11 +122,11 @@ const Methodology = ({
           </ul>
         </div>
         <div className="methodology-header">
-          Comprehensive Timeline of Early Life Events and Outcomes Dataset
+          Comprehensive Seminal Events Timeline Dataset
         </div>
         <div className="methodology-text">
           Drawing from 859 references identified in the literature review, the dataset used
-          to generate the TELEO digitization includes:
+          to generate the SET digitization includes:
           <ul className="methodology-list">
             <li>
               543 Organogenesis events
