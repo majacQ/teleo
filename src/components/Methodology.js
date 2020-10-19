@@ -28,8 +28,7 @@ const Methodology = ({
         </div>
         <div className="methodology-text">
           The Early Life Events and Outcomes Resource (ELEnOR)
-          stems from the Healthy
-          Birth, Growth, and Development knowledge integration (HBGDki) initiative of the
+          stems from the Knowledge Integration (Ki) initiative of the
           Bill & Melinda Gates Foundation. In developing ELEnOR, the overarching goal was
           to create a detailed map linking key events in normal organogenesis, growth and
           maturation; cognitive, language, emotional, and motor development; health
@@ -45,12 +44,12 @@ const Methodology = ({
           Key principles of data structure and inclusion
         </div>
         <div className="methodology-text">
-          To align with HBGDki goals of answering key questions about preterm birth, growth
+          To align with Ki goals of answering key questions about preterm birth, growth
           faltering, and impaired neurocognitive development (1), we emphasized health
           outcomes of key importance in low- and middle-income countries using a global
           burden of disease tool (2). A list of health outcomes was derived from this
           source, iteratively reviewed, and expanded to increase breadth and include
-          information about specific interests of the HBGDki team. Interventions were
+          information about specific interests of the Ki team. Interventions were
           included based on empirical evidence of efficacy in peer-reviewed studies.
           Implementation feasibility was a key consideration for inclusion of interventions
           in ELEnOR. Interventions deemed impractical in low- and middle-income countries,
@@ -61,7 +60,7 @@ const Methodology = ({
         </div>
         <div className="methodology-text">
           A literature review was performed by the University of Washington’s (UW’s) START
-          Center in the Department of Global Health, in collaboration with the HBGDki
+          Center in the Department of Global Health, in collaboration with the Ki
           initiative. Development of ELEnOR began in September 2015 and has continued to
           the present. To develop ELEnOR, a review was conducted by researchers in
           epidemiology and clinical practitioners.  Specific resources searched by the team
@@ -75,11 +74,11 @@ const Methodology = ({
           systematic review. Thus, an alternative approach was developed to collect and
           synthesize these data. First, the UW team created a preliminary proposal of data
           collection procedures, organizational structure and data categories. This
-          proposal was then reviewed and refined by UW and HBGDki leadership. Second, the
+          proposal was then reviewed and refined by UW and Ki leadership. Second, the
           UW team collected detailed content for inclusion in ELEnOR. These data were
           iteratively reviewed by the team for accuracy and completeness. Final decisions
           about retention versus exclusion of specific content were reached by consensus
-          between the UW researchers and HBGDki leaders.
+          between the UW researchers and Ki leaders.
         </div>
         <div className="methodology-header">
           Organization of ELEnOR
