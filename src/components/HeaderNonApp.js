@@ -13,7 +13,7 @@ const HeaderNonApp = ({
       <div
         role="presentation"
       >
-        <Link className="header-text" to="home">Seminal Events Timeline</Link>
+        <Link className="header-text" to="home">ELEnOR: Early Life Events and Outcomes Resource</Link>
       </div>
       <div className="header-icons">
         <Button

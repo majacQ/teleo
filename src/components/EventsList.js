@@ -1,34 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import posed, { PoseGroup } from 'react-pose';
+import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import Event from './Event';
 import ExpandInfo from './ExpandInfo';
 import { pinnedLabWidths, getPinnedTextFromData } from '../utils/pinnedText';
-
-const PosedDiv = posed.div({
-  enter: {
-    height: 'auto',
-    opacity: 1,
-    transition: {
-      height: { duration: 200 },
-      opacity: { duration: 400, delay: 0 }
-    }
-  },
-  exit: {
-    height: 0,
-    opacity: 0,
-    transition: {
-      height: { duration: 200, delay: 100 },
-      opacity: { duration: 400 }
-    }
-  }
-});
-
-const PosedRow = posed.div({
-  enter: { opacity: 1, transition: { duration: 1000 } },
-  exit: { opacity: 0, transition: { duration: 1000 } }
-});
 
 const EventsList = ({
   data, gid, pinned, collapsed, setRangeStats, xScaleFoc, windowSize, expanded
@@ -40,6 +16,30 @@ const EventsList = ({
   const focWidth = windowSize.appWidth;
   // compute data structure containing layout information
   const expandedRows = expanded.map((d) => d.row);
+
+  const variants = {
+    enter: {
+      height: 'auto',
+      opacity: 1,
+      transition: {
+        height: { duration: 0.2 },
+        opacity: { duration: 0.4, delay: 0 }
+      }
+    },
+    exit: {
+      height: 0,
+      opacity: 0,
+      transition: {
+        height: { duration: 0.2, delay: 0.1 },
+        opacity: { duration: 0.4 }
+      }
+    }
+  };
+
+  const rowVariants = {
+    enter: { opacity: 1, transition: { duration: 1 } },
+    exit: { opacity: 0, transition: { duration: 1 } }
+  };
 
   if (data.length === 0) {
     return (<div />);
@@ -126,13 +126,22 @@ const EventsList = ({
   }
 
   return (
-    <PoseGroup flipMove={false}>
+    <AnimateSharedLayout>
       {
         rows.map((rowdat, i) => {
           const rowId = `${gid}-${i}`;
           const idx = expandedRows.indexOf(rowId);
           return (
-            <PosedRow key={rowId} style={{ overflow: 'hidden' }}>
+            <motion.div
+              variants={rowVariants}
+              key={rowId}
+              layoutID={rowId}
+              style={{ overflow: 'hidden' }}
+              // initial="enter"
+              animate="enter"
+              exit="exit"
+              layout
+            >
               <div className="event-row">
                 <div className="event-row-abs">
                   {
@@ -147,18 +156,25 @@ const EventsList = ({
                   }
                 </div>
               </div>
-              <PoseGroup flipMove={false}>
+              <AnimatePresence>
                 { idx > -1 && (
-                  <PosedDiv key={idx} style={{ overflow: 'hidden' }} withParent={false}>
+                  <motion.div
+                    key={idx}
+                    style={{ overflow: 'hidden', height: 0, opacity: 0 }}
+                    intial={{ height: 0, opacity: 0 }}
+                    animate="enter"
+                    exit="exit"
+                    variants={variants}
+                  >
                     <ExpandInfo data={expanded[idx]} />
-                  </PosedDiv>
+                  </motion.div>
                 )}
-              </PoseGroup>
-            </PosedRow>
+              </AnimatePresence>
+            </motion.div>
           );
         })
       }
-    </PoseGroup>
+    </AnimateSharedLayout>
   );
 };
 
@@ -180,5 +196,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(
-  mapStateToProps,
+  mapStateToProps
 )(EventsList);

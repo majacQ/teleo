@@ -2,32 +2,26 @@ import React, { useState } from 'react';
 // import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import posed from 'react-pose';
+import { motion } from 'framer-motion';
 import { niceAge } from '../utils/ageCalc';
 import NetworkGraph from './NetworkGraph';
 import RefsList from './RefsList';
-
-const Collapse = posed.div({
-  open: {
-    height: 'auto',
-    transition: { duration: 300 },
-    applyAtEnd: {
-      overflow: 'initial'
-    }
-  },
-  close: {
-    height: 0,
-    transition: { duration: 300 },
-    applyAtStart: {
-      overflow: 'hidden'
-    }
-  }
-});
 
 const ExpandInfo = ({
   data, refsData, networkData, windowSize
 }) => {
   const [refExpanded, setRefExpand] = useState(false);
+
+  const variants = {
+    open: {
+      height: 'auto',
+      transition: { duration: 0.3 }
+    },
+    close: {
+      height: 0,
+      transition: { duration: 0.3 }
+    }
+  };
 
   if (data.uid === -1) {
     return '';
@@ -122,12 +116,14 @@ const ExpandInfo = ({
             />
           </span>
         </div>
-        <Collapse
-          pose={refExpanded ? 'open' : 'close'}
+        <motion.div
+          initial={refExpanded ? 'open' : 'close'}
+          animate={refExpanded ? 'open' : 'close'}
+          variants={variants}
           style={{ overflow: 'hidden' }}
         >
           <RefsList data={refsData} indices={refs} nCol={Math.ceil(windowSize.appWidth / 350)} />
-        </Collapse>
+        </motion.div>
       </div>
     </div>
   );
@@ -147,5 +143,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(
-  mapStateToProps,
+  mapStateToProps
 )(ExpandInfo);

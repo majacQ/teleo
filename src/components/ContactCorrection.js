@@ -54,6 +54,19 @@ const ContactCorrection = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
+  // https://www.smtpjs.com
+  const sendMail = () => {
+    window.Email.send({
+      SecureToken: '',
+      To: 'info@kiglobalhealth.org',
+      From: email,
+      Subject: 'ELEnOR: Correction request',
+      Body: `From: ${name}\n\nEmail: ${expln}\n\nArea:${selectedCat}\n\nCategory: ${selectedSubcat}\n\nDetails:${expln}`
+    }).then(
+      (message) => alert(message)
+    );
+  };
+
   return (
     <div className="contact-correction">
       <div className="contact-detail-header">
@@ -171,7 +184,7 @@ const ContactCorrection = () => {
         disabled={
           selectedSubcat === '' || expln.length === 0 || name.length === 0 || email.length === 0
         }
-        // onClick={() => {}}
+        onClick={sendMail}
       >
         Send
       </Button>

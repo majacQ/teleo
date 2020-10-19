@@ -8,6 +8,19 @@ const ContactBroken = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
+  // https://www.smtpjs.com
+  const sendMail = () => {
+    window.Email.send({
+      SecureToken: '',
+      To: 'info@kiglobalhealth.org',
+      From: email,
+      Subject: 'ELEnOR: Something isn\'t working',
+      Body: `From: ${name}\n\nEmail: ${expln}\n\nProblem:${expln}`
+    }).then(
+      (message) => alert(message)
+    );
+  };
+
   return (
     <div className="contact-correction">
       <div className="contact-detail-header">
@@ -79,7 +92,7 @@ const ContactBroken = () => {
         disabled={
           expln.length === 0 || name.length === 0 || email.length === 0
         }
-        // onClick={() => {}}
+        onClick={sendMail}
       >
         Send
       </Button>

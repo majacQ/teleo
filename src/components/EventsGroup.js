@@ -1,37 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import posed from 'react-pose';
+import { motion } from 'framer-motion';
 import EventsList from './EventsList';
 import { setFilters, setSelectedORFI, setCollapsedGroup } from '../actions';
-
-const Collapse = posed.div({
-  open: {
-    height: 'auto',
-    transition: { duration: 500 },
-    applyAtEnd: {
-      overflow: 'initial'
-    }
-  },
-  close: {
-    height: 0,
-    transition: { duration: 300 },
-    applyAtStart: {
-      overflow: 'hidden'
-    }
-  }
-});
-
-const CollapseIcon = posed.div({
-  open: {
-    transform: 'scale(1, 1)',
-    transition: { duration: 200 }
-  },
-  close: {
-    transform: 'scale(1, -1)',
-    transition: { duration: 200 }
-  }
-});
 
 const EventsGroup = ({
   windowSize, collapsedGroups,
@@ -40,6 +12,34 @@ const EventsGroup = ({
   toggleCollapse, data, subcategory, category, gid, group
 }) => {
   const [rangeStats, setRangeStats] = useState({ before: 0, in: 0, after: 0 });
+
+  const collapseVariants = {
+    open: {
+      height: 'auto',
+      transition: { duration: 0.5 },
+      applyAtEnd: {
+        overflow: 'initial'
+      }
+    },
+    close: {
+      height: 0,
+      transition: { duration: 0.3 },
+      applyAtStart: {
+        overflow: 'hidden'
+      }
+    }
+  };
+
+  const collapseIconVariants = {
+    open: {
+      scaleY: 1,
+      transition: { duration: 0.2 }
+    },
+    close: {
+      scaleY: -1,
+      transition: { duration: 0.2 }
+    }
+  };
 
   const focWidth = windowSize.appWidth;
   const isCollapsed = collapsedGroups.indexOf(gid) > -1;
@@ -78,14 +78,19 @@ const EventsGroup = ({
               />
             )
           } */}
-          <CollapseIcon pose={isCollapsed ? 'close' : 'open'} style={{ display: 'inline-block' }}>
+          <motion.div
+            initial={isCollapsed ? 'close' : 'open'}
+            animate={isCollapsed ? 'close' : 'open'}
+            variants={collapseIconVariants}
+            style={{ display: 'inline-block' }}
+          >
             <span
               className="icon-chevron-down eventgroup-header-icon"
               onClick={() => { toggleCollapse(gid); }}
               onKeyPress={() => {}}
               role="presentation"
             />
-          </CollapseIcon>
+          </motion.div>
           <span
             className="icon-x eventgroup-header-icon"
             onClick={() => { removeGroup(subcategory, group, gid); }}
@@ -94,8 +99,10 @@ const EventsGroup = ({
           />
         </div>
       </div>
-      <Collapse
-        pose={isCollapsed ? 'close' : 'open'}
+      <motion.div
+        initial={isCollapsed ? 'close' : 'open'}
+        animate={isCollapsed ? 'close' : 'open'}
+        variants={collapseVariants}
         style={{ overflow: 'hidden' }}
       >
         <EventsList
@@ -105,7 +112,7 @@ const EventsGroup = ({
           // collapsed={isCollapsed}
           setRangeStats={setRangeStats}
         />
-      </Collapse>
+      </motion.div>
     </div>
   );
 };

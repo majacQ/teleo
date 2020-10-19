@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import posed from 'react-pose';
+import { motion } from 'framer-motion';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
 import HeaderNonApp from './HeaderNonApp';
@@ -16,37 +17,40 @@ const crslItems = [
   {
     title: 'Contextualize the role of immunization',
     desc: 'Explore the extended network of risk factors associated with measles infection in children by contextualizing immunization alongside other potential interventions.',
+    src: 'images/carousel/immunization@2x.png',
     link: 'app#from=280&to=5017&nd=&ogm=&ho=ho_15&int=&rf=rf_163,rf_81,rf_19,rf_82,rf_59&cgs=&pnd=',
     index: 1
   },
   {
     title: 'Malnutrition and Cognitive Development',
     desc: 'Explore biological mechanisms linking malnutrition to impaired cognitive development.',
+    src: 'images/carousel/malnutrition@2x.png',
     link: 'app#from=279&to=832&nd=Cognitive&ogm=CNS&ho=&int=&rf=rf_82,rf_151&cgs=&pnd=OG034;ogm;cn;33,OG035;ogm;cn;34,OG036;ogm;cn;35,OG037;ogm;cn;36,GM007;ogm;cn;43,DD304;nd;co;1,DD314;nd;co;11,DD320;nd;co;17,DD325;nd;co;22,rf_151;rf;;58,rf_82;rf;;146,DD338;nd;co;35',
     index: 2
   },
   {
     title: 'Breastfeeding Intervention',
     desc: 'Explore metrics to evaluate a breastfeeding promotion intervention.',
+    src: 'images/carousel/breastfeeding@2x.png',
     link: 'app#from=280&to=460&nd=&ogm=Gastrointestinal&ho=ho_2,ho_7,ho_10,ho_18,ho_21,ho_24,ho_26,ho_29&int=int_61&rf=rf_82,rf_1,rf_49,rf_71&cgs=ogm_Gastrointestinal&pnd=GM073;ogm;gi;75,GM081;ogm;gi;83,GM082;ogm;gi;84',
     index: 3
   }
 ];
-
-const PosedDiv = posed.div({
-  state1: { left: 800 * -2 },
-  state2: { left: 800 * -1 },
-  state3: { left: 800 * -0 },
-  state4: { left: 800 * 1 },
-  state5: { left: 800 * 2 }
-  // visible: { left: prps => (800 * (prps.i - curCrsl)) }
-});
 
 const Home = ({
   windowSize
 }) => {
   const [curCrsl, setCurCrsl] = useState(0);
 
+  const variants = {
+    state1: { left: 800 * -2 },
+    state2: { left: 800 * -1 },
+    state3: { left: 800 * -0 },
+    state4: { left: 800 * 1 },
+    state5: { left: 800 * 2 }
+    // visible: { left: prps => (800 * (prps.i - curCrsl)) }
+  };
+  
   return (
     <div>
       <HeaderNonApp />
@@ -76,10 +80,10 @@ const Home = ({
           >
             <div className="home-image-text">
               <div className="home-image-text-welcome">
-                Welcome to the
+                Welcome to
               </div>
               <div className="home-image-text-set">
-                Seminal Events Timeline
+                ELEnOR: Early Life Events and Outcomes Resource
               </div>
               <div className="home-image-text-desc">
                 Explore the biological mechanisms of global health problems through seminal events
@@ -189,14 +193,23 @@ const Home = ({
           >
             {
               crslItems.map((crsl, i) => (
-                <PosedDiv
-                  pose={`state${i + 3 - curCrsl}`}
+                <motion.div
+                  // pose={`state${i + 3 - curCrsl}`}
+                  variants={variants}
+                  initial={`state${i + 3 - curCrsl}`}
+                  animate={`state${i + 3 - curCrsl}`}
+                  transition={{ ease: "easeOut", duration: 0.5 }}
                   className="home-carousel-item"
                   key={crsl.title}
                   style={{ marginLeft: windowSize.appLeft + 50 }}
                 >
-                  <div className="home-carousel-item-title">{crsl.title}</div>
-                  <div className="home-carousel-item-desc">{crsl.desc}</div>
+                  <div className="home-carousel-image-container">
+                    <img className="home-carousel-img" src={crsl.src} alt={crsl.title} />
+                  </div>
+                  <div className="home-carousel-text-container">
+                    <div className="home-carousel-item-title">{crsl.title}</div>
+                    <div className="home-carousel-item-desc">{crsl.desc}</div>
+                  </div>
                   <div className="carousel-button">
                     <Button
                       classes={{ label: 'carousel-button-label', root: 'carousel-button-root' }}
@@ -206,7 +219,7 @@ const Home = ({
                       </Link>
                     </Button>
                   </div>
-                </PosedDiv>
+                </motion.div>
               ))
             }
             { curCrsl > 0 && (
@@ -236,6 +249,22 @@ const Home = ({
           </div>
         </div>
         <div
+          className="home-download"
+          style={{ paddingLeft: windowSize.appLeft, paddingRight: windowSize.appLeft }}
+        >
+          <div className="home-download-text">
+            <a className="home-download-text-link" href="elenor_data.xlsx">Download the dataset (.xls)</a>
+          </div>
+          <IconButton
+            className="home-download-button"
+            aria-label="download"
+          >
+            <a className="home-download-button-text" href="elenor_data.xlsx">
+              <GetAppIcon />
+            </a>
+          </IconButton>
+        </div>
+        <div
           className="home-methodology"
           style={{ paddingLeft: windowSize.appLeft, paddingRight: windowSize.appLeft }}
         >
@@ -246,7 +275,7 @@ const Home = ({
             className="home-methodology-button"
             aria-label="build"
           >
-            <Link className="home-methodology-text-link" to="methodology">
+            <Link className="home-methodology-button-text" to="methodology">
               <ArrowForwardIcon />
             </Link>
           </IconButton>
@@ -272,52 +301,31 @@ const Home = ({
                 Gates Foundation works to help all people lead healty, productive lives.
                 In developing countries, it focuses on improving people&apos;s health and
                 giving them the chance to lift themselves out of hunger and extreme
-                poverty. In the United States, it seeks to ensure that all people -
-                especially those with the fewest resources - have access to the
+                poverty. In the United States, it seeks to ensure that all people&mdash;especially
+                those with the fewest resources&mdash;have access to the
                 opportunities they need to succeed in school and life.
               </p>
+              <div>
+                <a className="home-learn-more" href="https://www.gatesfoundation.org">Learn More &gt;</a>
+              </div>
             </div>
           </Box>
           <Box flexBasis={0} flexGrow={1} className="home-info-column">
             <div className="home-info-logo">
-              Healthy Birth,
-              <br />
-              Growth, & Development
+              <img src="images/ki.svg" alt="ki" width="131px" />
             </div>
             <div>
               <p>
-                In 2013, the Bill & Melinda Gates Foundation created the Health Birth, Growth,
-                and Development program (HBGD) to ensure that all children can regain control
-                of their futures, maximize their potential, and have the opportunity to lead
-                a healty and productive life.
+                Ki, which stands for knowledge integration, gives researchers access to a huge trove of integrated
+                data and the tools to analyze it in powerful ways that generate new insights quickly. Ki collects and
+                standardizes many disparate data sets so they can be explored together. Then, interdisciplinary teams
+                make new discoveries by examining this data in novel ways. Finally, these discoveries allow researchers
+                and practitioners to make more strategic decisions about interventions in the field and directions for
+                further study, feeding the virtuous cycle by generating more data.
               </p>
-              <p>
-                HBGD intends to fill the key knowledge gaps in the field the prevent us from
-                knowing how to use our scarce resources to intervene effectively. HBGD is
-                organized around a list of key questions, and the answers to these questions
-                will help the Foundation and its partners cut through some of the complexity
-                and start to reduce the heavy burden of preterm birth, stunting, and
-                neurocognitive impairment.
-              </p>
-            </div>
-          </Box>
-          <Box flexBasis={0} flexGrow={1} className="home-info-column">
-            <div className="home-info-logo">
-              <img src="images/hbgdki.png" alt="hbgdki" width="150px" />
-            </div>
-            <div>
-              <p>
-                Within HBGD, the knowledge integration initiative (HBGDki) aims to answer the
-                key questions by analyzing the large body of data that already exists.
-              </p>
-              <p>
-                Researchers have been studying birth, growth, and development for decades, but
-                most of the data they&apos;ve collected are stored on hard drives or in file
-                cabinets where no one has access to them. HBGDki has brought a lot of these
-                data together in a large and diverse knowledge base. HBGDki is visualizing and
-                analyzing the data using state-of-the-art analysis methods and tools to
-                generate new insights that will help us answer the key questions.
-              </p>
+              <div>
+                <a className="home-learn-more" href="https://kiglobalhealth.org">Learn More &gt;</a>
+              </div>
             </div>
           </Box>
         </Box>

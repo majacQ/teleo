@@ -9,6 +9,19 @@ const ContactFeedback = () => {
   const [email, setEmail] = useState('');
   const [topic, setTopic] = useState('');
 
+  // https://www.smtpjs.com
+  const sendMail = () => {
+    window.Email.send({
+      SecureToken: '',
+      To: 'info@kiglobalhealth.org',
+      From: email,
+      Subject: `ELEnOR: Feedback: ${topic}`,
+      Body: `From: ${name}\n\nEmail: ${expln}\n\nTopic: ${topic}Problem:${expln}`
+    }).then(
+      (message) => alert(message)
+    );
+  };
+
   return (
     <div className="contact-correction">
       <div className="contact-detail-header">
@@ -99,7 +112,7 @@ const ContactFeedback = () => {
         disabled={
           topic.length === 0 || expln.length === 0 || name.length === 0 || email.length === 0
         }
-        // onClick={() => {}}
+        onClick={sendMail}
       >
         Send
       </Button>
