@@ -9,17 +9,12 @@ const ContactFeedback = () => {
   const [email, setEmail] = useState('');
   const [topic, setTopic] = useState('');
 
-  // https://www.smtpjs.com
   const sendMail = () => {
-    window.Email.send({
-      SecureToken: '',
-      To: 'info@kiglobalhealth.org',
-      From: email,
-      Subject: `ELEnOR: Feedback: ${topic}`,
-      Body: `From: ${name}\n\nEmail: ${expln}\n\nTopic: ${topic}Problem:${expln}`
-    }).then(
-      (message) => alert(message)
-    );
+    const subject = `ELEnOR: Feedback: ${encodeURIComponent(topic)}`;
+    const body = `From: ${name}%0D%0A%0D%0AEmail: ${email}%0D%0A%0D%0ATopic: ${encodeURIComponent(topic)}%0D%0A%0D%0AProblem:${encodeURIComponent(expln)}`;
+    const mail = document.createElement('a');
+    mail.href = `mailto:info@kiglobalhealth.org?subject=${subject}&body=${body}`;
+    mail.click();
   };
 
   return (

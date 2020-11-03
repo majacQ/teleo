@@ -8,17 +8,12 @@ const ContactBroken = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
-  // https://www.smtpjs.com
   const sendMail = () => {
-    window.Email.send({
-      SecureToken: '',
-      To: 'info@kiglobalhealth.org',
-      From: email,
-      Subject: 'ELEnOR: Something isn\'t working',
-      Body: `From: ${name}\n\nEmail: ${expln}\n\nProblem:${expln}`
-    }).then(
-      (message) => alert(message)
-    );
+    const subject = 'ELEnOR: Something isn\'t working';
+    const body = `From: ${name}%0D%0A%0D%0AEmail: ${email}%0D%0A%0D%0AProblem: ${encodeURIComponent(expln)}`;
+    const mail = document.createElement('a');
+    mail.href = `mailto:info@kiglobalhealth.org?subject=${subject}&body=${body}`;
+    mail.click();
   };
 
   return (
